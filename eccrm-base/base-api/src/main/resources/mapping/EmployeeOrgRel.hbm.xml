@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.employee.domain">
+    <class name="EmployeeOrgRel" table="EMPLOYEE_ORG_REL">
+        <id name="id" column="id" length="40">
+            <generator class="uuid.hex"/>
+        </id>
+        <!--  代码生成器生成字段 -->
+        <many-to-one name="organization" class="eccrm.base.org.domain.Organization" column="ORG_ID"
+                     foreign-key="fk_Employee_org"></many-to-one>
+        <many-to-one name="emplyuee" class="eccrm.base.employee.domain.Employee" column="EMP_ID"
+                     foreign-key="fk_Employee_emp"></many-to-one>
+
+
+    </class>
+</hibernate-mapping>

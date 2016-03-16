@@ -1,0 +1,76 @@
+<div class="modal" tabindex="-1" role="dialog" >
+    <div class="modal-dialog" style="width: 920px;" >
+        <div class="modal-content" >
+            <div class="modal-header" static="" >
+                <button type="button" class="close" ng-click="$hide()" >×</button >
+                <h4 class="modal-title" >选择人员</h4 >
+            </div >
+            <div class="modal-body" style="width: 100%;height: 400px;" >
+
+                <div class="row panel panel-tree" style="height: 100%;width:100%" >
+                    <div class="tree" style="border: 1px solid #B7C1CB;width: 240px" >
+                        <div class="tree-content" >
+                            <ul id="treeDemos" class="ztree" ></ul >
+                        </div >
+                        <div class="scroller" ></div >
+                    </div >
+                    <div class="content" style="padding-left: 245px" >
+
+                        <div class="list-result" >
+                            <div class="block" >
+                                <div class="block-content" >
+                                    <div class="content-wrap" >
+                                        <div class="table-responsive panel panel-table" style="max-height: none;border: none;" >
+                                            <table class="table table-striped table-hover" >
+                                                <thead class="table-header" >
+                                                <tr >
+                                                    <td >
+                                                        <div select-all-checkbox checkboxes="emps.data"
+                                                             selected-items="eitems" anyone-selected="anyone" ></div >
+                                                    </td >
+                                                    <td >姓名</td >
+                                                    <td >工号</td >
+                                                    <td >移动电话</td >
+                                                    <td >电子邮件</td >
+                                                </tr >
+                                                </thead >
+                                                <tbody class="table-body" >
+                                                <tr ng-show="!emps|| emps.data.length == 0" >
+                                                    <td colspan="5" class="text-center" >没有查询到数据！</td >
+                                                </tr >
+                                                <tr ng-repeat="foo in emps.data" ng-show="emps.total != 0" >
+                                                    <td >
+                                                        <input type="checkbox" style="height: 12px;" ng-model="foo.isSelected" />
+                                                    </td >
+                                                    <td ><span ng-bind-template="{{ foo.employeeName }}" ></span ></td >
+                                                    <td ><span ng-bind-template="{{ foo.employeeCode }}" ></span ></td >
+                                                    <td ><span ng-bind-template="{{ foo.mobile }}" ></span >
+                                                    </td >
+                                                    <td ><span ng-bind-template="{{ foo.email }}" ></span ></td >
+                                                </tr >
+                                                </tbody >
+                                            </table >
+                                        </div >
+                                    </div >
+                                </div >
+                            </div >
+                        </div >
+                        <div eccrm-page="pager" class="list-pagination" ></div >
+                    </div >
+                </div >
+
+            </div >
+            <div class="modal-footer" ng-cloak >
+                <button type="button" class="btn btn-default btn-primary" ng-click="save();"
+                        ng-disabled="form.$invalid" >保存
+                </button >
+                <button type="button" class="btn btn-default" ng-click="$hide()" >关闭</button >
+            </div >
+
+        </div >
+    </div >
+</div >
+<div />
+
+
+

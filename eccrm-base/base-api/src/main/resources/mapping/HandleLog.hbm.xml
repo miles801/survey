@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.handlelog.domain">
+    <class name="HandleLog" table="SYS_HANDLE_LOG">
+        <id name="id" column="id" length="40">
+            <generator class="uuid.hex"/>
+        </id>
+        <!--  代码生成器生成字段 -->
+        <property name="tenementId" column="tenement_id" update="false" not-null="true" type="string" length="40"/>
+        <property name="createdDatetime" column="created_datetime" type="timestamp" update="false"/>
+        <property name="description" type="string" length="1000"/>
+        <property name="creatorId" column="creator_id" length="32"  update="false"/>
+        <property name="creatorName" column="creator_name" length="40"  update="false"/>
+
+        <property name="handleType" column="handle_type" type="string" length="40"/>
+        <property name="handleResult" column="handle_result" type="string" length="40"/>
+        <property name="handleContent" column="handle_content" type="string" length="4000"/>
+        <property name="startDate" column="start_date" type="timestamp"/>
+        <property name="endDate" column="end_date" type="timestamp"/>
+        <property name="businessId" column="business_id" type="string" length="32"/>
+        <property name="businessType" column="business_type" type="string" length="100"/>
+
+        <!-- 过滤器 -->
+        <filter name="tenementFilter"/>
+
+    </class>
+</hibernate-mapping>

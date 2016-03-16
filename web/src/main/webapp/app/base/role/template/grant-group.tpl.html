@@ -1,0 +1,55 @@
+<div class="panel panel-tree" style="padding: 5px 0" >
+    <div class="tree" >
+        <div class="tree-content" >
+            <ul id="treeDemo" class="ztree" ></ul >
+        </div >
+    </div >
+    <div class="content" >
+        <div class="block" >
+            <div class="block-header" >
+                        <span class="header-button" ng-cloak >
+                            <a class="btn btn-green btn-min" ng-click="grant();" ng-disabled="!groupId" >
+                                <span class="glyphicons crown" ></span > 授权
+                            </a >
+                            <a class="btn btn-green btn-min" ng-click="remove();" ng-disabled="!anyone" >
+                                <span class="glyphicons remove_2" ></span > 取消授权
+                            </a >
+                        </span >
+            </div >
+            <div class="block-content" >
+                <div class="table-responsive panel panel-table first-min" >
+                    <table class="table table-striped table-hover last-tr-bottom-border" >
+                        <thead class="table-header" >
+                        <tr >
+                            <td >
+                                <div select-all-checkbox checkboxes="beans" selected-items="items" anyone-selected="anyone" ></div >
+                            </td >
+                            <td >角色名称</td >
+                            <td >角色编号</td >
+                            <td >角色说明</td >
+                            <td >截止时间</td >
+                            <td >角色状态</td >
+                        </tr >
+                        </thead >
+                        <tbody class="table-body" ng-cloak >
+                        <tr ng-show="!beans.length" >
+                            <td colspan="6" class="text-center" >没有符合条件的记录！</td >
+                        </tr >
+
+                        <tr ng-repeat="foo in beans " >
+                            <td >
+                                <input type="checkbox" ng-model="foo.isSelected" />
+                            </td >
+                            <td ng-bind-template="{{ foo.roleName }}" ></td >
+                            <td ng-bind-template="{{ foo.roleCode }}" ></td >
+                            <td ng-bind-template="{{ foo.roleDescription | substr:30 }}" ></td >
+                            <td ng-bind-template="{{ foo.roleEndDate | eccrmDate }}" ></td >
+                            <td ng-bind-template="{{ foo.roleState }}" ></td >
+                        </tr >
+                        </tbody >
+                    </table >
+                </div >
+            </div >
+        </div >
+    </div >
+</div >

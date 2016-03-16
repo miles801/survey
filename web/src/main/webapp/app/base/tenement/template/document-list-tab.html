@@ -1,0 +1,45 @@
+<div class="block noborder" >
+    <div class="block-header" >
+            <span class="header-button" >
+                <a class="btn btn-min btn-green" ng-click="add();" ng-disabled="!canEidt" >
+                    <i class="glyphicons plus" ></i > 新增
+                </a >
+                <a class="btn btn-min btn-green" ng-click="remove();" ng-disabled="!canEidt || !anyone" >
+                    <i class="glyphicons fork" ></i > 删除
+                </a >
+            </span >
+    </div >
+    <div class="block-content" >
+        <div class="table-responsive panel panel-table" >
+            <table class="table table-striped table-hover" >
+                <thead class="table-header" >
+                <tr >
+                    <td class="width-min" >
+                        <div select-all-checkbox checkboxes="documents" selected-items="items" anyone-selected="anyone" ></div >
+                    </td >
+                    <td >文档名称</td >
+                    <td >类型</td >
+                    <td >采集人</td >
+                    <td >采集时间</td >
+                </tr >
+                </thead >
+                <tbody class="table-body" >
+                <tr ng-show="!documents || !documents.length" >
+                    <td colspan="8" class="text-center" >没有符合条件的记录！</td >
+                </tr >
+                <tr ng-repeat="foo in documents" >
+                    <td >
+                        <input type="checkbox" ng-model="foo.isSelected" />
+                    </td >
+                    <td >
+                        <a ng-click="view(foo.id)" style="cursor: pointer;" >{{foo.name}}</a >
+                    </td >
+                    <td ng-bind-template="{{foo.docType | docType }}" ></td >
+                    <td ng-bind-template="{{foo.creatorName}}" ></td >
+                    <td ng-bind-template="{{foo.createdDatetime | eccrmDatetime}}" ></td >
+                </tr >
+                </tbody >
+            </table >
+        </div >
+    </div >
+</div >

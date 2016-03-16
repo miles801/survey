@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.parameter.domain">
+    <class name="BusinessParamItem" table="SYS_BP_ITEM">
+        <id name="id" column="id" length="40">
+            <generator class="uuid.hex"/>
+        </id>
+        <!--  代码生成器生成字段 -->
+        <property name="createdDatetime" column="created_datetime" type="timestamp" update="false"/>
+        <property name="description" type="string" length="1000"/>
+        <property name="creatorId" column="creator_id" length="32"  update="false"/>
+        <property name="creatorName" column="creator_name" length="40"  update="false"/>
+        <property name="type" column="param_type" type="string" length="40" />
+        <property name="name" column="name" type="string" length="120" />
+        <property name="value" column="value" type="string" length="120" />
+        <property name="status" column="status" type="string" length="40" />
+        <property name="cascadeTypeCode" column="cascade_type_code" type="string" length="40"/>
+        <property name="cascadeItemValue" column="cascade_item_value" type="string" length="40"/>
+        <property name="sequenceNo" column="sequence_no" type="integer"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,29 @@
+package eccrm.base.notebook.vo;
+
+import eccrm.base.tenement.vo.CrmBaseVo;
+/**
+* @author shenbb
+* @datetime 2014-03-22
+*/
+
+public class NoteBookVo extends CrmBaseVo {
+
+	private String title;
+	private String content;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+}

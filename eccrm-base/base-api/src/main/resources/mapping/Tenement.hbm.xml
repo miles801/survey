@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.tenement.domain">
+    <class name="Tenement" table="SYS_TENEMENT">
+        <id name="id" column="id" length="40">
+            <generator class="uuid"/>
+        </id>
+
+        <property name="name" type="string" length="200" unique="true"/>
+        <property name="code" type="string" length="40" unique="true"/>
+        <property name="companyScale" column="company_scale" type="string" length="40"/>
+        <property name="website" type="string" length="200"/>
+        <property name="industry" type="string" length="40"/>
+        <property name="province" type="string" length="40"/>
+        <property name="city" type="string" length="40"/>
+        <property name="county" type="string" length="40"/>
+        <property name="address" type="string" length="200"/>
+        <property name="rentType" column="rent_type" type="string" length="40"/>
+        <property name="userScale" column="user_scale" type="string" length="40"/>
+        <property name="singleResource" column="single_resource" type="boolean"/>
+        <property name="startDate" column="start_date" type="timestamp"/>
+        <property name="endDate" column="end_date" type="timestamp"/>
+        <property name="description" type="string" length="2000"/>
+        <property name="remark" column="remark" type="string" length="2000"/>
+        <property name="principalEmployeeId" column="principal_employee_id"/>
+        <property name="status" type="integer" length="3"/>
+
+        <property name="createdDatetime" column="created_datetime" type="timestamp" update="false"/>
+        <property name="modifiedDatetime" column="modified_datetime" type="timestamp"/>
+        <property name="modifierId" column="modifier_id" length="32"/>
+        <property name="modifierName" column="modifier_name" length="40"/>
+        <property name="creatorId" column="creator_id" length="32" update="false"/>
+        <property name="creatorName" column="creator_name" length="40" update="false"/>
+    </class>
+</hibernate-mapping>

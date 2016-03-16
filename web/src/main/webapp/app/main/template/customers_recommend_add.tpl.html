@@ -1,0 +1,224 @@
+<style>
+    .spanText{
+        font-size: 14px;
+        color: #428BCA;
+    }
+    .btn.btn-min2 {
+        padding: 1px 10px 3px 10px;
+    }
+    .block table tr td:last-child {
+        white-space: nowrap;
+        width: 10px;
+    }
+    .modal .modal-body .row {
+        margin: 0 0 3px 0;
+    }
+</style>
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:650px;">
+            <div class="modal-header" static="">
+                <button type="button" class="close" ng-click="$hide()">×</button>
+                <h4 class="modal-title" >客户推荐</h4>
+            </div>
+            <div class="modal-body">
+                <div class="block-content">
+                    <div class="content-wrap">
+                        <form name="form" class="form-horizontal" role="form">
+                            <div style="display: none;">
+                                <input type="hidden" ng-model="page.type" ng-init="page.type='${pageType}'"/>
+                                <input type="hidden" id="pageType" value="${pageType}"/>
+                                <input type="hidden" id="id" value="${id}"/>
+                            </div>
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="row legend col-12" style="margin-top: 0!important;">
+                                        <div class="legend-title" ><span style="font-size: 14px;font-weight: 900;">被推荐者</span></div>
+                                        <div class="block" style="padding: 10px 8px;height: 138px;">
+                                            <div class="row">
+                                                <div class="form-label col-2" >
+                                                    <label >客户编码:</label >
+                                                </div >
+                                                <span class="col-2-half spanText"  ng-bind-template="1041360" ></span >
+                                                <div class="form-label col-2" >
+                                                    <label >客户姓名:</label >
+                                                </div >
+                                                <span class="col-2-half spanText" ng-bind-template="yaoxu" ></span >
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-label col-2" >
+                                                    <label >客户等级:</label >
+                                                </div >
+                                                <span class="col-2-half spanText" ng-bind-template="顾客" ></span >
+                                                <div class="form-label col-2" >
+                                                    <label >证件号:</label >
+                                                </div >
+                                                <span class="col-2-half spanText" ng-bind-template="412727197410214578" ></span >
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-label col-2" >
+                                                    <label >性别:</label >
+                                                </div >
+                                                <span class="col-2-half spanText" ng-bind-template="男" ></span >
+                                                <div class="form-label col-2" >
+                                                    <label >出生日期:</label >
+                                                </div >
+                                                <span class="col-2-half spanText" ng-bind-template="1974-10-21" ></span >
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-label col-2" >
+                                                    <label >联系电话:</label >
+                                                </div >
+                                                <span class="col-2-half spanText" ng-bind-template="15201198158" ></span >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="row">
+                                        <div class="form-label col-4" >
+                                            <label >姓名:</label >
+                                        </div >
+                                        <input type="text" class="col-8" value="程丽丽"/>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-label col-4" >
+                                            <label >电话:</label >
+                                        </div >
+                                        <input type="text" class="col-8" value=""/>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-label col-4" >
+                                            <label >客户编码:</label >
+                                        </div >
+                                        <input type="text" class="col-8" value=""/>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-label col-4" >
+                                            <label >证件号:</label >
+                                        </div >
+                                        <input type="text" class="col-8" value=""/>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-label col-4" >
+                                            <label ></label >
+                                        </div >
+                                        <div class="col-8">
+                                            <button style="margin: 3px;float: right;">查询</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: -7px;">
+                                <select class="col-4">
+                                    <option>00：等待选择</option>
+                                    <option>10：亲属_长辈</option>
+                                    <option>20：亲属_晚辈</option>
+                                    <option>30：亲属_配偶</option>
+                                    <option>31：亲属_平辈</option>
+                                </select>
+                            </div>
+                            <div class="row"style="margin-top: 13px;">
+                                <div class="col-12">
+                                    <div class="row legend col-12" style="margin-top: 0!important;">
+                                        <div class="legend-title"><span style="font-size: 14px;font-weight: 900;">推荐者</span></div>
+                                        <div class="block" style="padding: 10px 8px;height: 115px;">
+                                            <div class="block-content">
+                                                <div class="content-wrap">
+                                                    <div class="table-responsive panel panel-table first-min">
+                                                        <table class="table table-striped table-hover" style="width: 100%;">
+                                                            <thead class="table-header">
+                                                            <tr>
+                                                                <td></td>
+                                                                <td>客户编号</td>
+                                                                <td>客户名称</td>
+                                                                <td>证件号</td>
+                                                                <td>客户类型</td>
+                                                                <td>客户级别</td>
+                                                                <td>客户状态</td>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody class="table-body">
+                                                            <tr>
+                                                                <td >
+                                                                    <input type="radio" style="height: 12px;" name="checkV"/>
+                                                                </td >
+                                                                <td>ZS_00A</td>
+                                                                <td>张三</td>
+                                                                <td>341223198709232327</td>
+                                                                <td>一级</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td >
+                                                                    <input type="radio" style="height: 12px;" name="checkV"/>
+                                                                </td >
+                                                                <td>ZS_00A</td>
+                                                                <td>张三</td>
+                                                                <td>341223198709232327</td>
+                                                                <td>一级</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="col-3-half">
+                                    <div class="row">
+                                        <div class="form-label col-3-half" >
+                                            <label >姓名:</label >
+                                        </div >
+                                        <input type="text" class="col-8-half" value="程丽丽"/>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-label col-3-half" >
+                                            <label >电话:</label >
+                                        </div >
+                                        <input type="text" class="col-8-half" value=""/>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-label col-3-half" >
+                                            <label >客户编码:</label >
+                                        </div >
+                                        <input type="text" class="col-8-half" value=""/>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-label col-3-half" >
+                                            <label >身份证:</label >
+                                        </div >
+                                        <input type="text" class="col-8-half" value=""/>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-label col-3-half" >
+                                            <label ></label >
+                                        </div >
+                                        <div class="col-8-half">
+                                            <button style="margin: 3px;float: right;">查询</button>
+                                        </div>
+
+                                    </div>
+                                </div>-->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-primary" ng-click="close();"
+                        ng-disabled="form.$invalid">确认
+                </button>
+                <button type="button" class="btn btn-default" ng-click="close()">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div/>
+

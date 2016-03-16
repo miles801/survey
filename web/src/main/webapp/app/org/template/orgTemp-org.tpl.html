@@ -1,0 +1,82 @@
+<div class="modal" tabindex="-1" role="dialog" >
+    <div class="modal-dialog" style="width:800px;" >
+        <div class="modal-content" >
+            <div class="modal-header" >
+                <button type="button" class="close" ng-click="$hide()" >&times;</button >
+                <h4 class="modal-title" >机构配置</h4 >
+            </div >
+
+            <div class="modal-body" >
+                <form name="form" class="form-horizontal" role="form" >
+                    <div style="display: none;" >
+                        <input type="hidden" ng-model="page.type" ng-init="page.type='${pageType}'" />
+                        <input type="hidden" ng-model="sendGroup.id" ng-init="sendGroup.id=('${id}') || null" />
+                    </div >
+                    <div class="row" >
+                        <div class="col-6-half " style="text-align: right;" ><!--
+                            <label title="如果勾选了，则在转移时会连同半选的节点一起转移过去" ><span style="font-weight: 700;" >包含半选：</span >
+                                <input type="checkbox" ng-model="halfCheck" />
+                            </label >-->
+                        </div >
+                        <div class="form-label col-1-half" >
+                            <label >上级机构:</label >
+                        </div >
+                        <div class="col-3" >
+                            <input type="text" class="col-12" ztree-single="OrgztreeOptions"
+                                   ng-model="parentOrgName" />
+                        </div >
+                    </div >
+                    <div class="row" >
+                        <span class="col-half" ></span >
+
+                        <div class="col-11 " >
+                            <div class="block-content" style="margin:10px;" >
+                                <div class="col-5 block" style="height:300px;  " >
+                                    <div class="block-header" >
+                                            <span class="header-text" >
+                                                <span class="glyphicons search" ></span >
+                                                    <span >集团机构</span >
+                                            </span >
+                                    </div >
+                                    <div class="block-content" >
+                                        <div class="content-wrap" style="padding:0px" >
+                                            <div class="tree-content" >
+                                                <ul id="treeDemoOrgTemp" class="ztree" ></ul >
+                                            </div >
+                                        </div >
+                                    </div >
+                                </div >
+                                <div class="col-2"
+                                     style="height: 100%;overflow: hidden;text-align: center;padding: 10px;" >
+                                    <div style="height: 160px;margin-top:50%;" >
+                                        <div class="row" >
+                                            <span class="icons right2 cp" ng-click="transform()" ></span >
+                                        </div >
+                                    </div >
+                                </div >
+                                <div class="col-5 block" style="height:300px; " >
+                                    <div class="block-header" >
+                                            <span class="header-text" >
+                                                <span class="glyphicons search" ></span >
+                                                    <span >平台机构</span >
+                                            </span >
+                                    </div >
+                                    <div class="block-content" >
+                                        <div class="content-wrap" style="padding:0px" >
+                                            <div class="tree-content" >
+                                                <ul id="treeDemoOrg" class="ztree" ></ul >
+                                            </div >
+                                        </div >
+                                    </div >
+                                </div >
+                            </div >
+                        </div >
+                    </div >
+                </form >
+            </div >
+            <div class="modal-footer" >
+                <button type="button" class="btn btn-default" ng-click="$hide()" >关闭</button >
+            </div >
+        </div >
+    </div >
+</div >

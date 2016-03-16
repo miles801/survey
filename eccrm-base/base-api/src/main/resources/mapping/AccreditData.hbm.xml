@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.auth.domain">
+    <class name="AccreditData" table="SYS_ACCREDIT_DATA">
+        <id name="id" column="ID" length="40">
+            <generator class="assigned"/>
+        </id>
+        <property name="resourceId" column="RESOURCE_ID" type="string" length="40" not-null="true"/>
+        <property name="resourceCode" column="RESOURCE_CODE" type="string" length="40" not-null="true"/>
+        <property name="orgId" column="ORG_ID" type="string" length="40"/>
+        <property name="deptId" column="DEPT_ID" type="string" length="40"/>
+        <property name="empId" column="EMP_ID" type="string" length="40"/>
+        <property name="accreditType" column="ACCREDIT_TYPE" type="string" length="40" not-null="true"/>
+        <property name="otherOrgIds" column="OTHER_ORG_IDS" type="string" length="2000"/>
+        <property name="otherOrgNames" column="OTHER_ORG_NAMES" type="string" length="2000"/>
+        <property name="otherParam" column="OTHER_PARAM" type="string" length="2000"/>
+
+        <filter name="AD_POSITION_FILTER"
+                condition="DEPT_ID in (select sre.position_id from dbo.SYS_ROLE_EMP sre where sre.EMPLOYEE_ID=:empId)"/>
+    </class>
+    <!-- 查询指定员工（员工ID）所有岗位下的资源 -->
+    <filter-def name="AD_POSITION_FILTER">
+        <filter-param name="empId" type="java.lang.String"/>
+    </filter-def>
+</hibernate-mapping>

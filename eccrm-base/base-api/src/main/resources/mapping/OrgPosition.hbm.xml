@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.org.domain">
+    <class name="OrgPosition" table="SYS_ORG_ROLE">
+        <id name="id" column="id" length="40">
+            <generator class="uuid.hex"/>
+        </id>
+        <property name="orgId" type="string" column="org_id" length="40" ></property>
+        <property name="roleId" type="string" column="role_id" length="40" ></property>
+    </class>
+</hibernate-mapping>

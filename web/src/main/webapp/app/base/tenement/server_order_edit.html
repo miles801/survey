@@ -1,0 +1,66 @@
+<div class="block" >
+    <div class="block-header" >
+        <div class="header-button" >
+            <button class="btn btn-min btn-green" >
+                <span class="glyphicons disk_save" ></span > 保存
+            </button >
+            <a class="btn btn-min btn-green" ng-href="document/" >
+                <span class="glyphicons message_forward" ></span > 取消
+            </a >
+        </div >
+    </div >
+    <div class="block-content" >
+        <div class="content-wrap" >
+            <div class="row" >
+                <div class="form-label col-1-half" >
+                    <label >名称:</label >
+                </div >
+                <input type="text" class="col-3" ng-model="document.name" />
+
+                <div class="form-label col-1-half" >
+                    <label >类型:</label >
+                </div >
+                <select class="col-3" ng-model="document.docType" >
+                    <option value="contract_protocol" >合同协议</option >
+                    <option value="business_license" >营业执照</option >
+                    <option value="certificate" >法人证件</option >
+                </select >
+            </div >
+            <div class="row" >
+                <div class="form-label col-1-half" >
+                    <label >简介:</label >
+                </div >
+                <textarea class="col-7-half label-1" rows="10" ng-model="document.description" ></textarea >
+            </div >
+            <div class="row" >
+                <div class="form-label col-1-half" >
+                    <label >附件:</label >
+                </div >
+                <input class="col-7-half" type="text" />
+
+                <div class="col-2 " style="padding-left: 10px;" >
+                    <button class="btn btn-tiny btn-green" ><i class="glyphicons plus" ></i ></button >
+                </div >
+            </div >
+            <div class="row" >
+                <div class="col-1-half" >&nbsp;</div >
+                <input class="col-7-half" type="text" />
+
+                <div class="col-2 " style="padding-left: 10px;" >
+                    <button class="btn btn-tiny btn-green" ><i class="glyphicons plus" ></i ></button >
+                </div >
+            </div >
+            <div class="row" >
+                <div class="form-label col-1-half" >
+                    <label >采集人:</label >
+                </div >
+                <span class="col-3" ng-bind-template="{{document.createPersonName}}" ></span >
+
+                <div class="form-label col-1-half" >
+                    <label >采集时间:</label >
+                </div >
+                <span class="col-3" ng-bind-template="{{document.createDateTime}}" ></span >
+            </div >
+        </div >
+    </div >
+</div >

@@ -1,0 +1,99 @@
+<div class="block noborder" >
+    <form name="form" class="form-horizontal" role="form">
+            <div class="row">
+                <div class="form-label col-2">
+                    <label>联络事项:</label>
+                </div>
+                <div class="col-10">
+                    <!-- <input class="col-3-half" type="text" />-->
+                    <select class="col-3-half" style="margin-right: 5px">
+                        <option>请选择</option>
+                        <option>完成</option>
+                    </select>
+                    <select class="col-3-half" style="margin-right: 5px">
+                        <option>请选择</option>
+                        <option>完成</option>
+                    </select>
+                    <input type="text" class="col-3-half" ztree-single="ztreeOptions"
+                           ng-model="condition.parent.name"
+                           text-container="body"
+                            />
+                    <input type="hidden" class="col-2-half" ng-model="condition.parent.id"/>
+                    <span class="add-on col">
+                        <i class="icons circle_fork icon" ng-click="condition.parent=null" title="清除"></i>
+                    </span>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="form-label col-2">
+                    <label>联络内容:</label>
+                </div>
+                <textarea rows="3" class="col-9 ng-pristine ng-valid" ng-model="beans.content"></textarea>
+            </div>
+            <div class="row">
+                <div class="form-label col-2">
+                    <label>联络结果:</label>
+                </div>
+
+                <select ng-model="beans.resultType"  class="col-4"
+                        ng-options="foo.value as foo.name for foo in resultType"></select>
+            </div>
+            <div class="row" ng-show="beans.resultType=='2'">
+                <div class="form-label col-2">
+                    <label>下次联系人:</label>
+                </div>
+                <div class="col-4">
+                    <div class="col-5" style="padding-right: 5px;">
+                        <select class=" ng-pristine ng-valid">
+                            <option value="" selected="">请选择</option>
+                            <option value="">员工推荐</option>
+                            <option value="">客户推荐</option>
+                            <option value="">网络宣传</option>
+                            <option value="">市场活动</option>
+                            <option value="">朋友介绍</option>
+                            <option value="">公司网络</option>
+                        </select>
+                    </div>
+                    <input class="col-7 ng-pristine ng-valid" type="text" ng-model="beans.type">
+
+                    <div class="add-on col">
+                        <i class="glyphicons user icon"></i>
+                    </div>
+                </div>
+                <div class="form-label col-2">
+                    <label>下次联系时间:</label>
+                </div>
+                <input type="text" class="col-3" ng-model="beans.startDate" bs-datepicker readonly/>
+                <span class="add-on col">
+                    <i class="glyphicons calendar icon" title="清除时间" ng-click="tenement.startDate=undefind;"></i>
+                </span>
+            </div>
+            <div class="row" ng-show="beans.resultType=='2'">
+                <div class="form-label col-2">
+                    <label>联络类型:</label>
+                </div>
+                <div class="col-4">
+                    <div class="col-5" style="padding-right: 5px;">
+                        <select ng-model="beans.contactType" class="col-12"
+                                ng-options="foo.id as foo.name for foo in type"> </select>
+                    </div>
+                    <select class="col-7">
+                        <option value="" selected>请选择</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-label col-2">
+                    <label>处理结果:</label>
+                </div>
+                <textarea rows="4" class="col-9 ng-pristine ng-valid" ng-model="beans.remark"></textarea>
+            </div>
+      </form>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-primary" ng-click="save()">
+            确认1
+        </button>
+        <button type="button" class="btn btn-default" ng-click="$hide()">关闭</button>
+    </div>
+</div>

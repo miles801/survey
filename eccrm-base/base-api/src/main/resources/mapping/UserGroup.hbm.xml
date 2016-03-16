@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.user.domain">
+    <class name="UserGroup" table="SYS_USER_GROUP">
+        <id name="id" column="id" length="40">
+            <generator class="uuid"/>
+        </id>
+        <many-to-one name="user" column="user_id" class="User"  update="false" lazy="proxy"/>
+        <many-to-one name="group" column="group_id" class="Group"  update="false" lazy="proxy"/>
+        <property name="sequenceNo" column="sequence_no" type="int"/>
+
+    </class>
+</hibernate-mapping>

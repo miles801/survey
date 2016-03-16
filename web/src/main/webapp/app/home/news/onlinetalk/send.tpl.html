@@ -1,0 +1,169 @@
+<style>
+    .modal .modal-body .row {
+        margin: 0 auto 5px;
+    }
+
+    .modal .add-on {
+        position: relative;
+        height: 0;
+        width: 0;
+    }
+</style>
+
+<div class="modal" tabindex="-1" role="dialog" backdrop="static">
+    <div class="modal-dialog" backdrop="static" style="width: 800px;">
+        <div class="modal-content" backdrop="static">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">发送消息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="block-content">
+
+                    <div class="content-wrap">
+                        <form name="form" class="form-horizontal" role="form">
+                            <div style="display: none;">
+                                <input type="hidden" ng-model="page.type" ng-init="page.type='${pageType}'"/>
+                                <input type="hidden" ng-model="menu.id" ng-init="menu.id=('${id}') || null"/>
+                            </div>
+                            <div class="row" >
+                                <div class=" col-1-half">
+                                    <label></label>
+                                </div>
+                                <span class="col-1-half" style="margin-right: 20px" ng-show="!(communicate.isBusiType || communicate.isOrg|| communicate.isPosition|| communicate.isOrgPos|| communicate.isEmp)"><input type="checkbox" id="All" ng-model="communicate.All">&nbsp;发送给所有人</span>
+                                <div class="col-6-half" ng-show="!communicate.All" >
+                                    <label style="padding-right: 10px" ><input type="checkbox"  ng-model="communicate.isBusiType" ng-value="true">&nbsp;系统类型</label>
+                                    <label style="padding-right: 10px" ><input type="checkbox"  ng-model="communicate.isOrg" ng-value="true">&nbsp;组织机构</label>
+                                    <label style="padding-right: 10px" ><input type="checkbox"  ng-model="communicate.isPosition" ng-value="true">&nbsp;岗位</label>
+                                    <label style="padding-right: 10px" ><input type="checkbox"  ng-model="communicate.isOrgPos" ng-value="true">&nbsp;机构岗位</label>
+                                    <label style="padding-right: 10px" ><input type="checkbox"  ng-model="communicate.isEmp" ng-value="true">&nbsp;员工</label>
+                                </div>
+                            <span class="col-1-half" style="padding-left: 10px">
+									<label style="cursor: pointer;margin-right: 10px;">
+                                        <input type="checkbox" name="authorization" id="authorization">
+                                        需要回复
+                                    </label>
+                            </span>
+                            </div>
+                            <div class="row" ng-if="communicate.isBusiType" >
+                                <div class="form-label col-1-half">
+                                    <label>系统类型:</label>
+                                </div>
+                                <input class="col-6-half" validate validate-required type="text" ng-model="communicate.userName" ng-click="busi()"/>
+                            <span class="add-on" style="position: fixed;">
+                                <i class="icons circle_fork icon" ng-click="beans.organization=null" title="清除"></i>
+                            </span>
+                            </div>
+                            <div class="row" ng-if="communicate.isOrg" >
+                                <div class="form-label col-1-half">
+                                    <label>组织机构:</label>
+                                </div>
+                                <input class="col-6-half"   validate validate-required type="text"
+                                       ng-model="communicate.userName" ng-click="Group()"/>
+                            <span class="add-on" style="position: fixed;">
+                                <i class="icons circle_fork icon" ng-click="beans.organization=null" title="清除"></i>
+                            </span>
+                            </div>
+                            <div class="row" ng-if="communicate.isPosition" >
+                                <div class="form-label col-1-half">
+                                    <label>岗位:</label>
+                                </div>
+                                <input class="col-6-half"  validate validate-required
+                                       type="text" ng-model="communicate.userName" ng-click="pos()"/>
+                            <span class="add-on" style="position: fixed;">
+                                <i class="icons circle_fork icon" ng-click="beans.organization=null" title="清除"></i>
+                            </span>
+                            </div>
+                            <div class="row" ng-if="communicate.isOrgPos" >
+                                <div class="form-label col-1-half">
+                                    <label>机构岗位:</label>
+                                </div>
+                                <input class="col-6-half"type="text"  validate validate-required ng-model="communicate.userName" ng-click="orgPos()"/>
+                            <span class="add-on" style="position: fixed;">
+                                <i class="icons circle_fork icon" ng-click="beans.organization=null" title="清除"></i>
+                            </span>
+                            </div>
+                            <div class="row" ng-if="communicate.isEmp">
+                                <div class="form-label col-1-half">
+                                    <label>员工:</label>
+                                </div>
+                                <input class="col-6-half"  validate validate-required ng-model="communicate.userGroupName" ng-change="update"
+                                       ng-click="emplo()"/>
+                             <span class="add-on" style="position: fixed;">
+                                <i class="icons circle_fork icon" ng-click="beans.organization=null" title="清除"></i>
+                            </span>
+                            </div>
+                            <!--<div class="row" ng-if="onlineTalk.flag">
+                                <div class="form-label col-1-half">
+                                    <label>接收人:</label>
+                                </div>
+                                <div class="col-6-half" style="padding-right: 5px;">
+                                    <span style="text-align: center;line-height: 25px;height: 25px;"
+                                          ng-bind-template="{{onlineTalk.username}}"></span>
+                                </div>
+
+                                <span class="col-2-half">
+									<label style="cursor: pointer;margin-right: 10px;">
+                                        <input type="checkbox" name="authorization" id="authorization"
+                                               ng-model="onlineTalk.needReply">
+                                        需要回复
+                                    </label>
+                                </span>
+                            </div>
+                            <div class="row" ng-if="!onlineTalk.flag">
+                                <div class="form-label col-1-half">
+                                    <label>接收组:</label>
+                                </div>
+                                <input class="col-6-half" type="text" ng-show="onlineTalk.type==1"
+                                       ng-click="Group();" ng-model="onlineTalk.userGroupName"/>
+                                <span class="add-on">
+                                    <i class="glyphicons user icon" ng-click="onlineTalk.userGroupName=null"></i>
+                                </span>
+                            </div>-->
+                            <div class="row">
+                                <div class="form-label col-1-half">
+                                    <label>内容:</label>
+                                </div>
+                                <div class="col-10">
+                                    <script id="container1" ng-bind-template="{{onlineTalk.content}}" ng-cloak
+                                            type="text/plain"></script>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-label col-1-half">
+                                    <label>附件:</label>
+                                </div>
+
+                                <div class="col-10-half">
+                                    <div eccrm-upload="uploadSendOptions"></div>
+                                </div>
+                            </div>
+                            <!--<div class="row">
+                                <div class="form-label col-1-half">
+                                    <label>发送人:</label>
+                                </div>
+                                <span class="col-3-half" ng-bind-template="{{onlineTalk.senderUser.username}}"></span>
+
+                                <div class="form-label col-1-half">
+                                    <label>发送时间:</label>
+                                </div>
+                                <span class="col-3-half"
+                                      ng-bind-template="{{onlineTalk.senderDatetime | date:'yyyy-MM-dd HH:mm:ss'}}"></span>
+                            </div>-->
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-primary" ng-click="save()" ng-disabled="!form.$valid">
+                    发送
+                </button>
+                <button type="button" class="btn btn-default" ng-click="destroy()">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

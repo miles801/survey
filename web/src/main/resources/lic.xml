@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<licence>
+    <description>
+        <![CDATA[
+            该Licence由开发商提供，不得更改任何信息，否则可能导致Licence验证失败!
+        ]]>
+    </description>
+    <name>上海优创融联计算机科技有限公司</name>
+
+    <version>1.1</version>
+    <!-- 服务器的MAC地址-->
+    <macAddress>
+        <!-- michael -->
+        <ip>84-A6-C8-19-7F-30</ip>
+        <ip>10-60-4B-00-2A-A4</ip>
+
+        <!-- huiqm -->
+        <ip>60-02-B4-AC-98-26</ip>
+        <ip>00-90-F5-F2-D3-FE</ip>
+
+        <!-- liub -->
+        <ip>D0-DF-9A-39-D5-D0</ip>
+
+        <!-- huangb -->
+        <ip>34-E6-AD-42-90-8C</ip>
+
+        <!-- xuc -->
+        <ip>34-E6-AD-D1-C8-42</ip>
+
+        <!-- denghj -->
+        <ip>34-E6-AD-5F-1E-64</ip>
+
+        <!-- husj -->
+        <ip>E4-F8-9C-B4-73-7D</ip>
+
+        <!-- 赵明 -->
+        <ip>1A-EE-65-5D-5E-20</ip>
+        <ip>B8-EE-65-5D-5E-20</ip>
+        <ip>C4-34-6B-4A-66-F9</ip>
+        <ip>B8-EE-65-5D-AC-40</ip>
+
+
+    </macAddress>
+
+    <!-- 允许登录的最大用户数 -->
+    <maxUser>20</maxUser>
+
+    <!-- 开始使用时间-->
+    <startDate>20151201</startDate>
+
+    <!-- 截止使用时间-->
+    <endDate>20151231</endDate>
+
+    <!-- 密钥 -->
+    <key>
+        <![CDATA[
+            87664-84667-10AC1-AD23D-07ABF-8787F
+        ]]>
+    </key>
+</licence>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+			http://www.springframework.org/schema/tx
+			http://www.springframework.org/schema/tx/spring-tx-3.2.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+       default-lazy-init="true">
+    <!-- 数据源配置,使用应用内的DBCP数据库连接池 -->
+    <context:property-placeholder location="classpath*:config.properties"/>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${db.driverClass}"/>
+        <property name="jdbcUrl" value="${db.jdbcUrl}"/>
+        <property name="user" value="${db.user}"/>
+        <property name="password" value="${db.password}"/>
+
+        <!-- 指定连接数据库连接池的最大连接数 -->
+        <property name="maxPoolSize" value="${db.maxPoolSize}"/>
+        <!-- 指定连接数据库连接池的最小连接数 -->
+        <property name="minPoolSize" value="${db.minPoolSize}"/>
+        <!-- 指定连接数据库连接池的初始化连接数 -->
+        <property name="initialPoolSize" value="${db.initialPoolSize}"/>
+        <!-- 最大空闲时间,60秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 -->
+        <property name="maxIdleTime" value="${db.maxIdleTime}"/>
+        <!-- 每60秒检查所有连接池中的空闲连接。Default: 0 -->
+        <property name="idleConnectionTestPeriod" value="${db.idleConnectionTestPeriod}"/>
+    </bean>
+
+    <!-- Hibernate配置 -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mappingLocations">
+            <list>
+                <value>classpath*:mapping/*.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${db.hibernate.dialect}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${db.hibernate.hbm2ddl}</prop>
+                <prop key="hibernate.jdbc.fetch_size">${db.hibernate.fetchSize}</prop>
+                <prop key="hibernate.jdbc.batch_size">${db.hibernate.batchSize}</prop>
+                <prop key="hibernate.show_sql">${db.hibernate.showSql}</prop>
+                <prop key="hibernate.format_sql">${db.hibernate.formatSql}</prop>
+                <prop key="hibernate.default_schema">#{${db.hibernate.schema}?:''}</prop>
+            </props>
+        </property>
+        <property name="entityInterceptor" ref="hibernateInterceptor"/>
+        <!-- 全局过滤器：查询数据时进行过滤 -->
+        <property name="filterDefinitions">
+            <list>
+                <bean class="eccrm.base.TenementFilter"/>
+                <bean class="eccrm.base.PersonalFilter"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- Hibernate拦截器 -->
+    <bean id="hibernateInterceptor" class="eccrm.base.HibernateInterceptor"/>
+
+    <!-- redis -->
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxIdle" value="${redis.maxIdle}"/>
+        <property name="maxTotal" value="${redis.maxActive}"/>
+        <property name="maxWaitMillis" value="${redis.timeout}"/>
+        <property name="testOnBorrow" value="${redis.testOnBorrow}"/>
+    </bean>
+
+    <bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool">
+        <constructor-arg index="0" ref="poolConfig" />
+        <constructor-arg index="1">
+            <list>
+                <bean class="redis.clients.jedis.JedisShardInfo">
+                    <constructor-arg name="host" value="${redis.host}" />
+                    <constructor-arg name="port" value="${redis.port}" />
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- 定义系统启动后要执行的操作 -->
+    <bean id="springLoadListenerContainer" class="com.ycrl.core.spring.SpringLoadListenerContainer"
+          factory-method="getInstance">
+        <property name="listeners">
+            <list>
+                <!-- 初始化com.ycrl.core.SystemContainer-->
+                <bean class="com.ycrl.core.InitSystemContainer"/>
+                <!-- 初始化加载需要授权的数据资源 -->
+                <bean class="eccrm.base.menu.service.impl.InitLoadDataResource"/>
+                <!-- 初始化定时清理附件垃圾数据 -->
+                <bean class="eccrm.base.attachment.service.ClearTempService"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 事务管理器配置,单数据源事务 -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <bean id="domainOperateAop" class="com.ycrl.aop.DomainOperateAop"/>
+    <!--
+      | 基本事务定义,使用transactionManager作事务管理
+      | 默认get*方法的事务为readonly,其余方法按默认设置
+      | 默认的设置请参考Spring文档事务一章
+      -->
+    <!-- 事务AOP -->
+    <aop:config>
+        <aop:pointcut id="txPointcut" expression="execution(* *..service..*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+    </aop:config>
+
+
+    <aop:config>
+        <aop:pointcut id="entitySaveAop"
+                      expression="execution(* *..service..save(..))"/>
+        <aop:pointcut id="entityUpdateAop" expression="execution(* *..service..update(..))"/>
+        <aop:aspect ref="domainOperateAop">
+            <aop:before method="beforeSave" pointcut-ref="entitySaveAop"/>
+            <aop:before method="beforeUpdate" pointcut-ref="entityUpdateAop"/>
+        </aop:aspect>
+    </aop:config>
+
+    <!--  事务 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true" propagation="REQUIRED"/>
+            <tx:method name="find*" read-only="true" propagation="REQUIRED"/>
+            <tx:method name="search*" read-only="true" propagation="REQUIRED"/>
+            <tx:method name="query*" read-only="true" propagation="REQUIRED"/>
+            <tx:method name="has*" read-only="true" propagation="REQUIRED"/>
+            <tx:method name="check*" read-only="true" propagation="REQUIRED"/>
+            <tx:method name="*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+
+
+</beans>

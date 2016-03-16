@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.im.domain" auto-import="false">
+    <class name="NewsRealReceiver" table="IM_NEWS_REAL_RECEIVER">
+        <id name="id" column="id" length="40">
+            <generator class="uuid"/>
+        </id>
+        <property name="newsId" column="NEWS_ID" type="string" length="40" not-null="true"/>
+        <property name="newsTitle" column="NEWS_TITLE" type="string" length="200"/>
+        <property name="category" column="NEWS_CATEGORY" type="string" length="40"/>
+        <property name="publishTime" column="PUBLISH_TIME" type="timestamp"/>
+        <property name="receiverId" column="RECEIVER_ID" type="string" length="40" not-null="true"/>
+        <property name="receiverName" column="RECEIVER_NAME" type="string" length="100"/>
+        <property name="hasRead" column="HAS_READ" type="boolean"/>
+        <property name="readTime" column="READ_TIME" type="timestamp"/>
+        <property name="hasReply" column="HAS_REPLY" type="boolean"/>
+        <property name="replyTime" column="REPLY_TIME" type="timestamp"/>
+        <property name="hasStar" column="HAS_STAR" type="boolean"/>
+        <property name="starTime" column="STAR_TIME" type="timestamp"/>
+    </class>
+</hibernate-mapping>

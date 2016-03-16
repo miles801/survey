@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.user.domain">
+    <class name="User" table="SYS_USER">
+        <id name="id" column="id" length="40">
+            <generator class="uuid"/>
+        </id>
+
+        <property name="username" type="string" length="40"/>
+        <property name="password" type="string" length="128" update="false"/>
+        <property name="code" type="string" length="40"/>
+        <property name="type" type="string" length="40"/>
+        <property name="startDate" column="start_date" type="timestamp"/>
+        <property name="email" type="java.lang.String" length="200"/>
+        <property name="endDate" column="end_date" type="timestamp"/>
+
+        <property name="employeeId" column="employee_id" type="string" length="40"/>
+        <property name="employeeName" column="employee_name" type="string" length="40"/>
+        <property name="employeeNo" column="employee_no" type="string" length="40"/>
+        <property name="gender" column="gender" type="string" length="40"/>
+        <property name="duty" column="duty" type="string" length="40"/>
+        <property name="position" column="position" type="string" length="40"/>
+        <property name="deptId" column="dept_id" type="string" length="40"/>
+        <property name="deptName" column="dept_name" type="string" length="100"/>
+        <property name="mobilePhone" column="mobile_phone" type="string" length="20"/>
+        <property name="officePhone" column="office_phone" type="string" length="20"/>
+
+        <property name="description" type="string" length="2000"/>
+        <property name="status" type="string" length="40"/>
+        <property name="tenementId" column="tenement_id" update="false" not-null="true" type="string" length="40"/>
+        <property name="createdDatetime" column="created_datetime" type="timestamp" update="false"/>
+        <property name="modifiedDatetime" column="modified_datetime" type="timestamp"/>
+        <property name="passwordDeadline" type="timestamp" column="password_deadline"/>
+
+        <property name="modifierId" column="modifier_id" length="40"/>
+        <property name="modifierName" column="modifier_name" length="40"/>
+        <property name="creatorId" column="creator_id" length="40" update="false"/>
+        <property name="creatorName" column="creator_name" length="40" update="false"/>
+
+        <!-- 过滤的是用户所属员工id为指定值、指定部门下、指定岗位下、指定系统下-->
+        <filter name="QUERY_USER" condition="employee_id in(:userIds)"/>
+    </class>
+    <filter-def name="QUERY_USER">
+        <filter-param name="userIds" type="string"/>
+    </filter-def>
+</hibernate-mapping>

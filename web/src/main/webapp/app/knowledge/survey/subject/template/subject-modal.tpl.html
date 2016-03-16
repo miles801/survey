@@ -1,0 +1,114 @@
+<div class="modal" role="dialog" style="z-index: 9999" >
+    <div class="modal-dialog" style="width: 800px;" >
+        <div class="modal-content" >
+            <div class="modal-header" static="" >
+                <button type="button" class="close" ng-click="$hide()" >×</button >
+                <h4 class="modal-title" ng-if="pageType=='add'" >新增题库</h4 >
+                <h4 class="modal-title" ng-if="pageType=='modify'" >更新题库</h4 >
+                <h4 class="modal-title" ng-if="pageType=='view'" >查看题库</h4 >
+            </div >
+            <div class="modal-body" >
+                <div class="block-content" >
+                    <div class="content-wrap" >
+                        <form name="form" class="form-horizontal" role="form" >
+                            <div class="row" >
+                                <div class="form-label col-1-half" >
+                                    <label >题目:</label >
+                                </div >
+                                <div class="col-10-half" >
+                                    <textarea id="container" class="col-12" rows="5" ></textarea >
+                                </div >
+                            </div >
+                            <div class="row" >
+                                <div class="form-label col-1-half" >
+                                    <label >说明:</label >
+                                </div >
+                                <div class="col-10-half" >
+                                    <textarea id="container2" class="col-12" rows="5" ></textarea >
+                                </div >
+                            </div >
+                            <div class="row" >
+                                <div class="form-label col-1-half" >
+                                    <label >分类:</label >
+                                </div >
+                                <div class="col-4" >
+                                    <input type="text" validate validate-required class="col-12" ztree-single="ztreeOptions"
+                                           ng-model="beans.categoryName" readonly />
+                                    <span class="add-on" >
+                                        <i class="icons circle_fork icon" ng-click="clearCategory();"
+                                           title="清除" ></i >
+                                    </span >
+                                </div >
+
+                                <div class="form-label col-2-half" >
+                                    <label >题型:</label >
+                                </div >
+                                <select ng-model="beans.subjectType" class="col-4"
+                                        ng-options="foo.value as foo.name for foo in types" > </select >
+                            </div >
+
+                            <div class="row" >
+                                <div class="form-label col-1-half" >
+                                    <label >状态:</label >
+                                </div >
+                                <select ng-model="beans.status" class="col-4"
+                                        ng-options="foo.value as foo.name for foo in status" > </select >
+                            </div >
+
+                            <!--  单选题的div  -->
+                            <div class="select" ng-if="beans.subjectType == '1' || beans.subjectType=='2'" >
+                                <div class="row" >
+                                    <div class="form-label col-1-half" >
+                                        <label ></label >
+                                    </div >
+                                    <span class="col-10-half" >
+                                        <label style="cursor: pointer;margin-right: 10px;" >
+                                            <input type="checkbox" style="height: 12px;" ng-model="beans.containOther"
+                                                   ng-value="true"
+                                                   class="ng-valid ng-dirty" value="true" >包含其他
+                                        </label >
+                                        <label style="cursor: pointer;margin-right: 10px;" >
+                                            <input type="checkbox" style="height: 12px;" ng-model="beans.isRequired"
+                                                   ng-value="true"
+                                                   class="ng-valid ng-dirty" value="true" >必填
+                                        </label >
+                                        <label style="cursor: pointer;margin-right: 10px;" >
+                                            <input type="checkbox" style="height: 12px;" ng-model="beans.showList"
+                                                   ng-value="true"
+                                                   class="ng-valid ng-dirty" value="true" >横排
+                                        </label >
+                                    </span >
+                                </div >
+                                <div class="row" bindonce ng-repeat="foo in beans.items" >
+                                    <div class="form-label col-1-half" >
+                                        <label ng-bind-template="{{'选项 '+($index+1)+':'}}" ></label >
+                                    </div >
+                                    <input type="text" class="col-4" ng-model="foo.name" />
+                                    <span class="icons plus cp" ng-if="pageType!='view' && $index===0" ng-click="beans.items.push({});" ></span >
+                                    <span class="icons minus cp" ng-if="pageType!='view' && $index>0" ng-click="removeItems($index)" ></span >
+                                </div >
+                            </div >
+
+                        </form >
+                    </div >
+                </div >
+
+            </div >
+            <div class="modal-footer" ng-cloak >
+                <button type="button" class="btn btn-default btn-primary" ng-if="pageType=='add'" ng-click="save();"
+                        ng-disabled="form.$invalid" >保存
+                </button >
+                <button type="button" class="btn btn-default btn-primary" ng-if="pageType=='add'" ng-click="save(true);"
+                        ng-disabled="form.$invalid" >保存并新建
+                </button >
+                <button type="button" class="btn btn-default btn-primary" ng-if="pageType=='modify'" ng-click="update();"
+                        ng-disabled="form.$invalid" >更新
+                </button >
+                <button type="button" class="btn btn-default" ng-click="$hide()" >关闭</button >
+            </div >
+
+        </div >
+    </div >
+</div >
+<div />
+

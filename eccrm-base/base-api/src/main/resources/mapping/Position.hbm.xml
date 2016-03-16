@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.position.domain">
+    <class name="Position" table="SYS_ROLE">
+        <id name="id" column="id" length="40">
+            <generator class="uuid.hex"/>
+        </id>
+        <property name="pinyin" type="string" length="100"/>
+        <property name="shortName" column="short_name" type="string" length="100"/>
+        <property name="jianPin" type="string" length="100"/>
+        <property name="name" type="string" length="100" not-null="true"/>
+        <property name="code" type="string" length="40"/>
+        <property name="startDate" type="timestamp" column="start_date"/>
+        <property name="endDate" type="string" column="end_date"/>
+        <many-to-one name="classify" class="eccrm.base.position.domain.Classify" column="classify_id"
+                     foreign-key="fk_Position_classify"/>
+        <property name="positionType" column="classify_id" type="string" insert="false" update="false"/>
+        <many-to-one name="organization" class="eccrm.base.org.domain.Organization" column="organization_id"
+                     foreign-key="fk_Position_organization"/>
+        <property name="status" type="string" length="40"/>
+        <property name="roleType" column="role_type" type="string" length="40"/>
+        <property name="busiTypeNo" column="role_type_no" type="string" length="40"/>
+        <property name="empCount" column="emp_count" type="integer" length="4"/>
+        <property name="minEmpCount" column="min_emp_count" type="integer" length="4"/>
+        <property name="isAlert" column="is_alert" type="boolean" length="40"/>
+
+        <property name="createdDatetime" column="created_datetime" type="timestamp" update="false"/>
+        <property name="modifiedDatetime" column="modified_datetime" type="timestamp"/>
+        <property name="description" type="string" length="1000"/>
+        <property name="modifierId" column="modifier_id" length="40"/>
+        <property name="modifierName" column="modifier_name" length="40"/>
+        <property name="creatorId" column="creator_id" length="32" update="false"/>
+        <property name="creatorName" column="creator_name" length="40" update="false"/>
+
+    </class>
+</hibernate-mapping>

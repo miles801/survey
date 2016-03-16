@@ -1,0 +1,83 @@
+<div class="modal" role="dialog" style="z-index: 9999" >
+    <div class="modal-dialog" style="width: 800px;" >
+        <div class="modal-content" >
+            <div class="modal-header" static="" >
+                <button type="button" class="close" ng-click="$hide()" >×</button >
+                <h4 class="modal-title" >选择题目</h4 >
+            </div >
+            <div class="modal-body" >
+                <div class="row" >
+                    <div class="form-label col-1-half" >
+                        <label >题目:</label >
+                    </div >
+                    <input class="col-4" type="text" ng-model="condition.title" />
+
+                    <div class="form-label col-1-half" >
+                        <label >题型:</label >
+                    </div >
+                    <select ng-model="condition.subjectType" class="col-4"
+                            ng-options="foo.value as foo.name for foo in types" > </select >
+                </div >
+                <div class="row" >
+                    <div class="form-label col-1-half" >
+                        <label >题库分类:</label >
+                    </div >
+                    <div class="col-4" >
+                        <input type="text" class="col-12" ztree-single="ztreeOptions"
+                               ng-model="categoryName" readonly />
+                        <span class="add-on" >
+                            <i class="icons circle_fork icon" ng-click="clearCategory();"
+                               title="清除" ></i >
+                        </span >
+                    </div >
+                    <div class="col-1" >&nbsp;</div >
+                    <div class="col" >
+                        <button class="btn btn-blue" ng-click="query();" >查询</button >
+                    </div >
+                </div >
+                <div class="row" >
+                    <div class="table-responsive panel panel-table first-min" style="border: none;" >
+                        <table class="table table-striped table-hover " >
+                            <thead class="table-header" >
+                            <tr >
+                                <td style="border-left:1px solid #b4d0e8 " >
+                                    <div select-all-checkbox checkboxes="beans.data" selected-items="items"
+                                         anyone-selected="anyone" ></div >
+                                </td >
+                                <td >题目</td >
+                                <td style="width: 20px;" >题型</td >
+                                <td style="width: 20px;" >分类</td >
+                            </tr >
+                            </thead >
+                            <tbody class="table-body" >
+                            <tr ng-show="!beans.total" >
+                                <td colspan="4" class="text-center" >没有符合条件的记录！</td >
+                            </tr >
+                            <tr bindonce ng-repeat="foo in beans.data" >
+                                <td >
+                                    <input type="checkbox" ng-model="foo.isSelected" ng-disabled="{{foo.status==1}}" />
+                                </td >
+                                <td title="点击查询明细！" style="cursor: pointer;" >
+                                    <a ng-click="view(foo.id)" bo-text="foo.title | removeHTMLTag | limitTo:40" ></a >
+                                </td >
+                                <td bo-text="foo.subjectTypeName" ></td >
+                                <td bo-text="foo.categoryName" ></td >
+                            </tr >
+                            </tbody >
+                        </table >
+                    </div >
+                    <div eccrm-page="pager" class="list-pagination" ></div >
+                </div >
+            </div >
+            <div class="modal-footer" ng-cloak >
+                <button type="button" class="btn btn-default btn-primary" ng-click="confirm();"
+                        ng-disabled="!anyone" >确定
+                </button >
+                <button type="button" class="btn btn-default" ng-click="$hide()" >关闭</button >
+            </div >
+
+        </div >
+    </div >
+</div >
+<div />
+

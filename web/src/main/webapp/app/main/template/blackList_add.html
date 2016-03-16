@@ -1,0 +1,209 @@
+
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:650px;">
+            <div class="modal-header" static="">
+                <button type="button" class="close" ng-click="$hide()">×</button>
+                <h4 class="modal-title" >黑名单</h4>
+            </div>
+            <div class="modal-body">
+                <div class="block-content">
+                    <div class="content-wrap">
+                    <form name="form" class="form-horizontal" role="form">
+                    <div style="display: none;">
+                        <input type="hidden" ng-model="page.type" ng-init="page.type=''"/>
+                        <input type="hidden" ng-model="menu.id" ng-init="menu.id=('') || null"/>
+                    </div>
+                    <div class="row">
+                        <div class="form-label col-2">
+                            <label>申请原因:</label>
+                        </div>
+                        <input class="col-3-half" type="text" ng-model="blacklistapply.ndd"/>
+                        <span class="add-on">
+                            <i class="glyphicons user icon"></i>
+                        </span>
+                        <div class="form-label col-2">
+                            <label>黑名单类型:</label>
+                        </div>
+                        <select ng-model="beans.type" class="col-3-half" disabled="true"
+                                ng-options="foo.id as foo.name for foo in blackList"> </select>
+                    </div>
+                    <div class="row" ng-show="beans.type==1">
+                        <div class="form-label col-2">
+                            <label>号码:</label>
+                        </div>
+                        <input type="text" class="col-3-half">
+                    </div>
+                    <div class="row" ng-show="beans.type==2">
+                        <div class="form-label col-2">
+                            <label>客户:</label>
+                        </div>
+                        <input type="text" class="col-3-half">
+                    </div>
+                    <div class="row">
+                        <div class="form-label col-2">
+                            <label>时间限制:</label>
+                        </div>
+                        <div class="col-7-half">
+                            <label style="cursor: pointer;margin-right: 10px;">
+                                <input name="sendType" type="radio" ng-model="beans.sendType" ng-value="false"
+                                       checked="checked"/> 所有时段
+                            </label>
+                            <label style="cursor: pointer;margin-right: 10px;">
+                                <input name="sendType" type="radio" ng-model="beans.sendType" ng-value="true"/> 指定时间范围内
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row" ng-show="beans.sendType">
+                        <div class="form-label col-2">
+
+                        </div>
+                        <input style="margin-right: 5px"  type="text" class="col-2-half ng-pristine ng-valid"
+                               ng-model="condition.startDateStart"
+                               bs-datepicker readonly data-max-date="{{condition.startDateEnd}}"/>
+                            <span class="add-on col">
+                                <i class="glyphicons calendar icon" title="清除时间"
+                                   ng-click="condition.startDateStart=undefined;"></i>
+                            </span>
+                        <div class="col-half" style="padding-right: 5px">
+                            <select class="col-12">
+                                <option value="">1</option>
+                                <option value="1">27</option>
+                            </select>
+                        </div>
+                        <div class="col-half" style="padding-right: 5px">
+                            <select class="col-12">
+                                <option value="">15</option>
+                                <option value="1">2</option>
+                            </select>
+                        </div>
+                        <select class="col-half">
+                            <option value="">13</option>
+                            <option value="1">2</option>
+                        </select> <span class="col-half" style="text-align: center">-</span>
+                        <input style="margin-right: 5px" class="col-2-half ng-pristine ng-valid" type="text" ng-model="condition.startDateEnd"
+                               bs-datepicker readonly data-min-date="{{condition.startDateStart}}"/>
+                            <span class="add-on col">
+                                <i class="glyphicons calendar icon" title="清除时间"
+                                   ng-click="condition.startDateEnd=undefined;"></i>
+                            </span>
+                        <div class="col-half" style="padding-right: 5px">
+                            <select class="col-12">
+                                <option value="">1</option>
+                                <option value="1">2</option>
+                            </select>
+                        </div>
+                        <div class="col-half" style="padding-right: 5px">
+                            <select class="col-12">
+                                <option value="">6</option>
+                                <option value="1">9</option>
+                            </select>
+                        </div>
+                        <select class="col-half">
+                            <option value="">1</option>
+                            <option value="1">8</option>
+                        </select>
+
+                        <div>
+                            <span class="col middel">
+                                <button type="button" class="btn btn-sm btn-green btn-min"
+                                        ng-click="" style="width: 4%">
+                                    <span class="glyphicons plus" style="margin-left: -5px"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-show="beans.sendType">
+                        <div class="form-label col-2">
+                            <label></label>
+                        </div>
+                        <input style="margin-right: 5px" type="text" class="col-2-half ng-pristine ng-valid" ng-model="condition.endDateStart"
+                               bs-datepicker readonly data-max-date="{{condition.endDateEnd}}"/>
+                            <span class="add-on col">
+                                <i class="glyphicons calendar icon" title="清除时间"
+                                   ng-click="condition.endDateStart=undefined;"></i>
+                            </span>
+                        <div class="col-half" style="padding-right: 5px">
+                            <select class="col-12">
+                                <option value="">3</option>
+                                <option value="1">2</option>
+                            </select>
+                        </div>
+                        <div class="col-half" style="padding-right: 5px">
+                            <select class="col-12">
+                                <option value="">7</option>
+                                <option value="1">9</option>
+                            </select>
+                        </div>
+                        <select class="col-half">
+                            <option value="">6</option>
+                            <option value="1">2</option>
+                        </select> <span class="col-half" style="text-align: center">-</span>
+                        <input style="margin-right: 5px" class="col-2-half ng-pristine ng-valid" type="text" ng-model="condition.endDateEnd"
+                               bs-datepicker readonly data-min-date="{{condition.endDateStart}}"/>
+                            <span class="add-on col">
+                                <i class="glyphicons calendar icon" title="清除时间"
+                                   ng-click="condition.endDateEnd=undefined;"></i>
+                            </span>
+                        <div class="col-half" style="padding-right: 5px">
+                            <select class="col-12">
+                                <option value="">14</option>
+                                <option value="1">2</option>
+                            </select>
+                        </div>
+                        <div class="col-half" style="padding-right: 5px">
+                            <select class="col-12">
+                                <option value="">12</option>
+                                <option value="1">2</option>
+                            </select>
+                        </div>
+                        <select class="col-half">
+                            <option value="">11</option>
+                            <option value="1">42</option>
+                        </select>
+
+                        <div>
+                            <span class="col middel">
+                                <span class="add-on">
+                                    <li class="glyphicons remove"></li>
+                                 </span>
+						    </span>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="form-label col-2">
+                            <label>备注:</label>
+                        </div>
+                        <textarea class="col-9-half" rows="3" ng-model="blacklistapply.persomn"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="form-label col-2">
+                            <label>采集人:</label>
+                        </div>
+                        <span ng-bind-template="{{ beans.creatorName }}" class="col-3-half"></span>
+
+                        <div class="form-label col-2">
+                            <label>采集时间:</label>
+                        </div>
+                        <span ng-bind-template="{{ beans.createdDatetime | eccrmDatetime}}" class="col-3-half"></span>
+                    </div>
+
+                    </form>
+                    </div>
+                    <!--<div eccrm-route="routeOptions"></div>-->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-primary" ng-click="close()">
+                    保存
+                </button>
+                <button type="button" class="btn btn-default" ng-click="close()">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div/>
+

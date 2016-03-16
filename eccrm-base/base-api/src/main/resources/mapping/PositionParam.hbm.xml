@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.position.domain">
+    <class name="PositionParam" table="SYS_ROLE_PARAM">
+        <id name="id" column="id" length="40">
+            <generator class="uuid.hex"/>
+        </id>
+        <property name="busiType" column="busi_type" type="string" length="40"></property>
+        <property name="orgType" column="org_type_id" type="string" length="40"></property>
+        <many-to-one name="position" class="eccrm.base.position.domain.Position" column="position_id"
+                     foreign-key="fk_PositionParam_position"></many-to-one>
+        <property name="status" type="string" length="40"></property>
+        <!--  代码生成器生成字段 -->
+        <property name="createdDatetime" column="created_datetime" type="timestamp" update="false"/>
+        <property name="description" type="string" length="1000"/>
+        <property name="creatorId" column="creator_id" length="40"  update="false"/>
+        <property name="creatorName" column="creator_name" length="40"  update="false"/>
+    </class>
+</hibernate-mapping>

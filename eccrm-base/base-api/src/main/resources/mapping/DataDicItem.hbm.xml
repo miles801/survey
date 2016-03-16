@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.datadic.domain">
+    <class name="eccrm.base.datadic.domain.DataDicItem" table="SYS_DIC_ITEM">
+        <id name="id" column="ID" length="40">
+            <generator class="uuid"/>
+        </id>
+        <property name="label" column="LABEL" type="string" length="40" not-null="true"/>
+        <property name="fieldName" column="FIELD_NAME" type="string" length="100" not-null="true"/>
+        <property name="conditionType" column="CONDITION_TYPE" type="string" length="40" not-null="true"/>
+        <property name="value" column="VALUE" type="string" length="200"/>
+        <property name="valueType" column="VALUE_TYPE" type="string" length="40"/>
+        <property name="valueSource" column="VALUE_SOURCE" type="string" length="40" not-null="true"/>
+        <property name="dicId" column="DIC_ID" type="string" length="40" not-null="true"/>
+        <property name="dicCode" column="DIC_CODE" type="string" length="40" not-null="true"/>
+        <property name="dicName" column="DIC_NAME" type="string" length="100"/>
+
+
+        <!-- 公共属性 -->
+        <property name="status" column="STATUS" type="string" length="40"/>
+        <property name="description" column="DESCRIPTION" type="string" length="1000"/>
+        <property name="creatorId" column="CREATOR_ID" type="string" length="40" update="false"/>
+        <property name="creatorName" column="CREATOR_NAME" type="string" length="40"/>
+        <property name="createdDatetime" column="CREATED_DATETIME" type="timestamp" update="false"/>
+        <property name="modifierId" column="MODIFIER_ID" type="string" length="40"/>
+        <property name="modifierName" column="MODIFIER_NAME" type="string" length="40"/>
+        <property name="modifiedDatetime" column="MODIFIED_DATETIME" type="timestamp"/>
+        <property name="tenementId" column="TENEMENT_ID" type="string" length="40" update="false"/>
+    </class>
+</hibernate-mapping>

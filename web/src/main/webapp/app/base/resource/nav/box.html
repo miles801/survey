@@ -1,0 +1,13 @@
+<div ng-class="{col-4:cols===1,col-8:cols===2,col-12:cols===3,row-3:rows==1,row-6:rows==2,row-9:rows==3}" >
+
+</div >
+<div class="panel panel-tab" style="height: 100%;margin: 0;" >
+    <ul class="nav nav-tabs" >
+        <li ng-class="{active:active===$index}" ng-repeat="foo in data" ng-click="$parent.active=$index;" >
+            <a ng-href="{{foo.url}}" target="tab_iframe" ></a >
+        </li >
+    </ul >
+    <div class="tab-content" style="height: 100%;margin-top:-30px;padding-top: 30px;" >
+        <iframe id="tab_iframe" src="" frameborder="0" style="border: 0;height: 100%;width: 100%;margin: 0;padding: 0;" ></iframe >
+    </div >
+</div >

@@ -1,0 +1,57 @@
+<div class="modal" tabindex="-1" role="dialog" >
+    <div class="modal-dialog" >
+        <div class="modal-content" >
+            <div class="modal-header" >
+                <button type="button" class="close" ng-click="$hide()" >&times;</button >
+                <h4 class="modal-title" >
+                    <span ng-bind-template="{{pageType=='add'?'新增':(pageType =='modify'?'编辑':'查看') }}" ></span >文档</h4 >
+            </div >
+            <div class="modal-body" >
+                <form role="form" name="form" >
+                    <div class="row" >
+                        <div class="form-label col-1-half" >
+                            <label >名称:</label >
+                        </div >
+                        <input type="text" class="col-4" ng-model="beans.name" validate validate-required autofocus />
+
+                        <div class="form-label col-2" >
+                            <label >类型:</label >
+                        </div >
+                        <select class="col-4" ng-model="beans.docType" ng-options="foo.code as foo.name for foo in docTypes" >
+                        </select >
+                    </div >
+                    <div class="row" >
+                        <div class="form-label col-1-half" >
+                            <label >简介:</label >
+                        </div >
+                        <textarea class="col-10" rows="5" ng-model="beans.description" ></textarea >
+                    </div >
+                    <div class="row" >
+                        <div class="form-label col-1-half" >
+                            <label >附件：</label >
+                        </div >
+                        <div eccrm-upload="uploadOptions" class="col-8" ></div >
+                    </div >
+                    <div class="row" >
+                        <div class="form-label col-1-half" >
+                            <label >采集人:</label >
+                        </div >
+                        <span class="col-4" ng-bind-template="{{ beans.creatorName }}" ></span >
+
+                        <div class="form-label col-2" >
+                            <label >采集时间:</label >
+                        </div >
+                        <span class="col-4" ng-bind-template="{{ beans.createdDatetime | eccrmDatetime }}" ></span >
+                    </div >
+                </form >
+            </div >
+            <div class="modal-footer" >
+                <button type="button" class="btn btn-default btn-primary"
+                        ng-if="pageType=='add' || pageType =='modify'"
+                        ng-click="ok();" ng-disabled="form.$invalid" ng-cloak >确定
+                </button >
+                <button type="button" class="btn btn-default" ng-click="$hide()" >关闭</button >
+            </div >
+        </div >
+    </div >
+</div >

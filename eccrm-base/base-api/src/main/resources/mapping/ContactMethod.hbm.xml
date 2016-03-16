@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.employee.domain">
+    <class name="ContactMethod" table="SYS_CONTACT_ADDR">
+        <id name="id" column="targetId" length="40">
+            <generator class="uuid.hex"/>
+        </id>
+
+
+        <property name="targetType" type="java.lang.String">
+            <column name="target_type" length="40">
+                <comment>目标类型</comment>
+            </column>
+        </property>
+        <property name="targetNo" type="java.lang.String">
+            <column name="target_no" length="40">
+                <comment>编号</comment>
+            </column>
+        </property>
+        <property name="supType" type="java.lang.String">
+            <column name="sup_type" length="40">
+                <comment>类型（电话，邮箱，email）</comment>
+            </column>
+        </property>
+        <property name="subType" type="java.lang.String">
+            <column name="SUB_TYPE" length="40">
+                <comment>子类型（只有移动号码，固定号码）</comment>
+            </column>
+        </property>
+        <property name="country" type="java.lang.String">
+            <column name="COUNTRY" length="32">
+                <comment>国家</comment>
+            </column>
+        </property>
+        <property name="province" type="java.lang.String">
+            <column name="PROVINCE" length="32">
+                <comment>省</comment>
+            </column>
+        </property>
+        <property name="city" type="java.lang.String">
+            <column name="CITY" length="32">
+                <comment>市</comment>
+            </column>
+        </property>
+        <property name="district" type="java.lang.String">
+            <column name="DISTRICT" length="32">
+                <comment>区</comment>
+            </column>
+        </property>
+        <property name="preAddr" type="java.lang.String">
+            <column name="PRE_ADDR" length="10">
+                <comment>区号</comment>
+            </column>
+        </property>
+        <property name="address" type="java.lang.String">
+            <column name="ADDRESS" length="200">
+                <comment>地址</comment>
+            </column>
+        </property>
+
+        <property name="aftAddr" type="java.lang.String">
+            <column name="AFT_ADDR" length="10">
+                <comment>分机号</comment>
+            </column>
+        </property>
+        <property name="zipCode" type="java.lang.Integer">
+            <column name="ZIP_CODE" precision="6" scale="0">
+                <comment>邮编</comment>
+            </column>
+        </property>
+        <property name="isDefualt" type="java.lang.Boolean">
+            <column name="IS_DEFUALT" precision="1" scale="0">
+                <comment>是否默认</comment>
+            </column>
+        </property>
+        <property name="isConfirm" type="java.lang.Boolean">
+            <column name="IS_CONFIRM" precision="1" scale="0">
+                <comment>已核实</comment>
+            </column>
+        </property>
+        <property name="isShow" type="string">
+            <column name="IS_SHOW" length="2">
+                <comment>是否显示</comment>
+            </column>
+        </property>
+        <property name="status" type="string">
+            <column name="STATUS" length="40">
+                <comment>状态</comment>
+            </column>
+        </property>
+        <!--  代码生成器生成字段 -->
+        <property name="tenementId" type="string" column="tenement_id" length="1000"/>
+        <property name="description" type="string" length="1000"/>
+        <property name="createdDatetime" column="created_datetime" type="timestamp" update="false"/>
+        <property name="creatorId" column="creator_id" length="32" not-null="true" update="false"/>
+        <property name="creatorName" column="creator_name" length="40" not-null="true" update="false"/>
+
+    </class>
+</hibernate-mapping>

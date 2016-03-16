@@ -1,0 +1,143 @@
+<style>
+    .modal .modal-body .row {
+        margin: 0 auto 5px;
+    }
+
+    .modal .add-on {
+        position: relative;
+        height: 0;
+        width: 0;
+    }
+</style>
+
+
+<div class="modal" tabindex="-1" role="dialog" backdrop="static">
+    <div class="modal-dialog" backdrop="static" style="width: 800px;">
+        <div class="modal-content" backdrop="static">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">转发信息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="block-content">
+
+                    <div class="content-wrap">
+                        <form name="form" class="form-horizontal" role="form">
+                            <div style="display: none;">
+                                <input type="hidden" ng-model="page.type" ng-init="page.type='${pageType}'"/>
+                                <input type="hidden" ng-model="menu.id" ng-init="menu.id=('${id}') || null"/>
+                            </div>
+                            <div class="row">
+                                <div class="form-label col-1-half">
+                                    <label>接收人:</label>
+                                </div>
+                                <div class="col-6-half" style="padding-right: 5px;">
+                                    <input class="col-12" ng-show="onlineTalk.type" ng-click="emplo();"
+                                           ng-model="onlineTalk.userName" type="text" style="padding: 5px;"/>
+                                    <input type="hidden" ng-model="onlineTalk.useridStr">
+
+                                    <span class="add-on">
+                                        <i class="glyphicons user icon"></i>
+                                    </span>
+                                </div>
+                                <span class="col-2-half">
+									<label style="cursor: pointer;margin-right: 10px;">
+                                        <input type="checkbox" name="authorization" id="authorization">
+                                        需要回复
+                                    </label>
+                                </span>
+                            </div>
+                            <div class="row" ng-show="type==2" id="users">
+                                <div class="form-label col-1-half">
+                                    <label></label>
+                                </div>
+                                <div class="col-10">
+                                    <div class="list-result">
+                                        <div class="block">
+                                            <div class="block-header">
+                                                <div class="header-text">
+                                                    <span class="glyphicons list"></span> <span>用户列表</span>
+                                                </div>
+                                                <div class="header-button">
+                                                    <a type="button" ng-click="confirm()" class="btn btn-green btn-min">
+                                                        <span class="glyphicons ok_2"></span> 确认 </a>
+                                                </div>
+                                            </div>
+                                            <div class="table-responsive panel panel-table">
+                                                <table class="table table-striped table-hover">
+                                                    <thead class="table-header">
+                                                    <tr>
+                                                        <td>
+                                                            <div select-all-checkbox checkboxes="users"
+                                                                 selected-items="items" anyone-selected="anyOne"></div>
+                                                        </td>
+                                                        <td>用户名</td>
+                                                        <td>姓名</td>
+                                                        <td>工号</td>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody class="table-body">
+                                                    <tr ng-show="!users || !users.length">
+                                                        <td colspan="4" style="text-align: center;">没有符合条件的记录</td>
+                                                    </tr>
+                                                    <tr ng-repeat="foo in users" ng-click="$parent.selected=foo">
+                                                        <td>
+                                                            <input type="checkbox" ng-model="foo.isSelected"/>
+                                                        </td>
+                                                        <td ng-bind-template="{{ foo.username}}"></td>
+                                                        <td ng-bind-template="{{ foo.code}}"></td>
+                                                        <td ng-bind-template="{{ foo.code}}"></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-label col-1-half">
+                                    <label>接收组:</label>
+                                </div>
+                                <input class="col-6-half" type="text" ng-model="onlineTalk.usergroupidStr"
+                                       ng-click="Group()"/>
+                                <span class="add-on">
+                                    <i class="glyphicons user icon"></i>
+                                </span>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-label col-1-half">
+                                    <label>内容:</label>
+                                </div>
+                                <div class="col-10">
+                                    <script id="container2" ng-bind-template="{{communicate.content}}"
+                                            type="text/plain"></script>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-label col-1-half">
+                                    <label>附件:</label>
+                                </div>
+
+                                <div class="col-10-half">
+                                    <div eccrm-upload="uploadForwardingOptions"></div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-primary" ng-click="save();" ng-disabled="!form.$valid">
+                    保存
+                </button>
+                <button type="button" class="btn btn-default" ng-click="$hide()">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="vendor/jquery-v1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="app/home/news/onlinetalk/list/userList.js"></script>

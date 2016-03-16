@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.org.domain">
+    <class name="Organization" table="SYS_ORG">
+        <id name="id" column="id" length="40">
+            <generator class="assigned"/>
+        </id>
+        <many-to-one name="parent" class="Organization" column="parent_id"
+                     foreign-key="fk_org_parent"/>
+        <property name="parentId" column="parent_id" insert="false" update="false"/>
+        <property name="longName" column="Name" type="java.lang.String"/>
+        <property name="name" column="SHORT_NAME" type="java.lang.String"/>
+        <property name="pinyin" column="PINYIN" type="java.lang.String"/>
+        <property name="jianpin" column="JIANPIN" type="java.lang.String"/>
+        <property name="guid" column="GUID" type="java.lang.String"/>
+        <property name="sequenceNo" column="SEQUENCE_NO" type="java.lang.Integer"/>
+        <property name="orgPath" column="ORG_PATH" type="java.lang.String"/>
+        <property name="description" column="DESCRIPTION" type="java.lang.String"/>
+        <property name="businessArea" column="CITY_ID" type="java.lang.String"/>
+        <property name="busiTypeId" column="BUSI_TYPE_ID" type="java.lang.String"/>
+        <property name="busType" column="bus_type" type="java.lang.String" length="40"/>
+        <property name="orgType" column="ORG_TYPE" type="java.lang.String"/>
+        <property name="isOrg" column="IS_ORG" type="java.lang.Integer"/>
+        <property name="path" type="string" length="1000"/>
+        <property name="isParent" column="IS_PARENT" type="boolean"/>
+        <property name="isDirectly" column="IS_DIRECTLY" type="boolean"/>
+        <property name="openDate" column="OPEN_DATE" type="date"/>
+
+        <property name="createdDatetime" column="created_datetime" type="timestamp" update="false"/>
+        <property name="modifiedDatetime" column="modified_datetime" type="timestamp"/>
+        <property name="status" type="string" length="40"/>
+        <property name="modifierId" column="modifier_id" length="40"/>
+        <property name="modifierName" column="modifier_name" length="40"/>
+        <property name="creatorId" column="creator_id" length="40" update="false"/>
+        <property name="creatorName" column="creator_name" length="40" update="false"/>
+
+
+    </class>
+</hibernate-mapping>

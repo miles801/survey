@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.position.domain">
+    <class name="Classify" table="SYS_ROLE_CATE">
+        <id name="id" column="id" length="40">
+            <generator class="uuid.hex"/>
+        </id>
+        <property name="name" type="string" length="40" not-null="true"/>
+        <many-to-one name="parent" class="Classify" column="PARENT_ID"/>
+        <property name="parentId" type="string" update="false" insert="false" column="PARENT_ID"/>
+        <property name="path" type="string" length="255"/>
+        <property name="status" type="string" length="40"/>
+        <property name="seqNo" type="integer" length="4"/>
+        <property name="createdDatetime" column="CREATED_DATETIME" type="timestamp" update="false"/>
+        <property name="description" type="string" length="1000"/>
+        <property name="creatorId" column="CREATOR_ID" length="40" update="false"/>
+        <property name="creatorName" column="CREATOR_NAME" length="40" update="false"/>
+
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,74 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header" static="">
+                <button type="button" class="close" ng-click="$hide()">×</button>
+                <h4 class="modal-title">岗位分类</h4>
+            </div>
+            <div class="modal-body">
+                <div class="block-content">
+                    <div class="content-wrap">
+                        <form name="form" class="form-horizontal" role="form">
+                            <div style="display: true;">
+                            </div>
+                            <div class="row">
+                                <div class="form-label col-1-half">
+                                    <label>分类名称:</label>
+                                </div>
+                                <input class="col-4-half ng-pristine ng-valid" type="text" validate validate-required
+                                       validate-min-length="1" validate-max-length="20"
+                                       ng-model="beans.name">
+                                <div class="form-label col-1-half">
+                                    <label>上级分类:</label>
+                                </div>
+                               <div class="col-4-half">
+                                   <input type="text" class="col-12" ztree-single="ztreeOptions"
+                                          ng-model="beans.parent.name"/>
+                               </div>
+                                <!--<span style="height: 24px;line-height: 24px;text-align: center">{{beans.parent.name}}</span>-->
+                                <input type="hidden" ng-model="beans.parent.id"/>
+                                <!--<span class="add-on" style="position: fixed;">
+                                    <i class="glyphicons remove icon" ng-click="beans.parent=null" title="清除"></i>
+                                </span>-->
+                                <!--<div class="form-label col-1-half">
+                                    <label>显示顺序:</label>
+                                </div>
+                                <input type="number" class="col-4-half" ng-model="beans.seqNo" validate
+                                       validate-int validate-max-length="3"/>-->
+                            </div>
+                            <div class="row">
+                                <div class="form-label col-1-half">
+                                    <label>显示顺序:</label>
+                                </div>
+                                <input type="number" class="col-4-half" ng-model="beans.seqNo" validate
+                                       validate-int validate-max-length="3"/>
+                            </div>
+                            <div class="row">
+                                <div class="form-label col-1-half">
+                                    <label>描述:</label>
+                                </div>
+                                <textarea class="col-10-half" rows="3"
+                                          validate validate-max-length="500" ng-model="beans.description"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer" ng-cloak>
+                <button type="button" class="btn btn-default btn-primary" ng-click="save();" ng-disabled="form.$invalid"
+                        ng-cloak ng-show="pageType=='add'">保存
+                </button>
+                <button type="button" class="btn btn-default btn-primary" ng-click="update();"
+                        ng-disabled="form.$invalid" ng-cloak ng-show="pageType=='modify'">更新
+                </button>
+                <button type="button" class="btn btn-default" ng-click="close()">关闭</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div/>
+
+
+

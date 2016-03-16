@@ -1,0 +1,62 @@
+<div class="modal" role="dialog" style="z-index: 9999" >
+    <div class="modal-dialog" style="width: 800px;" >
+        <div class="modal-content" >
+            <div class="modal-header" static="" >
+                <button type="button" class="close" ng-click="$hide()" >×</button >
+                <h4 class="modal-title" ng-if="pageType=='add'" >设置跳转规则</h4 >
+                <h4 class="modal-title" ng-if="pageType=='modify'" >设置跳转规则</h4 >
+                <h4 class="modal-title" ng-if="pageType=='view'" >查看跳转规则</h4 >
+            </div >
+            <div class="modal-body" >
+                <div class="block-content" >
+                    <div class="content-wrap" >
+                        <div class="row" >
+                            <div class="form-label col-1-half" >
+                                <label >当前题目:</label >
+                            </div >
+                            <select ng-model="beans.subjectId" class="col-4"
+                                    ng-options="foo.value as foo.name for foo in subjects" > </select >
+                        </div >
+                        <div class="row" >
+                            <div class="form-label col-1-half" >
+                                <label >跳转类型:</label >
+                            </div >
+                            <span ><input type="radio" ng-model="beans.routeType" ng-value="1" />直接跳转</span >
+                            <span ><input type="radio" ng-model="beans.routeType" ng-value="2" />条件跳转</span >
+                        </div >
+
+                        <div class="row" ng-if="beans.routeType=='2'" ng-cloak>
+                            <div class="form-label col-1-half" title="当用户对当前题目的给出答案为一下选项时就跳转到下一题目">
+                                <label >题目答案:</label >
+                            </div >
+                            <select ng-model="beans.subjectId" class="col-4"
+                                    ng-options="foo.value as foo.name for foo in subjects" > </select >
+                        </div>
+                        <div class="row" >
+                            <div class="form-label col-1-half" >
+                                <label >下一题目:</label >
+                            </div >
+                            <select ng-model="beans.subjectId" class="col-4"
+                                    ng-options="foo.value as foo.name for foo in nextSubjects" > </select >
+                        </div >
+                    </div >
+                </div >
+            </div >
+            <div class="modal-footer" ng-cloak >
+                <button type="button" class="btn btn-default btn-primary" ng-if="pageType=='add'" ng-click="save();"
+                        ng-disabled="form.$invalid" >保存
+                </button >
+                <button type="button" class="btn btn-default btn-primary" ng-if="pageType=='add'" ng-click="save(true);"
+                        ng-disabled="form.$invalid" >保存并设置下一题
+                </button >
+                <button type="button" class="btn btn-default btn-primary" ng-if="pageType=='update'" ng-click="update();"
+                        ng-disabled="form.$invalid" >更新
+                </button >
+                <button type="button" class="btn btn-default" ng-click="$hide()" >关闭</button >
+            </div >
+
+        </div >
+    </div >
+</div >
+<div />
+

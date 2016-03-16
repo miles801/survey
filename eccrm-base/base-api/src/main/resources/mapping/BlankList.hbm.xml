@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.employee.domain">
+    <class name="BlankList" table="QD_WHITE_LIST">
+        <id name="id" column="ID" length="40">
+            <generator class="uuid.hex"/>
+        </id>
+
+        <property name="titleTxt" type="java.lang.String">
+            <column name="TITLE_TXT" length="64">
+                <comment>主题</comment>
+            </column>
+        </property>
+        <property name="busMatter" type="java.lang.String">
+            <column name="BUS_MATTER" length="200">
+                <comment>业务事项</comment>
+            </column>
+        </property>
+
+        <property name="dutyId" type="java.lang.String">
+            <column name="DUTY_ID" length="40">
+                <comment>岗位id</comment>
+            </column>
+        </property>
+        <!-- 公共属性 -->
+        <property name="status" column="STATUS" type="string" length="40"/>
+        <property name="description" column="DESCRIPTION" type="string" length="1000"/>
+        <property name="creatorId" column="CREATOR_ID" type="string" length="40" update="false"/>
+        <property name="creatorName" column="CREATOR_NAME" type="string" length="40"/>
+        <property name="createdDatetime" column="CREATED_DATETIME" type="timestamp" update="false"/>
+        <property name="modifierId" column="MODIFIER_ID" type="string" length="40"/>
+        <property name="modifierName" column="MODIFIER_NAME" type="string" length="40"/>
+        <property name="modifiedDatetime" column="MODIFIED_DATETIME" type="timestamp"/>
+        <property name="tenementId" column="TENEMENT_ID" type="string" length="40" update="false"/>
+
+
+
+    </class>
+</hibernate-mapping>

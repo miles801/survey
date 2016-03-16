@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.contact.domain">
+    <class name="Contact" table="SYS_CONTACT">
+        <id name="id" column="id" length="40">
+            <generator class="uuid"/>
+        </id>
+        <property name="resourceType" type="string" column="resource_type" length="40"/>
+        <property name="resourceId" type="string" column="resouce_id" length="32"/>
+        <property name="resourceName" type="string" column="resouce_name" length="32"/>
+        <property name="code" type="string" length="32"/>
+        <property name="linkmanId" type="string" column="linkman_id" length="32"/>
+        <property name="linkmanName" type="string" column="linkman_name" length="32"/>
+        <property name="contactType" type="string" column="contact_type" length="40"/>
+        <property name="contactID" type="string" column="contact_id" length="32"/>
+        <property name="country" type="string" length="40"/>
+        <property name="province" type="string" length="40"/>
+        <property name="city" type="string" length="40"/>
+        <property name="district" type="string" length="40"/>
+        <property name="address" type="string" length="200"/>
+        <property name="postCode" column="post_code" length="6"/>
+        <property name="startDatetime" column="start_datetime" type="timestamp" update="false"/>
+        <property name="endDatetime" column="end_datetime" type="timestamp"/>
+        <property name="contactItem" column="contact_item" type="string" length="40"/>
+        <property name="contactItem2" column="contact_item2" type="string" length="40"/>
+        <property name="contactItem3" column="contact_item3" type="string" length="40"/>
+        <property name="contactDirect" column="contact_direct" type="string" length="40"/>
+        <property name="contactMethod" column="contact_method" type="string" length="40"/>
+        <property name="content" type="string" length="512"/>
+        <property name="resultType" column="result_type" type="string" length="256"/>
+        <property name="remark" type="string" length="1024"/>
+        <property name="nextLinkmanId" column="next_linkman_id" type="string" length="32"/>
+        <property name="nextLinkmanName" column="next_linkman_name" type="string" length="32"/>
+        <property name="nextContactType" column="next_contact_type" type="string" length="40"/>
+        <property name="nextContactMethod" column="next_contact_method" type="string" length="40"/>
+        <property name="nextCountry" column="next_country" type="string" length="40"/>
+        <property name="nextProvince" column="next_province" type="string" length="40"/>
+        <property name="nextCity" column="next_city" type="string" length="40"/>
+        <property name="nextDistrict" column="next_district" type="string" length="40"/>
+        <property name="nextAddress" column="next_address" type="string" length="200"/>
+        <property name="nextPostCode" column="next_post_code" type="string" length="6"/>
+        <property name="nextTime" column="next_contacttime" type="timestamp"/>
+        <property name="satisfaction" type="string" length="40"/>
+        <property name="tenementId" type="string" column="tenement_id"/>
+        <property name="createdDatetime" column="created_datetime" type="timestamp" update="false"/>
+        <property name="modifiedDatetime" column="modified_datetime" type="timestamp"/>
+        <property name="description" type="string" length="1000"/>
+        <property name="status" type="string" length="40"/>
+        <property name="creatorId" column="creator_id" length="40" update="false"/>
+        <property name="creatorName" column="creator_name" length="40" update="false"/>
+        <property name="modifierId" column="modifier_id" length="40" update="false"/>
+        <property name="modifierName" column="modifier_name" length="40" update="false"/>
+        <property name="ndoeId" column="NODE_ID" type="string" length="40"/>
+        <property name="ndoeName" column="NDOE_NAME" type="string" length="40"/>
+        <property name="stageId" column="STAGE_ID" type="string" length="40"/>
+        <property name="stageName" column="STAGE_NAME" type="string" length="256"/>
+        <property name="isBespeak" column="IS_BESPEAK" type="java.lang.Integer" length="40"/>
+        <property name="bespeakPhone" column="BESPEAK_PHONE" type="string" length="40"/>
+        <property name="niceId" column="NICE_ID" type="string" length="40"/>
+        <property name="niceUrl" column="NICE_URL" type="string" length="200"/>
+
+        <property name="businessId" column="BUSINESS_ID" type="string" length="40"/>
+        <property name="flowKey" column="FLOW_KEY" type="string" length="40"/>
+        <property name="flowType" column="FLOW_TYPE" type="string" length="40"/>
+    </class>
+</hibernate-mapping>

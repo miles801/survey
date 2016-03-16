@@ -1,0 +1,522 @@
+
+.callCenter {
+    position: absolute;
+    width: 700px;
+    height: 80px;
+    top: 0;
+    left: 220px;
+}
+
+.callCenter > div {
+    margin-left: 12px;
+}
+
+.callCenter div {
+    float: left;
+    width: 100%;
+}
+
+.callCenter .sf_login {
+    width: 60px;
+    height: 80px;
+    padding-top: 10px;
+}
+
+.callCenter .sf_login .login_bg {
+    position: relative;
+    cursor: pointer;
+    width: 40px;
+    height: 45px;
+    margin-left: 10px;
+}
+
+.callCenter .sf_login .login_bg div {
+    height: 100%;
+    width: 100%;
+}
+
+.callCenter .sf_login .login_bg .disabled {
+    background: url(../images/callCenter/agentStat38_rest.gif) no-repeat;
+}
+
+.callCenter .sf_login .login_bg .disable {
+    background: url(../images/callCenter/agentStat38_busy.gif) no-repeat;
+}
+
+.callCenter .sf_login .login_desc {
+    color: #FFFFFF;
+    padding: 2px 5px;
+    width: 40px;
+    text-align: center;
+    margin-top: 1px;
+}
+
+.callCenter .state {
+    width: 60px;
+    height: 80px;
+    padding-top: 10px;
+}
+
+.callCenter .state .state_bg {
+    position: relative;
+    cursor: pointer;
+    width: 40px;
+    height: 45px;
+    margin-left: 10px;
+}
+
+.callCenter .state .state_bg div {
+    height: 100%;
+    width: 100%;
+}
+
+.callCenter .state .state_desc {
+    cursor: pointer;
+    width: 60px;
+    text-align: center;
+    height: 20px;
+    color: #FFFFFf;
+    padding: 2px 5px;
+}
+
+.callCenter .state .changeState {
+    position: fixed;
+    width: 150px;
+    min-height: 50px;
+    border: 1px solid #ddd;
+    z-index: 120;
+    top: 80px;
+}
+
+.callCenter .state .changeState .chunk {
+}
+
+.callCenter .state .changeState .chunk .title {
+    height: 24px;
+    padding: 2px 5px;
+    background-image: linear-gradient(top, #C0D6EB 0%, #D4E9FC 100%);
+    background-image: -o-linear-gradient(top, #C0D6EB 0%, #D4E9FC 100%);
+    background-image: -moz-linear-gradient(top, #C0D6EB 0%, #D4E9FC 100%);
+    background-image: -webkit-linear-gradient(top, #C0D6EB 0%, #D4E9FC 100%);
+    background-image: -ms-linear-gradient(top, #C0D6EB 0%, #D4E9FC 100%);
+}
+
+.callCenter .state .changeState .chunk ul.content {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    background: #FFFFFf;
+}
+
+.callCenter .state .changeState2 {
+    position: fixed;
+    width: 150px;
+    z-index: 160;
+    margin-top: 60px;
+    margin-left: 150px;
+    top: 90px;
+}
+
+.callCenter .state .changeState2 .chunk2 {
+    width: 150px;
+    min-height: 20px;
+    border: 1px solid #DDDDDD;
+    overflow: hidden;
+    padding: 5px;
+}
+
+.callCenter .state .changeState2 .chunk2 .title {
+    height: 24px;
+    padding: 2px 5px;
+    background-image: linear-gradient(top, #C0D6EB 0%, #D4E9FC 100%);
+    background-image: -o-linear-gradient(top, #C0D6EB 0%, #D4E9FC 100%);
+    background-image: -moz-linear-gradient(top, #C0D6EB 0%, #D4E9FC 100%);
+    background-image: -webkit-linear-gradient(top, #C0D6EB 0%, #D4E9FC 100%);
+    background-image: -ms-linear-gradient(top, #C0D6EB 0%, #D4E9FC 100%);
+}
+
+.callCenter .state .changeState2 .chunk2 ul.content2 {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    background: #FFFFFf;
+}
+
+.callCenter .state .changeState2 .chunk2 ul.content2 li {
+    padding: 5px 10px;
+    cursor: pointer;
+    color: #000000;
+}
+
+.callCenter .state .changeState2 .chunk2 ul.content2 li:hover {
+    background: #B2CFED;
+}
+
+.callCenter .state .changeState2 .chunk2 ul.content2 li.active {
+    color: green;
+    margin-right: 1px;
+    font-weight: 700;
+}
+
+.callCenter .state .changeState .chunk ul.content li {
+    padding: 3px 10px;
+    cursor: pointer;
+    color: #000000;
+}
+
+.callCenter .state .changeState .chunk ul.content li .caret {
+    margin-top: 8px;
+    margin-right: 4px;
+    float: right;
+}
+
+.callCenter .state .changeState .chunk ul.content li:hover {
+    background: #B2CFED;
+}
+
+.callCenter .state .changeState .chunk ul.content li.active {
+    color: green;
+    margin-right: 10px;
+    font-weight: 700;
+}
+
+.callCenter .state .state_desc div {
+    color: #FFFFFF;
+    padding: 2px 5px;
+    width: 100%;
+    text-align: center;
+}
+
+.callCenter .state .state_bg .ready {
+    background: url(../images/callCenter/agentStat38_allReady.gif) no-repeat;
+}
+
+.callCenter .state .state_bg .busy {
+    background: url(../images/callCenter/agentStat38_busy.gif) no-repeat;
+}
+
+.callCenter .state .state_bg .disabled {
+    background: url(../images/callCenter/agentStat38_enable.gif) no-repeat;
+}
+
+.callCenter .state .state_bg .partReady {
+    background: url(../images/callCenter/agentStat38_partReady.gif) no-repeat;
+}
+
+.callCenter .state .state_bg .rest {
+    background: url(../images/callCenter/agentStat38_rest.gif) no-repeat;
+}
+
+.callCenter .line {
+    width: 45px;
+    height: 100%;
+    padding-top: 25px;
+    margin-left: 20px;
+}
+
+.callCenter .line div {
+    height: 20px;
+    margin-top: 3px;
+    width: 100%;
+}
+
+.callCenter .line .line1 .green_red {
+    background: url(../images/callCenter/light_1A1.gif) no-repeat;
+}
+
+.callCenter .line .line1 .yellow_red {
+    background: url(../images/callCenter/light_1A2.gif) no-repeat;
+}
+
+.callCenter .line .line1 .yellow {
+    background: url(../images/callCenter/light_1A3.gif) no-repeat;
+}
+
+.callCenter .line .line1 .green {
+    background: url(../images/callCenter/light_1A4.gif) no-repeat;
+}
+
+.callCenter .line .line2 .green_red {
+    background: url(../images/callCenter/light_2A1.gif) no-repeat;
+}
+
+.callCenter .line .line2 .yellow_red {
+    background: url(../images/callCenter/light_2A2.gif) no-repeat;
+}
+
+.callCenter .line .line2 .yellow {
+    background: url(../images/callCenter/light_2A3.gif) no-repeat;
+}
+
+.callCenter .line .line2 .green {
+    background: url(../images/callCenter/light_2A4.gif) no-repeat;
+}
+
+.callCenter .line .line3 .green_red {
+    background: url(../images/callCenter/light_3A1.gif) no-repeat;
+}
+
+.callCenter .line .line3 .yellow_red {
+    background: url(../images/callCenter/light_3A2.gif) no-repeat;
+}
+
+.callCenter .line .line3 .yellow {
+    background: url(../images/callCenter/light_3A3.gif) no-repeat;
+}
+
+.callCenter .line .line3 .green {
+    background: url(../images/callCenter/light_3A4.gif) no-repeat;
+}
+
+.callCenter .info {
+    width: 120px;
+    height: 80px;
+    padding-top: 30px;
+}
+
+.callCenter .info .input {
+    width: 120px;
+    height: 30px;
+}
+
+.callCenter .info .input input[type="text"] {
+    width: 100%;
+}
+
+.callCenter .info .desc {
+    width: 120px;
+    height: 20px;
+    color: #FFFFFF;
+}
+
+.callCenter .dial {
+    width: 80px;
+    height: 80px;
+    padding-top: 25px;
+    margin-left: 20px;
+}
+
+.callCenter .dial .left {
+    width: 43px;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.callCenter .dial .right {
+    width: 37px;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.callCenter .bg {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.callCenter .dial .left .active {
+    background: url(../images/callCenter/dial_active.gif) no-repeat;
+}
+
+.callCenter .dial .left .calling_down {
+    background: url(../images/callCenter/dial_calling_down.gif) no-repeat;
+}
+
+.callCenter .dial .left .disable {
+    background: url(../images/callCenter/dial_disable.gif) no-repeat;
+}
+
+.callCenter .dial .left .calling {
+    background: url(../images/callCenter/dial_calling.gif) no-repeat;
+}
+
+.callCenter .dial .left .down {
+    background: url(../images/callCenter/dial_down.gif) no-repeat;
+}
+
+.callCenter .dial .left .normal {
+    background: url(../images/callCenter/dial_normal.gif) no-repeat;
+}
+
+.callCenter .dial .left .over {
+    background: url(../images/callCenter/dial_over.gif) no-repeat;
+}
+
+.callCenter .dial .right .disable {
+    background: url(../images/callCenter/discon_disable.gif) no-repeat;
+}
+
+.callCenter .dial .right .down {
+    background: url(../images/callCenter/discon_down.gif) no-repeat;
+}
+
+.callCenter .dial .right .normal {
+    background: url(../images/callCenter/discon_normal.gif) no-repeat;
+}
+
+.callCenter .dial .right .over {
+    background: url(../images/callCenter/discon_over.gif) no-repeat;
+}
+
+.callCenter .keyboard {
+    width: 40px;
+    height: 80px;
+    padding-top: 30px;
+}
+
+.callCenter .keyboard .dial-board {
+    position: fixed;
+    width: 269px;
+    height: 258px;
+    top: 70px;
+    background: url(../images/callCenter/dial_board.png) no-repeat;
+    z-index: 500;
+}
+
+.callCenter .keyboard .disable {
+    background: url(../images/callCenter/keyboard_disable.gif) no-repeat;
+}
+
+.callCenter .keyboard .down {
+    background: url(../images/callCenter/keyboard_down.gif) no-repeat;
+}
+
+.callCenter .keyboard .normal {
+    background: url(../images/callCenter/keyboard_normal.gif) no-repeat;
+}
+
+.callCenter .keyboard .over {
+    background: url(../images/callCenter/keyboard_over.gif) no-repeat;
+}
+
+.callCenter .ivr-bar {
+    width: 170px;
+    height: 80px;
+    padding-top: 30px;
+}
+
+.callCenter .ivr-bar > div {
+    width: 31px;
+    height: 37px;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+}
+
+.callCenter .ivr-bar .call1.disable {
+    background: url(../images/callCenter/call_01_disable.gif) no-repeat;
+}
+
+.callCenter .ivr-bar .call1.normal {
+    background: url(../images/callCenter/call_01_normal.gif) no-repeat;
+}
+
+.callCenter .ivr-bar .call1.down {
+    background: url(../images/callCenter/call_01_down.gif) no-repeat;
+}
+
+.callCenter .ivr-bar .call1.over {
+    background: url(../images/callCenter/call_01_over.gif) no-repeat;
+}
+
+.callCenter .ivr-bar .call2 {
+
+}
+
+.callCenter .ivr-bar .call2.disable {
+    background: url(../images/callCenter/call_02_disable.gif) no-repeat;
+}
+
+.callCenter .ivr-bar .call2.normal {
+    background: url(../images/callCenter/call_02_normal.gif) no-repeat;
+}
+
+.callCenter .ivr-bar .call2.down {
+    background: url(../images/callCenter/call_02_down.gif) no-repeat;
+}
+
+.callCenter .ivr-bar .call2.over {
+    background: url(../images/callCenter/call_02_over.gif) no-repeat;
+}
+
+.callCenter .ivr-bar .call3 {
+
+}
+
+.callCenter .ivr-bar .call3.disable {
+    background: url(../images/callCenter/call_03_disable.gif) no-repeat;
+}
+
+.callCenter .ivr-bar .call3.normal {
+    background: url(../images/callCenter/call_03_normal.gif) no-repeat;
+}
+
+.callCenter .ivr-bar .call3.down {
+    background: url(../images/callCenter/call_03_down.gif) no-repeat;
+}
+
+.callCenter .ivr-bar .call3.over {
+    background: url(../images/callCenter/call_03_over.gif) no-repeat;
+}
+
+.callCenter .ivr-bar .ivr {
+
+}
+
+.callCenter .ivr-bar .ivr.disabled {
+    background: url(../images/callCenter/call_04_disable.gif) no-repeat;
+}
+
+.callCenter .ivr-bar .ivr.normal {
+    background: url(../images/callCenter/call_04_normal.gif) no-repeat;
+}
+
+.callCenter .ivr-bar .ivr.down {
+    background: url(../images/callCenter/call_04_down.gif) no-repeat;
+}
+
+.callCenter .ivr-bar .ivr.over {
+    background: url(../images/callCenter/call_04_over.gif) no-repeat;
+}
+
+.callCenter .ivr-bar .call5 {
+
+}
+
+.callCenter .ivr-bar .call5.disable {
+    background: url(../images/callCenter/call_05_disable.gif) no-repeat;
+}
+
+.callCenter .ivr-bar .call5.normal {
+    background: url(../images/callCenter/call_05_normal.gif) no-repeat;
+}
+
+.callCenter .ivr-bar .call5.down {
+    background: url(../images/callCenter/call_05_down.gif) no-repeat;
+}
+
+.callCenter .ivr-bar .call5.over {
+    background: url(../images/callCenter/call_05_over.gif) no-repeat;
+}
+
+.jc {
+    background: url(../images/callCenter/agentStat38_busy.gif) no-repeat;
+}
+
+.ch {
+    background: url(../images/callCenter/agentStat38_busy.gif) no-repeat;
+}
+
+.xx {
+    background: url(../images/callCenter/agentStat38_busy.gif) no-repeat;
+}
+
+.qtyw {
+    background: url(../images/callCenter/agentStat38_busy.gif) no-repeat;
+}
+
+.wh {
+    background: url(../images/callCenter/agentStat38_busy.gif) no-repeat;
+}

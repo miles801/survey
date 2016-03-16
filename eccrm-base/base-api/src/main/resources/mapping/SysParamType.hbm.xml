@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.parameter.domain">
+    <class name="SysParamType" table="SYS_SP_TYPE">
+        <id name="id" column="id" length="40">
+            <generator class="uuid"/>
+        </id>
+        <property name="name" type="string" column="name" length="40"  unique="true"/>
+        <property name="code" type="string" column="code" length="40"  unique="true"/>
+        <many-to-one name="parent" class="SysParamType" column="parent_id"/>
+        <property name="sequenceNo" type="int" column="sequence_no"/>
+        <property name="path" column="path" length="2000"/>
+        <property name="status" column="status" type="string"  length="40"/>
+        <property name="createdDatetime" column="created_datetime" type="timestamp" update="false"/>
+        <property name="creatorId" column="creator_id" length="32"  update="false"/>
+        <property name="creatorName" column="creator_name" length="40"  update="false"/>
+        <property name="description" type="string" length="1000"/>
+    </class>
+</hibernate-mapping>

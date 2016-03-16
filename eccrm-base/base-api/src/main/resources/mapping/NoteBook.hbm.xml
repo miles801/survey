@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.notebook.domain">
+    <class name="NoteBook" table="TOOL_NOTE">
+        <id name="id" column="id" length="40">
+            <generator class="assigned"/>
+        </id>
+        <!--  代码生成器生成字段 -->
+        <property name="tenementId" column="tenement_id" type="string" length="40" update="false"/>
+        <property name="createdDatetime" column="created_datetime" type="timestamp" update="false"/>
+        <property name="modifiedDatetime" column="modified_datetime" type="timestamp"/>
+        <property name="description" type="string" length="2000"/>
+        <property name="status" type="string" length="40"/>
+        <property name="modifierId" column="modifier_id" length="40"/>
+        <property name="modifierName" column="modifier_name" length="40"/>
+        <property name="creatorId" column="creator_id" length="40" update="false"/>
+        <property name="creatorName" column="creator_name" length="40" update="false"/>
+        <property name="title" type="string" length="100"/>
+        <property name="content" type="string" length="1000"/>
+    </class>
+</hibernate-mapping>

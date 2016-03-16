@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.tenement.domain">
+    <class name="Document" table="SYS_TENEMENT_DOC">
+        <id name="id" column="id" length="40">
+            <generator class="uuid.hex"></generator>
+        </id>
+        <!--  代码生成器生成字段 -->
+        <property name="tenementId" column="tenement_id" update="false" not-null="true" type="string" length="40"/>
+        <property name="createdDatetime" column="created_datetime" type="timestamp" update="false"/>
+        <property name="description" type="string" length="1000"/>
+        <property name="creatorId" column="creator_id" length="32"  update="false"/>
+        <property name="creatorName" column="creator_name" length="40"  update="false"/>
+        <property name="name" column="name" type="string" length="100" />
+        <property name="docType" column="doc_type" type="string" length="40"/>
+
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.position.domain">
+    <class name="PositionEmp" table="SYS_ROLE_EMP">
+        <id name="id" column="id" length="40">
+            <generator class="uuid"/>
+        </id>
+        <many-to-one name="employee" class="eccrm.base.employee.domain.Employee" column="employee_id" update="false"
+                     insert="false"/>
+        <property name="empId" type="string" column="employee_id" length="40"/>
+        <many-to-one name="position" class="Position" column="position_id" update="false" insert="false"/>
+        <property name="positionId" type="string" column="position_id" length="40"/>
+        <many-to-one name="org" column="org_id" class="eccrm.base.org.domain.Organization" update="false"
+                     insert="false"/>
+        <property name="orgId" type="string" column="org_id" length="40"/>
+
+        <!-- 过滤指定系统的机构-->
+        <filter name="POSITION_EMP_PARAM_FILTER"
+                condition="org_id in(select o.id from dbo.ORGNIZATION o where o.org_type in(:params))"/>
+    </class>
+    <filter-def name="POSITION_EMP_PARAM_FILTER">
+        <filter-param name="params" type="java.lang.String"/>
+    </filter-def>
+
+</hibernate-mapping>

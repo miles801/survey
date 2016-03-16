@@ -1,0 +1,81 @@
+<div class="modal" tabindex="-1" role="dialog" >
+    <div class="modal-dialog" style="width: 800px;" >
+        <div class="modal-content" >
+            <div class="modal-header" >
+                <button type="button" class="close" ng-click="$hide()" >&times;</button >
+                <h4 class="modal-title" >
+                    <span ng-cloak >{{pageType=='add'?'新增':(pageType=='modify'?'更新':'查看')}}角色</span >
+                </h4 >
+            </div >
+            <div class="modal-body" >
+                <form name="form" class="form-horizontal" >
+                    <div class="row" >
+                        <div class="form-label col-1-half" >
+                            <label >名称:</label >
+                        </div >
+                        <input type="text" class="col-4-half" autofocus placeholder="请输入类型名称" ng-model="role.name"
+                               name="name" validate validate-required />
+
+                        <div class="form-label col-1-half" >
+                            <label >编号:</label >
+                        </div >
+                        <input type="text" class="col-4" ng-model="role.code"
+                               name="code" validate validate-required />
+                    </div >
+
+                    <div class="row" >
+                        <div class="form-label col-1-half" >
+                            <label >启动时间:</label >
+                        </div >
+                        <input class="col-4-half" type="text" ng-model="role.startDate" readonly
+                               bs-datepicker data-max-date="{{role.endDate}}" />
+                        <span class="add-on col" >
+                            <i class="glyphicons calendar icon" ng-click="role.startDate=undefined;" ></i >
+                        </span >
+
+                        <div class="form-label col-1-half" >
+                            <label >失效时间:</label >
+                        </div >
+                        <input type="text" ng-model="role.endDate" class="col-4" readonly
+                               bs-datepicker data-min-date="{{role.startDate}}" />
+                        <span class="add-on col" >
+                            <i class="glyphicons calendar icon" ng-click="role.endDate=undefined"></i >
+                        </span >
+                    </div >
+
+                    <div class="row" >
+                        <div class="form-label col-1-half" >
+                            <label >说明:</label >
+                        </div >
+                        <textarea rows="6" class="col-10" ng-model="role.description" ></textarea >
+                    </div >
+                    <div class="row" >
+                        <div class="form-label  col-1-half" >
+                            <label >状态:</label >
+                        </div >
+                        <select class="col-4-half" ng-model="role.status" ng-options="foo.value as foo.name for foo in status" >
+                        </select >
+                    </div >
+                    <div class="row" >
+                        <div class="form-label  col-1-half" >
+                            <label >创建人:</label >
+                        </div >
+                        <span class="col-4-half" ng-bind-template="{{role.creatorName}}" ></span >
+
+                        <div class="form-label  col-1-half" >
+                            <label >创建时间:</label >
+                        </div >
+                        <span ng-bind-template="{{role.createdDatetime | eccrmDatetime }}" class="col-4" ></span >
+
+                    </div >
+                </form >
+            </div >
+            <div class="modal-footer" >
+                <button type="button" ng-cloak class="btn btn-default btn-primary" ng-if="pageType=='add'" ng-click="save();" ng-disabled="!form.$valid" >保存</button >
+                <button type="button" ng-cloak class="btn btn-default btn-primary" ng-if="pageType=='add'" ng-click="save(true);" ng-disabled="!form.$valid" >保存并新建</button >
+                <button type="button" ng-cloak class="btn btn-default btn-primary" ng-if="pageType=='modify'" ng-click="update();" >更新</button >
+                <button type="button" class="btn btn-default" ng-click="$hide()" >关闭</button >
+            </div >
+        </div >
+    </div >
+</div >

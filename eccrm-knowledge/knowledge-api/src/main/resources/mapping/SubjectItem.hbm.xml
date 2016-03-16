@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.knowledge.survey.domain">
+    <class name="SubjectItem" table="KN_SUBJECT_ITEM">
+        <id name="id" column="ID" length="40">
+            <generator class="uuid"/>
+        </id>
+        <property name="name" type="string" column="NAME" length="100"/>
+        <property name="sequenceNo" type="integer" column="SEQUENCE_NO"/>
+        <property name="subjectId" type="string" column="SUBJECT_ID" length="40"/>
+        <property name="subjectName" type="string" column="SUBJECT_NAME" length="200"/>
+    </class>
+</hibernate-mapping>

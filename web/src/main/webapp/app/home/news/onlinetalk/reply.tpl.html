@@ -1,0 +1,97 @@
+<style>
+    .modal .modal-body .row {
+        margin: 0 auto 5px;
+    }
+
+    .modal .add-on {
+        position: relative;
+        height: 0;
+        width: 0;
+    }
+</style>
+
+
+<div class="modal" tabindex="-1" role="dialog" backdrop="static">
+    <div class="modal-dialog" backdrop="static" style="width: 800px;">
+        <div class="modal-content" backdrop="static">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">回复信息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="block-content">
+
+                    <div class="content-wrap">
+                        <form name="form" class="form-horizontal" role="form">
+                            <div style="display: none;">
+                                <input type="hidden" ng-model="page.type" ng-init="page.type='${pageType}'"/>
+                                <input type="hidden" ng-model="menu.id" ng-init="menu.id=('${id}') || null"/>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-label col-1-half">
+                                    <label>接收人:</label>
+                                </div>
+                                <span class="col-3-half" ng-bind-template="{{onlineTalk.user.username}}"></span>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-label col-1-half">
+                                    <label>内容:</label>
+                                </div>
+                                <div class="col-10">
+                                    <script id="container4" ng-bind-template="{{onlineTalk.replyContent}}"
+                                            type="text/plain"></script>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-label col-1-half">
+                                    <label>附件:</label>
+                                </div>
+                                <div class="col-10">
+                                    <div class="row">
+                                        <table class="tableGrid" id="fileTable">
+                                            <tr>
+                                                <th style="display:none;"></th>
+                                                <th style="width: 40%;">附件名称</th>
+                                                <th style="width: 20%;">附件大小</th>
+                                                <th style="width: 25%;">上传时间</th>
+                                            </tr>
+                                            <tr ng-cloak ng-show="!attachments || !attachments.length">
+                                                <td colspan="4" style="text-align: center;">无附件!</td>
+                                            </tr>
+                                            <tr ng-repeat="at in attachments">
+                                                <td style="display: none;">{{at.id}}</td>
+                                                <td>{{at.fileName}}</td>
+                                                <td>{{(at.size/1000 || 0)|number:3}}KB</td>
+                                                <td>{{at.uploadTime | eccrmDatetime}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-label col-1-half">
+                                    <label>发送人:</label>
+                                </div>
+                                <span class="col-3-half"
+                                      ng-bind-template="{{onlineTalk.creatorName}}"></span>
+
+                                <div class="form-label col-1-half">
+                                    <label>发送时间:</label>
+                                </div>
+                                <span class="col-3-half"
+                                      ng-bind-template="{{onlineTalk.createdDatetime| date:'yyyy-MM-dd HH:mm:ss'}}"></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-primary" ng-click="saveReply();">保存</button>
+                <button type="button" class="btn btn-default" ng-click="$hide()">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>

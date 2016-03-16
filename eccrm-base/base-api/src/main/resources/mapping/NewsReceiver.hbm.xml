@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.im.domain" auto-import="false">
+    <class name="NewsReceiver" table="IM_NEWS_RECEIVER">
+        <id name="id" column="id" length="40">
+            <generator class="uuid"/>
+        </id>
+        <property name="newsId" column="NEWS_ID" type="string" length="40" not-null="true"/>
+        <property name="receiverId" column="RECEIVER_ID" type="string" length="40" not-null="true"/>
+        <property name="receiverName" column="RECEIVER_NAME" type="string" length="100"/>
+        <property name="receiverId2" column="RECEIVER_ID2" type="string" length="40"/>
+        <property name="receiverName2" column="RECEIVER_NAME2" type="string" length="100"/>
+        <property name="receiverType" column="RECEIVER_TYPE" type="string" length="40"/>
+        <property name="description" column="DESCRIPTION" type="string" length="1000"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,102 @@
+<script >
+</script >
+<div class="modal" tabindex="-1" role="dialog" >
+    <div class="modal-dialog" style="width:450px;" >
+        <div class="modal-content" >
+            <div class="modal-header" static="" >
+                <button type="button" class="close" ng-click="$hide()" >×</button >
+                <h4 class="modal-title" >软电话参数设置</h4 >
+            </div >
+            <div class="modal-body" >
+                <div class="block-content" >
+                    <div class="content-wrap" >
+                        <form name="form" class="form-horizontal" role="form" >
+                            <div style="display: none;" >
+                            </div >
+                            <div class="row" >
+                                <div class="form-label col-3-half">
+                                    <label ><span style="color: red;" > * </span >工号:</label >
+                                </div >
+                                <input class="col-8" type="text" id="LoginID" ng-model="beans.LoginID" disabled="true"
+                                       validate validate-required />
+                            </div >
+                            <div class="row" >
+                                <div class="form-label col-3-half" hidden="true">
+                                    <label ><span style="color: red;" > * </span >密码:</label >
+                                </div >
+                                <input hidden="true" type="password" class="col-8" id="Password" ng-model="beans.Password"
+                                       validate validate-required >
+                            </div >
+                            <div class="row" >
+                                <div class="form-label col-3-half" >
+                                    <label ><span style="color: red;" > * </span >分机:</label >
+                                </div >
+                                <select id="StationID" class="col-8" ng-model="beans.StationID" ng-options="foo for foo in stationIds" ></select >
+                            </div >
+                            <div class="row" >
+                                <div class="form-label col-3-half" hidden="true">
+                                    <label ><span style="color: red;" > * </span >SDK URL:</label >
+                                </div >
+                                <input hidden="true" type="text" class="col-8" id="SDKServerURL" ng-model="beans.SDKServerURL"
+                                       validate validate-required >
+                            </div >
+                        </form >
+                    </div >
+                </div >
+            </div >
+            <div class="modal-footer" >
+                <button type="button" class="btn btn-default btn-primary" id="btnSave" ng-disabled="!form.$valid"
+                        ng-click="save()" >
+                    确认
+                </button >
+                <button type="button" class="btn btn-default" ng-click="close()" >关闭</button >
+            </div >
+        </div >
+    </div >
+</div >
+<div />
+<!--<script>
+
+    function initPara(){
+        var s = window.parent.top.readConfigFile();
+        //
+    }
+
+    function checkInput(){
+        var ret = true;
+        $display("LoginIDMsg", "none");
+        $display("PasswordMsg", "none");
+        $display("StationIDMsg", "none");
+        $display("SDKServerURLMsg", "none");
+        if(!$value("LoginID")){
+            $display("LoginIDMsg", "block");ret = false;
+        }
+        if(!$value("Password")){
+            $display("PasswordMsg", "block");ret = false;
+        }
+        if(!$value("StationID")){
+            $display("StationIDMsg", "block");ret = false;
+        }
+        if(!$value("SDKServerURL")){
+            $display("SDKServerURLMsg", "block");ret = false;
+        }
+        return ret;
+    }
+
+    $("btnSave").onclick = function(){
+        try{
+            if(checkInput()){
+                window.parent.top.writeConfigFile(1,2,3,4);//将新的设置写入配置文件
+                window.close();
+            }
+        }catch(Ex){
+            alert("保存设置失败!");
+            window.close();
+        }
+    }
+    $("btnCancel").onclick = function(){
+        window.close();
+    }
+
+</script>-->
+

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.menu.domain">
+    <class name="MenuNav" table="SYS_MENU_NAV">
+        <id name="id" column="ID" length="40">
+            <generator class="assigned"/>
+        </id>
+
+        <property name="name" column="NAME" type="string" length="60"/>
+        <property name="showName" column="SHOW_NAME" type="string" length="40"/>
+        <property name="sequenceNo" column="SEQUENCE_NO" type="int"/>
+        <property name="type" column="NAV_TYPE" type="string" length="40"/>
+        <property name="cols" column="COLS" type="int"/>
+        <property name="rows" column="ROWS" type="int"/>
+        <many-to-one name="parent" column="PARENT_ID" class="MenuNav"/>
+        <property name="resourceId" column="RESOURCE_ID" type="string" length="40"/>
+        <property name="publishDatetime" column="PUBLISH_DATETIME" type="timestamp"/>
+        <property name="showMore" column="SHOW_MORE" type="boolean"/>
+
+
+        <!-- 公共属性 -->
+        <property name="status" column="STATUS" type="string" length="40"/>
+        <property name="description" column="DESCRIPTION" type="string" length="1000"/>
+        <property name="creatorId" column="CREATOR_ID" type="string" length="40" update="false"/>
+        <property name="creatorName" column="CREATOR_NAME" type="string" length="40"/>
+        <property name="createdDatetime" column="CREATED_DATETIME" type="timestamp" update="false"/>
+        <property name="modifierId" column="MODIFIER_ID" type="string" length="40"/>
+        <property name="modifierName" column="MODIFIER_NAME" type="string" length="40"/>
+        <property name="modifiedDatetime" column="MODIFIED_DATETIME" type="timestamp"/>
+        <property name="tenementId" column="TENEMENT_ID" type="string" length="40" update="false"/>
+    </class>
+</hibernate-mapping>

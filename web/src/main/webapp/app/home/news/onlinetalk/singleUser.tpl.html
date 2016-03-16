@@ -1,0 +1,39 @@
+<div class="modal" tabindex="-1" role="dialog" backdrop="static" >
+    <div class="modal-dialog" backdrop="static" style="width: 800px;" >
+        <div class="modal-content" backdrop="static" >
+            <div class="modal-header" >
+                <button type="button" class="close" ng-click="$hide()" >&times;</button >
+                <h4 class="modal-title" >选择用户</h4 >
+            </div >
+            <div class="modal-body" >
+                <div class="table-responsive panel panel-table first-min" >
+                    <table class="table table-striped table-hover" >
+                        <thead class="table-header" >
+                        <tr >
+                            <td ></td >
+                            <td >员工名称</td >
+                        </tr >
+                        </thead >
+                        <tbody class="table-body" >
+                        
+	                        <tr ng-show="!principals || !principals.length" ng-cloak >
+	                            <td colspan="2" class="text-center" >没有符合条件的记录！</td >
+	                        </tr >
+	                        <tr ng-repeat="foo in principals">
+	                            <td >
+	                                <input type="radio" ng-model="$parent.selected" ng-value="foo"/>
+	                            </td >
+	                            <td >{{ foo.username }}</td >
+	                        </tr > 
+                        
+                        </tbody >
+                    </table >
+                </div >
+            </div >
+            <div class="modal-footer" >
+                <button type="button" class="btn btn-default btn-primary" ng-click="confirm();" >确定</button >
+                <button type="button" class="btn btn-default" ng-click="$hide()" >关闭</button >
+            </div >
+        </div >
+    </div >
+</div >

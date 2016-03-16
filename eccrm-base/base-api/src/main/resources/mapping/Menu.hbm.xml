@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.menu.domain">
+    <class name="eccrm.base.menu.domain.Menu" table="SYS_MENU">
+        <id name="id" column="id" length="40">
+            <generator class="assigned"/>
+        </id>
+        <property name="name" column="NAME" type="string" length="60" not-null="true"/>
+        <property name="sequenceNo" column="SEQUENCE_NO" type="integer" length="2" scale="2"/>
+        <property name="type" column="MENU_TYPE" type="string" length="40"/>
+        <property name="authorization" column="IS_AUTHORIZATION" type="boolean"/>
+        <property name="code" column="CODE" type="string" length="40" not-null="true"/>
+        <property name="icon" column="ICON_ID" type="string" length="40"/>
+        <many-to-one name="parent" column="PARENT_ID" class="Menu"/>
+        <property name="parentId" column="PARENT_ID" update="false" insert="false" type="string" length="40"/>
+        <property name="path" column="MENU_PATH" type="string" length="1000"/>
+        <property name="popInfo" column="POP_INFO" type="string" length="40"/>
+        <many-to-one name="resource" class="Resource" column="RESOURCE_ID"/>
+        <property name="show" column="IS_SHOW" type="boolean"/>
+        <property name="fullScreen" column="FULL_SCREEN" type="boolean"/>
+
+        <!-- 公共属性 -->
+        <property name="status" column="STATUS" type="string" length="40"/>
+        <property name="description" column="DESCRIPTION" type="string" length="1000"/>
+        <property name="creatorId" column="CREATOR_ID" type="string" length="40" update="false"/>
+        <property name="creatorName" column="CREATOR_NAME" type="string" length="40"/>
+        <property name="createdDatetime" column="CREATED_DATETIME" type="timestamp" update="false"/>
+        <property name="modifierId" column="MODIFIER_ID" type="string" length="40"/>
+        <property name="modifierName" column="MODIFIER_NAME" type="string" length="40"/>
+        <property name="modifiedDatetime" column="MODIFIED_DATETIME" type="timestamp"/>
+        <property name="tenementId" column="TENEMENT_ID" type="string" length="40" update="false"/>
+    </class>
+</hibernate-mapping>

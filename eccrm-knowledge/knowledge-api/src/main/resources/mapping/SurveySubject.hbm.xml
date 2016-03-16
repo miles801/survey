@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.knowledge.survey.domain">
+    <class name="SurveySubject" table="KN_SURVEY_R_SUBJECT">
+        <id name="id" column="ID" length="40">
+            <generator class="uuid"/>
+        </id>
+
+        <property name="categoryId" column="CATEGORY_ID" type="string" length="40" not-null="true" update="false"/>
+        <property name="categoryName" column="CATEGORY_NAME" type="string" length="40"/>
+        <property name="subjectId" column="SUBJECT_ID" type="string" length="40" not-null="true" update="false"/>
+        <property name="subjectName" column="SUBJECT_NAME" type="string" length="100"/>
+        <property name="subjectType" column="SUBJECT_TYPE" type="string" length="40"/>
+        <property name="subjectTypeName" column="SUBJECT_TYPE_NAME" type="string" length="40"/>
+        <property name="surveyId" column="SURVEY_ID" type="string" length="40" not-null="true" update="false"/>
+        <property name="sequenceNo" column="SEQUENCE_NO" type="integer"/>
+
+        <property name="nextSubjectId" type="string" column="NEXT_SUBJECT_ID" length="40"/>
+        <property name="nextSubjectName" type="string" column="NEXT_SUBJECT_NAME" length="200"/>
+        <property name="routeType" type="string" column="ROUTE_TYPE" length="40"/>
+        <property name="condition" type="string" column="ROUTE_CONDITION" length="40"/>
+        <property name="isFirst" type="boolean" column="IS_FIRST"/>
+
+        <!-- 公共属性 -->
+        <property name="creatorId" column="CREATOR_ID" type="string" length="40" update="false"/>
+        <property name="creatorName" column="CREATOR_NAME" type="string" length="40"/>
+        <property name="createdDatetime" column="CREATED_DATETIME" type="timestamp" update="false"/>
+        <property name="tenementId" column="TENEMENT_ID" type="string" length="40" update="false"/>
+
+    </class>
+</hibernate-mapping>

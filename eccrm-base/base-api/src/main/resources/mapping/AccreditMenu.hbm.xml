@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.auth.domain">
+    <class name="AccreditMenu" table="SYS_ACCREDIT_MENU">
+        <id name="id" column="ID" length="40">
+            <generator class="assigned"/>
+        </id>
+
+        <property name="deptId" column="DEPT_ID" type="string" length="40" not-null="true"/>
+        <property name="orgId" column="ORG_ID" type="string" length="40"/>
+        <property name="resourceId" column="RESOURCE_ID" type="string" length="40" not-null="true"/>
+
+    </class>
+</hibernate-mapping>

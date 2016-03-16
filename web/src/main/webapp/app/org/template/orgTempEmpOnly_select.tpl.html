@@ -1,0 +1,110 @@
+<div class="modal" tabindex="-1" role="dialog" >
+    <div class="modal-dialog" style="width: 900px;height: 700px !important;" >
+        <div class="modal-content" style="width: 900px;height: 510px !important;" >
+            <div class="modal-header" >
+                <button type="button" class="close" ng-click="$hide()" >×</button >
+                <h4 class="modal-title" >选择人员</h4 >
+            </div >
+            <div class="modal-body condition-row-1" style="width: 900px;height: 430px !important;" >
+                <div class="list-condition" >
+                    <div class="row" >
+                        <div class="form-label col-1-half" >
+                            <label >姓名:</label >
+                        </div >
+                        <div class="col-3" >
+                            <input type="text" class="col-12" ng-model="condition.employeeName" />
+                        </div >
+
+                        <div class="form-label col-1-half" >
+                            <label >CTX:</label >
+                        </div >
+                        <div class="col-3" >
+                            <input type="text" class="col-12" ng-model="condition.username" />
+                        </div >
+                    </div >
+                    <div class="row" >
+                        <div class="form-label col-1-half" >
+                            <label >电话:</label >
+                        </div >
+                        <div class="col-3" >
+                            <input type="text" class="col-12" ng-model="condition.mobile" />
+                        </div >
+                        <div class="form-label col-1-half" >
+                            <label >组织机构:</label >
+                        </div >
+                        <div class="col-3" >
+                            <input type="text" class="col-12" ztree-single="orgTree" readonly ng-model="orgName" />
+                            <span class="col add-on" >
+                                <i class="icons icon fork" ng-click="clear();" ></i >
+                            </span >
+                        </div >
+                        <span class="col-half" >&nbsp;</span >
+
+                        <div class="col" >
+                            <button class="btn btn-blue" ng-click="query();" >
+                                查询
+                            </button >
+                        </div >
+                    </div >
+                </div >
+                <div class="list-result" >
+                    <div class="block" >
+                        <div class="block-content" >
+                            <div class="content-wrap" >
+                                <div class="table-responsive panel panel-table" style="border: none;max-height: none" >
+                                    <table class="table table-striped table-hover" >
+                                        <thead class="table-header" >
+                                        <tr >
+                                            <td >
+                                                <div select-all-checkbox checkboxes="emps.data" selected-items="items" ></div >
+                                            </td >
+                                            <td >姓名</td >
+                                            <td >工号</td >
+                                            <td >职务</td >
+                                            <td >移动电话</td >
+                                            <td >电子邮件</td >
+                                            <td >CTXNAME</td >
+                                            <td >分机</td >
+                                            <td >状态</td >
+                                        </tr >
+                                        </thead >
+                                        <tbody class="table-body" >
+                                        <tr ng-show="!emps || emps.total == 0" >
+                                            <td colspan="10" class="text-center" style="border: none;" >没有查询到数据！</td >
+                                        </tr >
+                                        <tr bindonce ng-repeat="foo in emps.data" ng-click="$parent.selected=foo">
+                                            <td >
+                                                <input type="radio" name="tempName" ng-value="foo.id" ng-click="$parent.selected=foo" />
+                                            </td >
+                                            <td ><span bo-text="foo.employeeName" ></span ></td >
+                                            <td ><span bo-text="foo.employeeCode" ></span ></td >
+                                            <td ><span bo-text="foo.jobName | substr:10" ></span ></td >
+                                            <td ><span bo-text="foo.employeeMobile" ></span ></td >
+                                            <td ><span bo-text="foo.officeEmail" ></span ></td >
+                                            <td ><span bo-text="foo.username" ></span ></td >
+                                            <td ><span bo-text="foo.mobile" ></span ></td >
+                                            <td ><span bo-text="foo.employeeStatusName" ></span ></td >
+                                        </tr >
+                                        </tbody >
+                                    </table >
+                                </div >
+                            </div >
+                        </div >
+                    </div >
+                </div >
+                <div eccrm-page="pager" class="list-pagination" ></div >
+            </div >
+            <div class="modal-footer" ng-cloak >
+                <button type="button" class="btn btn-default btn-primary" ng-click="confirm();"
+                        ng-disabled="form.$invalid" >确定
+                </button >
+                <button type="button" class="btn btn-default" ng-click="$hide()" >关闭</button >
+            </div >
+
+        </div >
+    </div >
+</div >
+<div />
+
+
+

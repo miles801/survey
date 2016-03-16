@@ -1,0 +1,119 @@
+<div class="modal" tabindex="-1" role="dialog" >
+    <div class="modal-dialog" style="width: 700px;" >
+        <div class="modal-content" >
+            <div class="modal-header" >
+                <button type="button" class="close" ng-click="$hide()" >&times;</button >
+                <h4 class="modal-title" >
+                    <span >菜单导航</span >
+                </h4 >
+            </div >
+            <div class="modal-body" >
+                <div class="block" >
+                    <div class="block-content" style="border: 0;" >
+                        <div class="content-wrap" style="padding: 10px;" >
+                            <form name="form" role="form" >
+                                <div class="row" >
+                                    <div class="form-label col-2" >
+                                        <label >导航名:</label >
+                                    </div >
+                                    <div class="col-3-half" >
+                                        <input type="text" name="name" class="col-12" ng-model="bean.name"
+                                               validate validate-required validate-max-length="20" maxlength="20" data-placement="right" />
+                                    </div >
+                                    <div class="form-label col-2" >
+                                        <label >显示顺序:</label >
+                                    </div >
+                                    <div class="col-3-half" >
+                                        <input type="text" class="col-12" ng-model="bean.sequenceNo"
+                                               validate validate-required validate-int maxlength="5" data-placement="right" />
+                                    </div >
+                                </div >
+                                <div class="row" >
+                                    <div class="form-label col-2" >
+                                        <label >显示名称:</label >
+                                    </div >
+                                    <div class="col-3-half" >
+                                        <input type="text" class="col-12" ng-model="bean.showName"
+                                               validate validate-required validate-max-length="20" maxlength="20" />
+                                    </div >
+
+                                    <div class="form-label col-2" >
+                                        <label >导航类型:</label >
+                                    </div >
+                                    <div class="col-3-half" >
+                                        <label >
+                                            <input type="radio" ng-model="bean.type" value="SINGLE" />单功能
+                                        </label >
+                                        <label style="margin-left: 10px;" >
+                                            <input type="radio" ng-model="bean.type" value="MULTI" />组合功能
+                                        </label >
+                                    </div >
+
+                                </div >
+                                <div class="row" >
+                                    <div class="form-label col-2" >
+                                        <label >显示更多:</label >
+                                    </div >
+                                    <div class="col-3-half" >
+                                        <input type="checkbox" ng-model="bean.showMore" />
+                                    </div >
+                                    <div class="form-label col-2" >
+                                        <label >显示样式:</label >
+                                    </div >
+                                    <span class="col" >行数</span >
+                                    <input class="col-1 text-center" type="text" ng-model="bean.rows" validate validate-required validate-options="numberCheck" />
+                                    <span class="col" style="margin-left: 8px;" >列数</span >
+                                    <input class="col-1 text-center" type="text" ng-model="bean.cols" valiadte validate-required validate-options="numberCheck" />
+
+                                </div >
+                                <div class="row" >
+                                    <div class="form-label col-2" ng-show="bean.type=='MULTI'" >
+                                        <label >上级导航:</label >
+                                    </div >
+                                    <div class="col-3-half" ng-show="bean.type=='MULTI'" >
+                                        <input type="text" name="name" class="col-12" ng-model="bean.parent.name" readonly ztree-single="parentTree" />
+                                        <span class="add-on" style="position:absolute;right: 0;top: 0" >
+                                            <i class="icons circle_fork icon" ng-click="bean.parent=null" title="清除" ></i >
+                                        </span >
+                                    </div >
+                                    <div class="form-label col-2" >
+                                        <label >所属功能:</label >
+                                    </div >
+                                    <div class="col-3-half" >
+                                        <input type="text" class="col-12" ng-model="bean.resourceName" readonly ztree-single="sourceTree" />
+                                        <span class="add-on" style="position:absolute;right: 0;top: 0" >
+                                            <i class="icons circle_fork icon" ng-click="bean.resourceName=null;bean.resourceId=null;" title="清除" ></i >
+                                        </span >
+                                    </div >
+                                </div >
+                                <div class="row" >
+                                    <div class="form-label col-2" >
+                                        <label >导航说明:</label >
+                                    </div >
+                                    <div class="col-9" >
+                                        <textarea rows="4" class="col-12" ng-model="bean.description" ></textarea >
+                                    </div >
+                                </div >
+                                <div class="row" >
+                                    <div class="form-label col-2" >
+                                        <label >状态:</label >
+                                    </div >
+                                    <div class="col-3-half" >
+                                        <select class="col-12" ng-model="bean.status" ng-options="foo.value as foo.name for foo in status" ></select >
+                                    </div >
+
+                                </div >
+                            </form >
+                        </div >
+                    </div >
+                </div >
+            </div >
+            <div class="modal-footer" >
+                <button type="button" class="btn btn-primary" ng-disabled="form.$invalid" ng-cloak ng-show="pageType=='add'" ng-click="save()" >保存</button >
+                <button type="button" class="btn btn-primary" ng-disabled="form.$invalid" ng-cloak ng-show="pageType=='modify'" ng-click="update()" >更新</button >
+                <button type="button" class="btn btn-default" ng-click="$hide()" >关闭</button >
+            </div >
+        </div >
+    </div >
+</div >
+

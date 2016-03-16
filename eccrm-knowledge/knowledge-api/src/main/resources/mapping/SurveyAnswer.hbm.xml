@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.knowledge.survey.domain">
+    <class name="SurveyAnswer" table="KN_SURVEY_ANSWER">
+        <id name="id" column="ID" length="40">
+            <generator class="uuid"/>
+        </id>
+        <property name="subjectId" type="string" column="SUBJECT_ID" length="40"/>
+        <property name="subjectName" type="string" column="SUBJECT_NAME" length="200"/>
+        <property name="subjectType" type="string" column="SUBJECT_TYPE" length="40"/>
+
+        <property name="surveyId" type="string" column="SURVEY_ID" length="40"/>
+        <property name="surveyName" type="string" column="SURVEY_NAME" length="40"/>
+
+        <property name="answer" column="ANSWER" type="string" length="1000" not-null="true"/>
+        <property name="answerUserId" type="string" length="40" not-null="true"/>
+        <property name="answerUserName" type="string" length="100" not-null="true"/>
+        <property name="answerUserType" type="string" length="40" not-null="true"/>
+        <property name="answerDate" column="ANSWER_DATETIME" type="timestamp" update="false"/>
+        <property name="businessId" type="string" length="40" not-null="true"/>
+
+        <property name="batchId" type="string" length="40" update="false"/>
+
+        <property name="creatorId" column="CREATOR_ID" type="string" length="40" update="false"/>
+        <property name="creatorName" column="CREATOR_NAME" type="string" length="40"/>
+        <property name="createdDatetime" column="CREATED_DATETIME" type="timestamp" update="false"/>
+        <property name="tenementId" column="TENEMENT_ID" type="string" length="40" update="false"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.user.domain">
+    <class name="LoginLog" table="SYS_USER_LOGIN_LOG">
+        <id name="id" column="id" length="40">
+            <generator class="uuid.hex"/>
+        </id>
+        <!--  代码生成器生成字段 -->
+        <property name="tenementId" column="tenement_id" update="false" not-null="true" type="string" length="40"/>
+        <property name="createdDatetime" column="created_datetime" type="timestamp" update="false"/>
+        <property name="creatorId" column="creator_id" length="32"  update="false"/>
+        <property name="creatorName" column="creator_name" length="40"  update="false"/>
+        <many-to-one name="user" fetch="join" class="User" column="creator_id" update="false" insert="false" lazy="proxy"/>
+        <property name="duration" type="long"/>
+        <property name="status" type="string" length="40"/>
+        <property name="logoutDatetime" type="timestamp" column="logout_datetime"/>
+        <property name="logoutType" column="logout_type" type="integer" length="1" scale="1"/>
+        <property name="ip" column="ip" type="java.lang.String" length="20"/>
+        <!-- 过滤器 -->
+        <filter name="tenementFilter"/>
+        <filter name="personalFilter"/>
+    </class>
+</hibernate-mapping>

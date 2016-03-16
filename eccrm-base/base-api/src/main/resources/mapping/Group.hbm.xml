@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.base.user.domain" auto-import="false">
+    <class name="Group" table="SYS_GROUP">
+        <id name="id" column="id" length="40">
+            <generator class="uuid.hex"></generator>
+        </id>
+        <property name="name" type="string" length="40" />
+        <property name="code" type="string" length="16"/>
+        <many-to-one name="parent" column="parent_id" class="Group" foreign-key="fk_group_parent"
+                     lazy="proxy"/>
+        <property name="description" type="string" length="1000"/>
+        <property name="sequenceNo" column="sequence_no" type="integer" length="2"/>
+        <property name="status" type="string" length="40"/>
+        <property name="path" type="string" length="1000"/>
+        <property name="tenementId" column="tenement_id" update="false" not-null="true" type="string" length="40"/>
+        <property name="createdDatetime" column="created_datetime" type="timestamp" update="false"/>
+        <property name="creatorId" column="creator_id" length="32"  update="false"/>
+        <property name="creatorName" column="creator_name" length="40"  update="false"/>
+
+
+        <!-- 过滤器 -->
+        <filter name="tenementFilter"></filter>
+    </class>
+</hibernate-mapping>

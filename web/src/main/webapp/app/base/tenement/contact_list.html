@@ -1,0 +1,52 @@
+<div class="block noborder" >
+    <div class="block-header" >
+        <div class="header-button" >
+            <a class="btn btn-min btn-green" ng-href="app/contact/edit/contact_edit.jsp?tenementId={{tenementId}}" >
+                <i class="glyphicons plus" ></i > 新增
+            </a >
+            <a class="btn btn-min btn-green" ng-click="multiDelete();" >
+                <i class="glyphicons fork" ></i > 删除
+            </a >
+        </div >
+    </div >
+    <div class="block-content" >
+        <div class="content-wrap" >
+            <div class="table-responsive panel panel-table" >
+                <table class="table table-striped table-hover" >
+                    <thead class="table-header" >
+                    <tr >
+                        <td >
+                            <input type="checkbox" style="height: 12px;" ng-model="checkAll" />
+                        </td >
+                        <td >姓名</td >
+                        <td >职务</td >
+                        <td >类型</td >
+                        <td >用户名</td >
+                        <td >用户类型</td >
+                        <td >E-MAIL</td >
+                        <td >办公电话</td >
+                        <td >手机</td >
+                        <td >状态</td >
+                    </tr >
+                    </thead >
+                    <tbody class="table-body" >
+                    <tr ng-show="!documents || documents.length == 0" >
+                        <td colspan="10" class="text-center" >没有符合条件的记录！</td >
+                    </tr >
+                    <tr ng-repeat="doc in documents" ng-init="foo=doc.document" >
+                        <td ng-bind-template="{{foo.name}}" ></td >
+                        <td ng-bind-template="{{doc.docTypeName}}" ></td >
+                        <td ng-bind-template="{{foo.size}}" ></td >
+                        <td ng-bind-template="{{doc.createPersonName}}" ></td >
+                        <td ng-bind-template="{{foo.createDateTime}}" ></td >
+                        <td ng-bind-template="{{foo.modifyDateTime}}" ></td >
+                        <td ng-bind-template="{{doc.statusName}}" ></td >
+                        <td ng-bind-template="{{doc.statusName}}" ></td >
+                        <td ng-bind-template="{{doc.statusName}}" ></td >
+                    </tr >
+                    </tbody >
+                </table >
+            </div >
+        </div >
+    </div >
+</div >

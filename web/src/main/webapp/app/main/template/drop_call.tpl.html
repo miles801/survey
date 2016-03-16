@@ -1,0 +1,106 @@
+<div class="modal" tabindex="-1" role="dialog" >
+    <div class="modal-dialog" style="width:800px;" >
+        <div class="modal-content" >
+            <div class="modal-header" >
+                <button type="button" class="close" ng-click="$hide()" >&times;</button >
+                <h4 class="modal-title" >联络信息</h4 >
+            </div >
+            <div class="modal-body" >
+                <form name="form" class="form-horizontal" role="form" >
+                    <div class="row" >
+                        <div class="form-label col-2" >
+                            <label validate-error="form.contactItem" >联络事项:</label >
+                        </div >
+                        <div class="col-9" >
+                            <div class="col-4" >
+                                <select name="contactItem" ng-model="contResult.contactItem" class="col-12" validate validate-required
+                                        ng-options="foo.value as foo.name for foo in contactItems"
+                                        ng-change="contactSubType2(contResult.contactItem)" ></select >
+                            </div >
+                            <div class="col-4" style="padding-left: 8px;" >
+                                <select ng-model="contResult.contactItem2" class="col-12" ng-show="contactItems2"
+                                        ng-options="foo.value as foo.name for foo in contactItems2"
+                                        ng-change="contactSubType3(contResult.contactItem2)" ></select >
+                            </div >
+                            <div class="col-4" style="padding-left: 8px;" >
+                                <select ng-model="contResult.contactItem3" class="col-12" ng-show="contactItems3"
+                                        ng-options="foo.value as foo.name for foo in contactItems3" ></select >
+                            </div >
+
+                        </div >
+
+                    </div >
+                    <div class="row" >
+                        <div class="form-label col-2" >
+                            <label validate-error="form.content" >联络内容:</label >
+                        </div >
+                        <textarea rows="3" class="col-9" name="content" ng-model="contResult.content" validate validate-required ></textarea >
+                    </div >
+                    <div class="row" >
+                        <div class="form-label col-2" >
+                            <label validate-error="form.resultType" >联络结果:</label >
+                        </div >
+                        <select ng-model="beans.resultType" class="col-3" name="resultType"
+                                ng-options="foo.value as foo.name for foo in resultType" validate validate-required ></select >
+                    </div >
+                    <div class="row" ng-show="contResult.resultType=='2'" >
+                        <div class="form-label col-2" >
+                            <label >下次联系人:</label >
+                        </div >
+                        <div class="col-4" >
+                            <div class="col-5" style="padding-right: 5px;" >
+                                <select class=" " >
+                                    <option value="" selected="" >请选择</option >
+                                    <option value="" >员工推荐</option >
+                                    <option value="" >客户推荐</option >
+                                    <option value="" >网络宣传</option >
+                                    <option value="" >市场活动</option >
+                                    <option value="" >朋友介绍</option >
+                                    <option value="" >公司网络</option >
+                                </select >
+                            </div >
+                            <input class="col-7 " type="text" ng-model="contResult.type" >
+
+                            <div class="add-on col" >
+                                <i class="glyphicons user icon" ></i >
+                            </div >
+                        </div >
+                        <div class="form-label col-2" >
+                            <label >下次联系时间:</label >
+                        </div >
+                        <input type="text" class="col-3" ng-model="contResult.startDate" bs-datepicker readonly />
+                <span class="add-on col" >
+                    <i class="glyphicons calendar icon" title="清除时间" ng-click="contResult.startDate=undefind;" ></i >
+                </span >
+                    </div >
+                    <div class="row" ng-show="contResult.resultType=='2'" >
+                        <div class="form-label col-2" >
+                            <label >联络类型:</label >
+                        </div >
+                        <div class="col-4" >
+                            <div class="col-5" style="padding-right: 5px;" >
+                                <select ng-model="contResult.contactType" class="col-12"
+                                        ng-options="foo.id as foo.name for foo in type" > </select >
+                            </div >
+                            <select class="col-7" >
+                                <option value="" selected >请选择</option >
+                            </select >
+                        </div >
+                    </div >
+                    <div class="row" >
+                        <div class="form-label col-2" >
+                            <label >处理结果:</label >
+                        </div >
+                        <textarea rows="4" class="col-9" ng-model="contResult.remark" ></textarea >
+                    </div >
+                </form >
+            </div >
+            <div class="modal-footer" >
+                <button type="button" class="btn btn-default btn-primary" ng-click="update()" ng-disabled="form.$invalid" >
+                    确认
+                </button >
+                <button type="button" class="btn btn-default" ng-click="$hide()" >关闭</button >
+            </div >
+        </div >
+    </div >
+</div >
