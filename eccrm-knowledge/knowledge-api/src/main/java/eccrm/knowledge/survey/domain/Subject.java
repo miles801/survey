@@ -40,6 +40,12 @@ public class Subject extends CrmBaseDomain {
     /*横排*/
     private Boolean showList;
 
+    // 题目答案
+    private String answer;
+
+    // 是否手动评卷（一般针对于填空题和简答题）
+    private Boolean manualApprove;
+
     /**
      * 题目选项列表
      */

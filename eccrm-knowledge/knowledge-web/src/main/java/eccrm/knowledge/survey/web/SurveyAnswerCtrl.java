@@ -35,10 +35,10 @@ public class SurveyAnswerCtrl extends BaseController {
     private SurveyService surveyService;
 
     /**
-     * 回答问卷
+     * 回答试卷
      * 如果已经答过题了，则进入浏览界面
      * 如果还未答题，则进入答题界面
-     * @param id         问卷ID
+     * @param id         试卷ID
      * @param businessId 需要绑定的业务ID
      * @param userId     答题人ID
      * @param userName   答题人名称
@@ -67,7 +67,7 @@ public class SurveyAnswerCtrl extends BaseController {
 
     /**
      * 查询具体某一个人的答题结果
-     * @param surveyId   问卷ID
+     * @param surveyId   试卷ID
      * @param businessId 业务ID
      * @param userId     答题人ID
      */

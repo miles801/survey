@@ -7,7 +7,7 @@ import com.ycrl.core.hibernate.criteria.Condition;
  * @author Michael
  */
 public class SurveySubjectBo implements BO {
-    // 问卷ID
+    // 试卷ID
     @Condition
     private String surveyId;
 

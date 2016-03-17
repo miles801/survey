@@ -1,5 +1,5 @@
 /**
- * 调查问卷
+ * 调查试卷
  * Created by Michael on 2015/3/27.
  */
 (function (angular) {
@@ -10,7 +10,7 @@
     ]);
 
     /**
-     * 调查问卷
+     * 调查试卷
      */
     app.service('SurveyService', function ($resource, CommonUtils) {
 
@@ -27,7 +27,7 @@
             //  id：
             publish: {method: 'POST', params: {method: 'publish', id: '@id'}, isArray: false},
 
-            // 根据id查询新增调查问卷信息
+            // 根据id查询新增调查试卷信息
             get: {method: 'GET', params: {id: '@id', method: 'get'}, isArray: false},
 
             //分页查询，返回{total:,data:[{},{}]}
@@ -50,23 +50,23 @@
             //  subjectIds:题目的id列表，多个id使用逗号进行分隔
             addSubjects: {method: 'POST', params: {method: 'addSubjects'}, isArray: false},
 
-            // 查询指定问卷的所有题目
+            // 查询指定试卷的所有题目
             // 必须参数：
-            //  surveyId：问卷id
+            //  surveyId：试卷id
             querySubjects: {method: 'POST', params: {method: 'querySubjects', surveyId: '@surveyId'}, isArray: false},
 
-            // 查询指定问卷的所有题目，并同时返回题目的所有选项
+            // 查询指定试卷的所有题目，并同时返回题目的所有选项
             // 必须参数
-            //  surveyId：问卷ID
+            //  surveyId：试卷ID
             querySubjectWithItems: {
                 method: 'GET',
                 params: {method: 'querySubjectWithItems', surveyId: '@surveyId'},
                 isArray: false
             },
 
-            // 给指定问卷的指定题目设置为第一题
+            // 给指定试卷的指定题目设置为第一题
             // 必须参数：
-            //  surveyId:问卷ID
+            //  surveyId:试卷ID
             //  subjectId:题目ID
             setToFirst: {
                 method: 'POST',
@@ -74,8 +74,8 @@
                 isArray: false
             },
 
-            // 更新题目在问卷的序号
-            // 接收参数：{id：'问卷题目id',sequenceNo:1}
+            // 更新题目在试卷的序号
+            // 接收参数：{id：'试卷题目id',sequenceNo:1}
             updateSubjectSequence: {
                 method: 'POST',
                 params: {method: 'updateSubjectSequence'},
@@ -83,7 +83,7 @@
             },
             // 移除题目
             // 必须参数：
-            //  surveyId：问卷ID
+            //  surveyId：试卷ID
             //  subjectIds：题目ID（多个值使用逗号进行分隔）
             deleteSubjects: {
                 method: 'DELETE',
@@ -107,7 +107,7 @@
 
             // 查询用户的答题结果
             // 必须参数：
-            //  surveyId：问卷ID
+            //  surveyId：试卷ID
             //  businessId：业务ID
             //  userId：答题人ID
             queryResult: {
@@ -115,9 +115,9 @@
                 params: {method: 'result', surveyId: '@surveyId', businessId: '@businessId', userId: '@userId'},
                 isArray: false
             },
-            // 查询指定问卷的所有答题
+            // 查询指定试卷的所有答题
             // 必须参数：
-            //  surveyId：问卷ID
+            //  surveyId：试卷ID
             queryBySurveyId: {method: 'GET', params: {method: 'queryBySurveyId', surveyId: '@surveyId'}, isArray: false}
 
         })
@@ -141,9 +141,9 @@
     app.service('SurveyModal', function ($modal, CommonUtils, ModalFactory, AlertFactory, SurveyService) {
         return {
             /**
-             * 单选问卷
+             * 单选试卷
              * 配置项
-             *  callback:推荐项,function，选择一个问卷后的回调，该方法接收一个参数，为被选择的问卷对象
+             *  callback:推荐项,function，选择一个试卷后的回调，该方法接收一个参数，为被选择的试卷对象
              * @param options
              */
             pickOne: function (options) {
@@ -159,7 +159,7 @@
                 // 预览
                 $scope.preview = function (id) {
                     CommonUtils.addTab({
-                        title: '预览问卷',
+                        title: '预览试卷',
                         url: "/survey/preview?id=" + id
                     });
                 };
@@ -176,7 +176,7 @@
                 // 初始化分页插件
                 $scope.pager = {
                     fetch: function () {
-                        // 只查询已发布的问卷
+                        // 只查询已发布的试卷
                         var param = angular.extend({status: 'PUBLISHED'}, $scope.condition, {
                             start: this.start,
                             limit: this.limit

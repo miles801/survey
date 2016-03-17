@@ -2,13 +2,21 @@
     var app = angular.module('eccrm.base.user.register', [
         'eccrm.base.user',
         'eccrm.angular',
+        'eccrm.angular.ztree',
+        'base.org',
         'eccrm.angularstrap'
     ]);
-    app.controller('Ctrl', function ($scope, CommonUtils, User, AlertFactory) {
+    app.controller('Ctrl', function ($scope, CommonUtils, User, AlertFactory, Org) {
         // 保存用户
         // 保存员工
         // 指定机构
         $scope.user = {};
+
+        // 机构树
+        $scope.orgTree = Org.staticTree(function (o) {
+            $scope.user.orgId = o.id;
+            $scope.user.orgName = o.name;
+        });
 
         $scope.ok = function () {
             // 验证密码是否一致

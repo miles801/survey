@@ -89,7 +89,7 @@
 
                         <div class="row">
                             <div class="form-label col-1-half">
-                                <label>所属县区:</label>
+                                <label>所属部门:</label>
                             </div>
                             <div class="col-2-half">
                                 <input type="text" class="col-12" ztree-single="OrgztreeOptions"
@@ -111,8 +111,8 @@
                             <div class="form-label col-1-half">
                                 <label>身份证号:</label>
                             </div>
-                            <input class="col-2-half" type="text" validate validate-max-length="20" validate-int
-                                   ng-model="employee.tel"/>
+                            <input class="col-2-half" type="text" validate validate-min-length="18"
+                                   validate-max-length="18" ng-model="employee.idNo"/>
 
                             <div class="form-label col-1-half">
                                 <label>职务:</label>
@@ -147,7 +147,7 @@
                         </div>
                         <div class="row">
                             <div class="form-label col-1-half">
-                                <label>工作单位:</label>
+                                <label>班组:</label>
                             </div>
                             <input class="col-6-half" type="text" validate validate-max-length="100"
                                    ng-model="employee.company"/>

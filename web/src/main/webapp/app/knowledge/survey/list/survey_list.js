@@ -30,7 +30,7 @@
         // 新增
         $scope.add = function () {
             CommonUtils.addTab({
-                title: '新增问卷',
+                title: '新增试卷',
                 url: "/survey/add",
                 onUpdate: $scope.query
             });
@@ -39,11 +39,11 @@
         // 更新
         $scope.modify = function (id, status) {
             if (status !== 'INACTIVE' && status !== 'ACTIVE') {
-                CommonUtils.errorDialog('只有"启用/未启用"的问卷才可以更新!');
+                CommonUtils.errorDialog('只有"启用/未启用"的试卷才可以更新!');
                 return false;
             }
             CommonUtils.addTab({
-                title: '更新问卷',
+                title: '更新试卷',
                 url: "/survey/modify?id=" + id,
                 onUpdate: $scope.query
             });
@@ -52,7 +52,7 @@
         // 查看
         $scope.view = function (id) {
             CommonUtils.addTab({
-                title: '查看问卷',
+                title: '查看试卷',
                 url: "/survey/detail?id=" + id
             });
         };
@@ -60,12 +60,12 @@
         // 发布
         $scope.publish = function (id, status) {
             if (status !== 'ACTIVE') {
-                CommonUtils.errorDialog('只有"启用"的问卷才可以发布!');
+                CommonUtils.errorDialog('只有"启用"的试卷才可以发布!');
                 return false;
             }
             ModalFactory.confirm({
                 scope: $scope,
-                content: '确认要发布该问卷?'
+                content: '确认要发布该试卷?'
             }, function () {
                 SurveyService.publish({id: id}, function (data) {
                     if (data && data.success) {
@@ -78,23 +78,15 @@
             });
         };
 
-        // 统计分析
-        $scope.analysis = function (id, status) {
-            if (status !== 'CLOSED') {
-                CommonUtils.errorDialog('只有"结束"的问卷才可以查看统计!');
-                return false;
-            }
-            // TODO 统计分析页面
-        };
 
         // 参与调查
         $scope.preview = function (id, status, startDate, endDate) {
             if (status === 'INACTIVE') {
-                CommonUtils.errorDialog('"未启用"的问卷不可以预览!');
+                CommonUtils.errorDialog('"未启用"的试卷不可以预览!');
                 return false;
             }
             CommonUtils.addTab({
-                title: '预览问卷',
+                title: '预览试卷',
                 url: "/survey/preview?id=" + id
             });
         };

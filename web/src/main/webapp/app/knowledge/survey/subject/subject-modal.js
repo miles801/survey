@@ -230,7 +230,7 @@
                 $scope.condition = {
                     title: null,        // 题目
                     status: 'ACTIVE',    // 状态为有效的
-                    surveyId: options.surveyId,        // 排除指定调查问卷下的题目
+                    surveyId: options.surveyId,        // 排除指定调查试卷下的题目
                     subjectType: null,  // 题型
                     categoryId: null    // 题库
                 };

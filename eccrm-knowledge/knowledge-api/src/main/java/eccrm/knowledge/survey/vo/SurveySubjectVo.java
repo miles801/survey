@@ -6,13 +6,13 @@ import eccrm.knowledge.survey.domain.SubjectItem;
 import java.util.List;
 
 /**
- * 调查问卷的题目
+ * 调查试卷的题目
  *
  * @author Michael
  */
 public class SurveySubjectVo extends CommonVo {
 
-    // 问卷ID
+    // 试卷ID
     private String surveyId;
 
     // 题目ID

@@ -20,32 +20,26 @@ public class Employee extends CommonDomain implements AttachmentSymbol {
     private String gender;
     // 出生年月
     private Date birthday;
-    private String contry;
-    private String provience;
-    private String city;
+    // 电话
     private String mobile;
-    private String tel;
+    // QQ
     private String qq;
+    // 邮箱
     private String email;
-    /**
-     * 分机号（作为RTX账号使用）
-     */
-    private String extensionNumber;
-    private String region;
+    // 地址
     private String address;
-    private String idType;
-    private String idNo;
+    // 民族
     private String nation;
+    // 政治面貌
     private String zzmm;
+    // 婚姻状况
     private String marriage;
-    private String xueli;
-    private String xuewei;
-    private String school;
-    private String major;
-    private Date beginWorkDate;
-    private String workType;
+    // 证件号码
+    private String idNo;
+    // 职务
     private String duty;
     // 直属机构
+    @NotNull
     private String orgId;
     private String orgName;
     // 直属岗位
@@ -58,6 +52,22 @@ public class Employee extends CommonDomain implements AttachmentSymbol {
     // 头像
     private String picture;
 
+
+    public String getDuty() {
+        return duty;
+    }
+
+    public void setDuty(String duty) {
+        this.duty = duty;
+    }
+
+    public String getIdNo() {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
+    }
 
     public String getCompany() {
         return company;
@@ -86,54 +96,6 @@ public class Employee extends CommonDomain implements AttachmentSymbol {
 
     public void setPicture(String picture) {
         this.picture = picture;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
-    public String getQq() {
-        return qq;
-    }
-
-    public void setQq(String qq) {
-        this.qq = qq;
-    }
-
-    public String getPositionId() {
-        return positionId;
-    }
-
-    public void setPositionId(String positionId) {
-        this.positionId = positionId;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getExtensionNumber() {
-        return extensionNumber;
-    }
-
-    public void setExtensionNumber(String extensionNumber) {
-        this.extensionNumber = extensionNumber;
     }
 
     public String getEmployeeCode() {
@@ -168,36 +130,28 @@ public class Employee extends CommonDomain implements AttachmentSymbol {
         this.birthday = birthday;
     }
 
-    public String getContry() {
-        return contry;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setContry(String contry) {
-        this.contry = contry;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
-    public String getProvience() {
-        return provience;
+    public String getQq() {
+        return qq;
     }
 
-    public void setProvience(String provience) {
-        this.provience = provience;
+    public void setQq(String qq) {
+        this.qq = qq;
     }
 
-    public String getCity() {
-        return city;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getRegion() {
-        return region;
-    }
-
-    public void setRegion(String region) {
-        this.region = region;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getAddress() {
@@ -206,22 +160,6 @@ public class Employee extends CommonDomain implements AttachmentSymbol {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getIdType() {
-        return idType;
-    }
-
-    public void setIdType(String idType) {
-        this.idType = idType;
-    }
-
-    public String getIdNo() {
-        return idNo;
-    }
-
-    public void setIdNo(String idNo) {
-        this.idNo = idNo;
     }
 
     public String getNation() {
@@ -248,62 +186,6 @@ public class Employee extends CommonDomain implements AttachmentSymbol {
         this.marriage = marriage;
     }
 
-    public String getXueli() {
-        return xueli;
-    }
-
-    public void setXueli(String xueli) {
-        this.xueli = xueli;
-    }
-
-    public String getXuewei() {
-        return xuewei;
-    }
-
-    public void setXuewei(String xuewei) {
-        this.xuewei = xuewei;
-    }
-
-    public String getSchool() {
-        return school;
-    }
-
-    public void setSchool(String school) {
-        this.school = school;
-    }
-
-    public String getMajor() {
-        return major;
-    }
-
-    public void setMajor(String major) {
-        this.major = major;
-    }
-
-    public Date getBeginWorkDate() {
-        return beginWorkDate;
-    }
-
-    public void setBeginWorkDate(Date beginWorkDate) {
-        this.beginWorkDate = beginWorkDate;
-    }
-
-    public String getWorkType() {
-        return workType;
-    }
-
-    public void setWorkType(String workType) {
-        this.workType = workType;
-    }
-
-    public String getDuty() {
-        return duty;
-    }
-
-    public void setDuty(String duty) {
-        this.duty = duty;
-    }
-
     public String getOrgId() {
         return orgId;
     }
@@ -318,6 +200,14 @@ public class Employee extends CommonDomain implements AttachmentSymbol {
 
     public void setOrgName(String orgName) {
         this.orgName = orgName;
+    }
+
+    public String getPositionId() {
+        return positionId;
+    }
+
+    public void setPositionId(String positionId) {
+        this.positionId = positionId;
     }
 
     public String getPositionName() {

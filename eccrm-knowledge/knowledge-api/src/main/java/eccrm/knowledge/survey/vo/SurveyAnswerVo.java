@@ -8,7 +8,7 @@ import java.util.Date;
  * @author Michael
  */
 public class SurveyAnswerVo extends CommonVo {
-    // 问卷
+    // 试卷
     private String surveyId;
     private String surveyName;
 

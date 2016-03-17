@@ -32,7 +32,7 @@ public class LoginFilter implements Filter {
 
     private Logger logger = Logger.getLogger(LoginFilter.class);
     //静态资源
-    private String[] static_suffix = new String[]{".js", ".less", ".css", ".jpg", ".png", ".gif", ".html", ".htm", ".ttf", ".svg", ".woff", ".map", ".ico", ".mp3", ".class"};
+    private String[] static_suffix = new String[]{".js", ".less", ".css", ".jpg", ".png", ".gif", ".html", ".htm", ".ttf", ".svg", ".woff", ".map", ".ico", ".json"};
 
 
     @Override

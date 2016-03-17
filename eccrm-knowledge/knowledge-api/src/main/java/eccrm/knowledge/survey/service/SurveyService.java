@@ -40,12 +40,12 @@ public interface SurveyService {
     void deleteByIds(String[] ids);
 
     /**
-     * 发布问卷
+     * 发布试卷
      *
-     * @param id 问卷ID
-     * @throws RuntimeException 问卷状态不是“启用状态”
-     * @throws RuntimeException 问卷已过期
-     * @throws RuntimeException 问卷未设置题目
+     * @param id 试卷ID
+     * @throws RuntimeException 试卷状态不是“启用状态”
+     * @throws RuntimeException 试卷已过期
+     * @throws RuntimeException 试卷未设置题目
      */
     void publish(String id);
 }

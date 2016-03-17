@@ -80,7 +80,6 @@ public class UserServiceImpl implements UserService {
         userDao.save(user);
 
         // 保存用户与组的关联关系
-        saveGroups(user, user.getGroupIds());
         return userId;
     }
 
@@ -91,17 +90,19 @@ public class UserServiceImpl implements UserService {
         // 保存员工
         Employee employee = new Employee();
         String empId = UUIDGenerator.generate();
+        employee.setOrgId(user.getOrgId());
+        employee.setOrgName(user.getOrgName());
         employee.setId(empId);
         employee.setEmployeeName(user.getEmployeeName());
         employee.setStatus("2");
         employee.setTenementId("1");
         // 设置员工的岗位（注册时默认添加到编号为TGB的岗位）
         PositionDao positionDao = SystemContainer.getInstance().getBean(PositionDao.class);
-        List<Position> positions = positionDao.findByCode("TGB");
+        List<Position> positions = positionDao.findByCode("NORMAL");
         if (positions != null && !positions.isEmpty()) {
             employee.setPositionId(positions.get(0).getId());
             employee.setPositionName(positions.get(0).getName());
-            employee.setPositionCode("TGB");
+            employee.setPositionCode("NORMAL");
         }
         employeeDao.save(employee);
         // 保存用户
@@ -144,8 +145,6 @@ public class UserServiceImpl implements UserService {
         // 删除用户的所有组
         userGroupDao.deleteByUserId(user.getId());
 
-        // 新建用户的所有组
-        saveGroups(user, user.getGroupIds());
         //更新用户
         userDao.update(user);
     }

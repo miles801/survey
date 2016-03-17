@@ -20,9 +20,9 @@ public class SubjectBo implements BO {
     private String categoryId;      // 题目所属题库
 
     /**
-     * 如果指定该值，则表示排除掉已经在指定问卷中存在的题目
+     * 如果指定该值，则表示排除掉已经在指定试卷中存在的题目
      */
-    private String surveyId;        // 问卷ID
+    private String surveyId;        // 试卷ID
 
     public String getCategoryId() {
         return categoryId;

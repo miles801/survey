@@ -16,6 +16,17 @@ public class SubjectItem extends CrmBaseDomain {
     private String subjectId;
     private String subjectName;
 
+    // 是否为正确答案
+    private Boolean isRight;
+
+    public Boolean getRight() {
+        return isRight;
+    }
+
+    public void setRight(Boolean right) {
+        isRight = right;
+    }
+
     public String getName() {
         return name;
     }

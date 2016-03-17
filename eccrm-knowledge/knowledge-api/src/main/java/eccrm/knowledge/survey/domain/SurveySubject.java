@@ -3,7 +3,7 @@ package eccrm.knowledge.survey.domain;
 import com.ycrl.base.common.CommonDomain;
 
 /**
- * 调查问卷的题目(关联关系)
+ * 调查试卷的题目(关联关系)
  *
  * @author Michael
  */
@@ -18,7 +18,7 @@ public class SurveySubject extends CommonDomain {
      */
     public static final String ROUTE_CONDITION = "2";
 
-    // 问卷ID
+    // 试卷ID
     private String surveyId;
 
     // 题目ID

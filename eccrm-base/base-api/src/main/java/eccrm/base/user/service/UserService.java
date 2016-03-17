@@ -24,7 +24,7 @@ public interface UserService extends VoWrapper<User, UserVo> {
     String save(User user);
 
     /**
-     * 注册
+     * 注册（注册时，默认岗位为“”用户）
      * 同时保存用户和员工信息
      *
      * @param user 用户

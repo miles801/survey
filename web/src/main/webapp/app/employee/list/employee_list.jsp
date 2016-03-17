@@ -115,16 +115,17 @@ Date: 2014-10-15 14:47:37
                                          anyone-selected="anyone" ></div >
                                 </td >
                                 <td >姓名</td >
-                                <td >机构</td >
-                                <td >移动电话</td >
-                                <td >账号</td >
+                                <td>性别</td>
+                                <td>所属机构</td>
+                                <td>电话</td>
+                                <td>班组</td>
                                 <td >状态</td >
                                 <td style="white-space: nowrap;text-align:center; width: 10px;" >操作</td >
                             </tr >
                             </thead >
                             <tbody class="table-body" >
                             <tr ng-show="!employees || !employees.total || employees.data.length==0" >
-                                <td colspan="7" class="text-center" >没有查询到数据！</td >
+                                <td colspan="8" class="text-center">没有查询到数据！</td>
                             </tr >
                             <tr bindonce ng-repeat="foo in employees.data" >
                                 <td >
@@ -134,9 +135,10 @@ Date: 2014-10-15 14:47:37
                                     <a ng-click="detail(foo.id)"
                                        bo-text="foo.employeeName" ></a >
                                 </td >
+                                <td bo-text="foo.genderName"></td>
                                 <td bo-text="foo.orgName" ></td >
                                 <td bo-text="foo.mobile" ></td >
-                                <td bo-text="foo.extensionNumber" ></td >
+                                <td bo-text="foo.company"></td>
                                 <td bo-text="foo.statusName" ></td >
                                 <td >
                                     <a ng-click="modify(foo.id)" title="编辑" >

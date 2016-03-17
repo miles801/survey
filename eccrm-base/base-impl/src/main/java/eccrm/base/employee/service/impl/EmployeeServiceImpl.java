@@ -8,7 +8,6 @@ import eccrm.base.employee.bo.EmployeeBo;
 import eccrm.base.employee.dao.EmployeeDao;
 import eccrm.base.employee.domain.Employee;
 import eccrm.base.employee.service.ContactType;
-import eccrm.base.employee.service.EmployeeOrgRelService;
 import eccrm.base.employee.service.EmployeeService;
 import eccrm.base.employee.vo.EmployeeVo;
 import eccrm.base.parameter.service.ParameterContainer;
@@ -31,8 +30,6 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
     private EmployeeDao employeesDao;
     @Resource
     private PositionEmpDao positionEmpDao;
-    @Resource
-    private EmployeeOrgRelService employeeOrgRelService;
     @Resource
     private PositionEmpService positionEmpService;
     @Resource
@@ -106,12 +103,6 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
 
 
     @Override
-    public List<Employee> queryByOrgId(String id) {
-        List<Employee> employeeList = employeeOrgRelService.findByOrgId(id);
-        return employeeList;
-    }
-
-    @Override
     public List<EmployeeVo> queryByRuleId(String id, String orgId) {
         List<EmployeeVo> employeeList = positionEmpService.findByEmployee(id, orgId);
         return employeeList;
@@ -129,10 +120,6 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
     @Override
     public void doCallback(Employee employee, EmployeeVo vo) {
         ParameterContainer parameterContainer = ParameterContainer.getInstance();
-        // 职务
-        vo.setDutyName(parameterContainer.getBusinessName(ContactType.BP_ZHIW, vo.getDuty()));
-        // 工作类型
-        vo.setWorkTypeName(parameterContainer.getBusinessName(ContactType.BP_EMPTYPE, vo.getWorkType()));
         // 状态
         vo.setStatusName(parameterContainer.getSystemName(ContactType.CONT_TYPE_STATUS, vo.getStatus()));
         // 性别

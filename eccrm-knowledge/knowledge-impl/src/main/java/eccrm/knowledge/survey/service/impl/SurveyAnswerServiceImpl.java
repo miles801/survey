@@ -61,7 +61,7 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 
     @Override
     public boolean hasAnswered(String surveyId, String businessId, String userId) {
-        Assert.hasText(surveyId, "缺少参数：问卷ID!");
+        Assert.hasText(surveyId, "缺少参数：试卷ID!");
         Assert.hasText(businessId, "缺少参数：业务ID!");
         Assert.hasText(userId, "缺少参数：答题人ID!");
         SurveyAnswerBo bo = new SurveyAnswerBo();
@@ -74,7 +74,7 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 
     @Override
     public List<SurveyAnswerVo> queryAnswer(String surveyId, String businessId, String userId) {
-        Assert.hasText(surveyId, "缺少参数：问卷ID!");
+        Assert.hasText(surveyId, "缺少参数：试卷ID!");
         Assert.hasText(businessId, "缺少参数：业务ID!");
         Assert.hasText(userId, "缺少参数：答题人ID!");
         SurveyAnswerBo bo = new SurveyAnswerBo();

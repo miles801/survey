@@ -178,7 +178,7 @@ public class OrganizationServiceImpl implements OrganizationService, BeanWrapCal
         List<Organization> organizations = organizationDao.query(bo);
         List<Organization> trees = TreeFactory.buildTree(organizations, Organization.class);
         return BeanWrapBuilder.newInstance().setCallback(this)
-                .addProperties(new String[]{"id", "name", "children"})
+                .addProperties(new String[]{"id", "name", "children", "parentId"})
                 .wrapList(trees, OrganizationVo.class);
     }
 
@@ -187,14 +187,9 @@ public class OrganizationServiceImpl implements OrganizationService, BeanWrapCal
         OrganizationBo bo = new OrganizationBo();
         bo.setStatus("1");
         List<Organization> organizations = organizationDao.query(bo);
-        List<Organization> trees = TreeFactory.buildTree(organizations, Organization.class);
-        List<OrganizationVo> organizationVoList = BeanWrapBuilder.newInstance().setCallback(this)
-                .addProperties(new String[]{"id", "name", "children"})
-                .wrapList(trees, OrganizationVo.class);
-
         return BeanWrapBuilder.newInstance().setCallback(this)
-                .addProperties(new String[]{"id", "name", "children"})
-                .wrapList(trees, OrganizationVo.class);
+                .addProperties(new String[]{"id", "name", "children", "parentId"})
+                .wrapList(organizations, OrganizationVo.class);
     }
 
     @Override

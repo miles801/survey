@@ -1,5 +1,5 @@
 /**
- * 调查问卷答题、预览页面
+ * 调查试卷答题、预览页面
  * 通过pageType来判断页面的类型
  * Created by Michael on 2015/3/27.
  */
@@ -11,10 +11,10 @@
         'eccrm.knowledge.survey'
     ]);
     app.controller('SurveyPreviewCtrl', function ($scope, CommonUtils, AlertFactory, SurveyService, SurveyAnswerService) {
-        // 调查问卷ID
+        // 调查试卷ID
         var surveyId = $('#surveyId').val();
         if (!surveyId) {
-            AlertFactory.error($scope, '没有获得调查问卷ID!', '页面初始化失败');
+            AlertFactory.error($scope, '没有获得调查试卷ID!', '页面初始化失败');
             return false;
         }
         var surveyName = $('#surveyName').val();
@@ -73,8 +73,8 @@
                     foo.answer = o.answer;
                 }
                 // 组装数据
-                foo.surveyId = surveyId;            // 问卷ID
-                foo.surveyName = surveyName;        // 问卷名称
+                foo.surveyId = surveyId;            // 试卷ID
+                foo.surveyName = surveyName;        // 试卷名称
                 foo.subjectId = o.id;               // 题目ID
                 foo.subjectName = o.title;          // 题目标题
                 foo.subjectType = o.subjectType;    // 题目类型
@@ -122,7 +122,7 @@
 
         // 回显已答题目
         var getAnswer = function () {
-            // 问卷ID、答题人、业务ID
+            // 试卷ID、答题人、业务ID
             var promise = SurveyAnswerService.queryResult({
                 surveyId: surveyId,
                 businessId: businessId,
@@ -157,16 +157,16 @@
         };
 
 
-        // 查询问卷题目
+        // 查询试卷题目
         var querySubject = function () {
             var promise = SurveyService.querySubjectWithItems({surveyId: surveyId});
             CommonUtils.loading(promise, '加载题目...', function (data) {
-                // 得到该调查问卷所有的题目
+                // 得到该调查试卷所有的题目
                 subjects = data.data || [];
                 hasLoad.resolve(true);
                 var length = subjects.length;
                 if (length == 0) {
-                    CommonUtils.errorDialog('初始化失败!该问卷没有设置题目!');
+                    CommonUtils.errorDialog('初始化失败!该试卷没有设置题目!');
                     $scope.form.$setValidity('init', false);
                     return false;
                 }
@@ -184,7 +184,7 @@
         // --------------------------------- HANDLE ---------------------
 
 
-        // 获取问卷的所有题目
+        // 获取试卷的所有题目
         querySubject();
 
         // 如果答题完成，则浏览

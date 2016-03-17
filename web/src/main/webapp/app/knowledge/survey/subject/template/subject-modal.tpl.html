@@ -19,7 +19,7 @@
                                     <textarea id="container" class="col-12" rows="5" ></textarea >
                                 </div >
                             </div >
-                            <div class="row" >
+                            <div class="row dn">
                                 <div class="form-label col-1-half" >
                                     <label >说明:</label >
                                 </div >
@@ -46,18 +46,9 @@
                                 <select ng-model="beans.subjectType" class="col-4"
                                         ng-options="foo.value as foo.name for foo in types" > </select >
                             </div >
-
-                            <div class="row" >
-                                <div class="form-label col-1-half" >
-                                    <label >状态:</label >
-                                </div >
-                                <select ng-model="beans.status" class="col-4"
-                                        ng-options="foo.value as foo.name for foo in status" > </select >
-                            </div >
-
                             <!--  单选题的div  -->
                             <div class="select" ng-if="beans.subjectType == '1' || beans.subjectType=='2'" >
-                                <div class="row" >
+                                <div class="row dn">
                                     <div class="form-label col-1-half" >
                                         <label ></label >
                                     </div >
@@ -89,6 +80,13 @@
                                 </div >
                             </div >
 
+                            <div class="row">
+                                <div class="form-label col-1-half">
+                                    <label>状态:</label>
+                                </div>
+                                <select ng-model="beans.status" class="col-4"
+                                        ng-options="foo.value as foo.name for foo in status"> </select>
+                            </div>
                         </form >
                     </div >
                 </div >

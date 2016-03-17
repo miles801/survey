@@ -22,7 +22,6 @@ public interface EmployeeService {
 
     void deleteByIds(String... ids);
 
-    List<Employee> queryByOrgId(String id);
 
     List<EmployeeVo> queryByRuleId(String id, String orgId);
 

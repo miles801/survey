@@ -6,12 +6,12 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
- * 调查问卷--用户对问卷进行作答
+ * 调查试卷--用户对试卷进行作答
  * @author Michael
  */
 public class SurveyAnswer extends CommonDomain {
-    // 问卷
-    @NotNull(message = "没有获取到问卷!")
+    // 试卷
+    @NotNull(message = "没有获取到试卷!")
     private String surveyId;
     private String surveyName;
 
@@ -38,7 +38,7 @@ public class SurveyAnswer extends CommonDomain {
     private String answerUserType;
 
     // 与业务ID进行绑定
-    @NotNull(message = "问卷必须与指定的业务ID进行绑定!")
+    @NotNull(message = "试卷必须与指定的业务ID进行绑定!")
     private String businessId;
 
     // 批次ID

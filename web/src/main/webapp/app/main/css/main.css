@@ -43,7 +43,8 @@ body {
 #header .top {
     overflow: hidden;
     height: 60px;
-    background: url(../images/header.png) no-repeat right;
+    /*background: url(../images/header.png) no-repeat right;*/
+    background-color: #01a796;
     position: relative;
     /*background: url('../images/banner2000.png') no-repeat;*/
     /*background-size: 100% 80px;*/
@@ -52,12 +53,16 @@ body {
 
 #header .top .tool {
     height: 25px;
+    margin-right: 9px;
     position: absolute;
     z-index: 2;
     top: 0;
+    border: 2px solid #fff;
     right: 0;
-    background: url(../images/bg_top_right.png) no-repeat;
     background-size: 235px 25px;
+    border-top: 0;
+    border-radius: 20px;
+    padding: 5px 0px;
 }
 
 #header .top .tool > div {
@@ -69,6 +74,8 @@ body {
 #header .top .tool a {
     margin-left: 15px;
     cursor: pointer;
+    top: -7px;
+    position: relative;
 }
 
 #header .top .tool a i.glyphicons:before {
@@ -78,7 +85,8 @@ body {
 #header .top .logo {
     overflow: hidden;
     height: 60px;
-    width: 55px;
+    width: 165px;
+    top: -3px;
     left: 5px;
     background: url('../images/logo.png') no-repeat 0 5px;
     position: absolute;
@@ -180,7 +188,6 @@ body {
 }
 
 #main #accordian {
-    background: #eef9ff;
     width: 150px;
     height: 100%;
     box-sizing: border-box;
@@ -202,22 +209,12 @@ body {
 
 /*heading styles*/
 #main #accordian h3 {
-    font-size: 12px;
-    line-height: 34px;
+    font-size: 14px;
+    line-height: 40px;
     margin: 0;
     cursor: pointer;
-    filter: progid:DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=#2682c1, endColorStr=#2768a4);
-    background-image: -webkit-linear-gradient(top, #2682c1 0%, #2768a4 100%);
-    background-image: linear-gradient(top, #2682c1 0%, #2768a4 100%);
-    background-image: -o-linear-gradient(top, #2682c1 0%, #2768a4 100%);
-    background-image: -moz-linear-gradient(top, #2682c1 0%, #2768a4 100%);
-    background-image: -ms-linear-gradient(top, #2682c1 0%, #2768a4 100%);
-    /*background-image: -webkit-linear-gradient(top, #BEC7D6 0%, #AFBACC 100%);
-    background-image: linear-gradient(top, #BEC7D6 0%, #AFBACC 100%);
-    background-image: -o-linear-gradient(top, #BEC7D6 0%, #AFBACC 100%);
-    background-image: -moz-linear-gradient(top, #BEC7D6 0%, #AFBACC 100%);
-    background-image: -ms-linear-gradient(top, #BEC7D6 0%, #AFBACC 100%);*/
-    border-bottom: 1px solid #003b73;
+    background-color: #f3fdfc;
+    border-bottom: 1px solid #7acac1;
     white-space: nowrap; /*防止折叠时挤开*/
 }
 
@@ -233,7 +230,8 @@ body {
 /*iconfont styles*/
 #main #accordian h3 span {
     font-size: 14px;
-    font-weight: 500;
+    color: #333;
+    font-weight: 700;
 }
 
 /*list items*/
@@ -249,10 +247,9 @@ body {
 #main #accordian ul ul li a {
     color: #000000;
     text-decoration: none;
-    font-size: 11px;
-    line-height: 27px;
+    line-height: 30px;
     display: block;
-    padding: 0 15px;
+    padding: 0 15px 0 25px;
     /*transition for smooth hover animation*/
     transition: all 0.15s;
     white-space: nowrap; /*防止折叠时挤开*/
@@ -295,8 +292,13 @@ body {
     right: 0;
 }
 
+#main #accordian .menu-children > .icon-down {
+    position: absolute;
+    color: #333;
+}
+
 #main #accordian .menu-text a {
-    color: #ffffff;
+    color: #333;
     text-decoration: none;
     line-height: 27px;
     padding: 0 0;
@@ -360,7 +362,7 @@ body {
     height: 30px;
     font-size: 12px;
     width: 100%;
-    border-top: 1px solid #d6d6d6;
+    border-top: 1px solid #01a796;
     overflow: hidden;
     text-align: center;
 }
@@ -463,7 +465,7 @@ body {
 .footer {
     height: 30px;
     line-height: 30px;
-    background: #002b74;
+    background: #01a796;
     color: #FFF;
     position: relative;
 }

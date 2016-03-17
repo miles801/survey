@@ -16,6 +16,26 @@
         <property name="showNavPage" column="SHOW_NAV_PAGE" type="boolean"/>
         <property name="multiPage" column="MULTI_PAGE" type="boolean"/>
         <property name="showResult" column="SHOW_RESULT" type="boolean"/>
+
+        <property name="totalScore" column="TOTAL_SCORE" type="int"/>
+        <property name="totalSubjects" column="TOTAL_SUBJECTS" type="int"/>
+        <property name="xzCounts" column="XZ_COUNTS" type="int"/>
+        <property name="xzScore" column="XZ_SCORE" type="int"/>
+        <property name="xzTotalScore" column="XZ_TOTAL_SCORE" type="int"/>
+        <property name="dxCounts" column="DX_COUNTS" type="int"/>
+        <property name="dxScore" column="DX_SCORE" type="int"/>
+        <property name="dxTotalScore" column="DX_TOTAL_SCORE" type="int"/>
+        <property name="pdCounts" column="PD_COUNTS" type="int"/>
+        <property name="pdScore" column="PD_SCORE" type="int"/>
+        <property name="pdTotalScore" column="PD_TOTAL_SCORE" type="int"/>
+        <property name="tkCounts" column="TK_COUNTS" type="int"/>
+        <property name="tkScore" column="TK_SCORE" type="int"/>
+        <property name="tkTotalScore" column="TK_TOTAL_SCORE" type="int"/>
+        <property name="jdCounts" column="JD_COUNTS" type="int"/>
+        <property name="jdScore" column="JD_SCORE" type="int"/>
+        <property name="jdTotalScore" column="JD_TOTAL_SCORE" type="int"/>
+        <property name="randomSubject" column="IS_RANDOM" type="boolean"/>
+
         <!-- 公共属性 -->
         <property name="status" column="STATUS" type="string" length="40"/>
         <property name="description" column="DESCRIPTION" type="string" length="1000"/>

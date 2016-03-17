@@ -95,10 +95,10 @@
                                              anyone-selected="anyone" ></div >
                                     </td >
                                     <td >分类名称</td >
-                                    <td style="width: 30px;" >父节点</td >
-                                    <td style="width: 30px;" >显示顺序</td >
-                                    <td style="width: 20px;" >状态</td >
-                                    <td >操作</td >
+                                    <td style="width: 200px;">上级分类</td>
+                                    <td style="width: 60px;">显示顺序</td>
+                                    <td style="width: 120px;">状态</td>
+                                    <td style="width: 120px;">操作</td>
                                 </tr >
                                 </thead >
                                 <tbody class="table-body" >

@@ -71,7 +71,7 @@ public class SubjectDaoImpl extends HibernateDaoHelper implements SubjectDao {
         CriteriaUtils.addCondition(criteria, bo);
         String surveyId = bo.getSurveyId();
 
-        // 排除指定问卷的题目
+        // 排除指定试卷的题目
         if (StringUtils.isNotEmpty(surveyId)) {
             DetachedCriteria detachedCriteria = DetachedCriteria.forClass(SurveySubject.class);
             detachedCriteria.setProjection(Projections.property("subjectId"))

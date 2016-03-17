@@ -41,7 +41,7 @@ public class SurveySubjectServiceImpl implements SurveySubjectService {
 
     @Override
     public void saveBatch(String surveyId, String[] subjectIds) {
-        Assert.hasText(surveyId, "调查问卷ID不能为空!");
+        Assert.hasText(surveyId, "调查试卷ID不能为空!");
         Assert.notEmpty(subjectIds);
         // 去掉重复添加的题目
         List<String> subjectIdList = surveySubjectDao.exists(surveyId, subjectIds);   // 查询已经存在的id集合
@@ -96,7 +96,7 @@ public class SurveySubjectServiceImpl implements SurveySubjectService {
 
     @Override
     public List<SurveySubjectVo> querySubject(final String surveyId, SubjectBo bo) {
-        Assert.hasText(surveyId, "调查问卷ID不能为空!");
+        Assert.hasText(surveyId, "调查试卷ID不能为空!");
         List<SurveySubject> surveySubjects = surveySubjectDao.queryBySurveyId(surveyId);
         if (surveySubjects == null || surveySubjects.isEmpty()) {
             return null;
@@ -128,7 +128,7 @@ public class SurveySubjectServiceImpl implements SurveySubjectService {
 
     @Override
     public boolean hasSubject(String surveyId) {
-        Assert.hasText(surveyId, "调查问卷:查询问卷的是否设置了题目是,必须指定问卷ID!");
+        Assert.hasText(surveyId, "调查试卷:查询试卷的是否设置了题目是,必须指定试卷ID!");
         SurveySubjectBo bo = new SurveySubjectBo();
         bo.setSurveyId(surveyId);
         Long count = surveySubjectDao.getTotal(bo);
@@ -142,7 +142,7 @@ public class SurveySubjectServiceImpl implements SurveySubjectService {
 
     @Override
     public void setNext(String id, String nextId, String condition) {
-        Assert.hasText(condition, "调查问卷:设置下一题,必须指定跳转条件的值!");
+        Assert.hasText(condition, "调查试卷:设置下一题,必须指定跳转条件的值!");
         setNextSubject(id, nextId, condition);
     }
 
@@ -154,8 +154,8 @@ public class SurveySubjectServiceImpl implements SurveySubjectService {
      * @param condition 条件，可为空
      */
     private void setNextSubject(String id, String nextId, String condition) {
-        Assert.hasText(id, "调查问卷:设置下一题,必须指定要设置的ID!");
-        Assert.hasText(nextId, "调查问卷:设置下一题,必须指定下一题ID!");
+        Assert.hasText(id, "调查试卷:设置下一题,必须指定要设置的ID!");
+        Assert.hasText(nextId, "调查试卷:设置下一题,必须指定下一题ID!");
         SurveySubject surveySubject = surveySubjectDao.findById(id);
         if (surveySubject == null) {
             throw new EntityNotFoundException(SurveySubject.class.getName() + ":" + id);
@@ -163,7 +163,7 @@ public class SurveySubjectServiceImpl implements SurveySubjectService {
 
         String subjectId = surveySubject.getSubjectId();
         if (subjectId.equals(nextId)) {
-            throw new RuntimeException("调查问卷:设置下一题,当前题的下一题不能是自己!");
+            throw new RuntimeException("调查试卷:设置下一题,当前题的下一题不能是自己!");
         }
 
         Subject subject = subjectDao.findById(nextId);

@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>银川市“红黄蓝”闲散青少年结对帮扶数据库</title>
+    <title>国网江阴供电公司考试系统 </title>
     <link rel="stylesheet" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css"/>
     <link rel="stylesheet" href="<%=contextPath%>/app/main/css/main.css"/>
@@ -30,9 +30,6 @@
     <div id="header">
         <div class="top">
             <div class="logo"></div>
-            <span style=" color: #fff; font-size: 26px; margin-left: 65px; height: 60px; display: inline-block; line-height: 60px; ">
-                | 银川市“红黄蓝”闲散青少年结对帮扶数据库
-            </span>
             <div class="tool" style="width: 100px;">
                 <a href="<%=contextPath%>/logout">
                     <img src="<%=contextPath%>/app/main/images/icon/h13.png" width="24" height="24" title="退出">
@@ -41,13 +38,12 @@
                     <img src="<%=contextPath%>/app/main/images/icon/h7.png" width="24" height="24" title="更改密码">
                 </a>
             </div>
-            <span style="font-size: 16px;position: absolute;right: 100px;color:#fff;top:30px;">共青团银川市委员会</span>
         </div>
     </div>
     <div id="main">
         <div class="leftbar">
             <div class="LB_container">
-                <a title="首页" ng-click="showHome();">
+                <a title="首页" ng-click="showHome();" class="current">
                     <img src="<%=contextPath%>/app/main/images/home.png" alt="首页"/>
                 </a>
                 <a bindonce bo-title="menu.name" ng-repeat="menu in menus" ng-repeat-finish
@@ -71,7 +67,7 @@
 							</span>
 							<span class="menu-children" bo-show="level1.children.length>0">
 								<span class="menu-children" style="position:relative">
-                                    <span style="position:absolute;color:#ffffff;">&#9660;</span>
+                                    <span class="icon-down">&#9660;</span>
                                 </span>
 							</span>
                         </h3>

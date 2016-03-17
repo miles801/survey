@@ -8,10 +8,10 @@
         'knowledge.survey.subject.modal'
     ]);
     app.controller('SubjectListCtrl', function ($scope, CommonUtils, Subject, ModalFactory, SubjectService, SubjectModal, SurveyService) {
-        // 问卷
+        // 试卷
         var surveyId = $('#surveyId').val();
         if (!surveyId) {
-            CommonUtils.errorDialog('没有获取到问卷ID!');
+            CommonUtils.errorDialog('没有获取到试卷ID!');
             return false;
         }
         // 页面
@@ -51,7 +51,7 @@
 
         // 设置为第一题
         $scope.setToFirst = function (subjectId) {
-            ModalFactory.confirm({scope: $scope, keywords: '一个问卷只能有一个第一题,设置后,其他已经被设置成第一题的将会被取消,请确认!'}, function () {
+            ModalFactory.confirm({scope: $scope, keywords: '一个试卷只能有一个第一题,设置后,其他已经被设置成第一题的将会被取消,请确认!'}, function () {
                 var promise = setToFirst.setToFirst({surveyId: subjectId, subjectId: subjectId});
                 CommonUtils.loading(promise, '更新中...', $scope.query);
             });

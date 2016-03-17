@@ -1,12 +1,10 @@
 package eccrm.base.user.domain;
 
 import eccrm.base.tenement.domain.CrmBaseDomain;
-import eccrm.base.user.enums.UserStatus;
 import eccrm.base.user.enums.UserType;
 import eccrm.core.enums.EnumClass;
 import eccrm.core.enums.EnumSymbol;
 
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -29,14 +27,7 @@ public class User extends CrmBaseDomain implements EnumSymbol {
     private Date startDate;
     private Date endDate;
     private String email;
-    @EnumClass(UserStatus.class)
     private String status;
-
-    /**
-     * 用户组的id列表，多个值使用逗号分隔
-     */
-    @Transient
-    private String groupIds;
 
     // 员工信息
     private String employeeId;
@@ -46,8 +37,8 @@ public class User extends CrmBaseDomain implements EnumSymbol {
     private String mobilePhone;
     private String officePhone;
 
-    private String deptId;// 机构
-    private String deptName;// 机构名称
+    private String orgId;// 机构
+    private String orgName;// 机构名称
     private String duty; // 职务
     private String position;
 
@@ -164,28 +155,20 @@ public class User extends CrmBaseDomain implements EnumSymbol {
         this.status = status;
     }
 
-    public String getGroupIds() {
-        return groupIds;
+    public String getOrgId() {
+        return orgId;
     }
 
-    public void setGroupIds(String groupIds) {
-        this.groupIds = groupIds;
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
     }
 
-    public String getDeptId() {
-        return deptId;
+    public String getOrgName() {
+        return orgName;
     }
 
-    public void setDeptId(String deptId) {
-        this.deptId = deptId;
-    }
-
-    public String getDeptName() {
-        return deptName;
-    }
-
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
+    public void setOrgName(String deptName) {
+        this.orgName = deptName;
     }
 
     public String getDuty() {

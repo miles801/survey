@@ -33,6 +33,10 @@
             // 返回：{data : [{id,name,children:[]}]}
             tree: {method: 'POST', params: {method: 'tree'}, isArray: false},
 
+            // 静态加载组织机构的所有数据
+            // 在数据量较大时，慎用！
+            staticTree: {method: 'GET', params: {method: 'tree.json'}, isArray: false},
+
             //分页查询，返回{total:,data:[{},{}]}
             query: {method: 'POST', params: {method: 'query', limit: '@limit', start: '@start'}, isArray: false},
 
@@ -216,6 +220,21 @@
                             CommonUtils.loading(promise, '加载机构树...', function (data) {
                                 callback(data.data || []);
                             });
+                        });
+                    },
+                    click: onClick
+                }
+            },
+
+            // 获得组织机构的所有数据（静态加载）
+            staticTree: function (onClick) {
+                return {
+                    data: function () {
+                        return CommonUtils.promise(function (defer) {
+                            var promise = OrgService.staticTree(function (data) {
+                                defer.resolve(data.data || []);
+                            });
+                            CommonUtils.loading(promise, '加载机构树...');
                         });
                     },
                     click: onClick

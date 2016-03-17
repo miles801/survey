@@ -3,6 +3,7 @@ package eccrm.base.employee.vo;
 
 import com.ycrl.base.common.CommonVo;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -12,191 +13,97 @@ import java.util.Date;
 public class EmployeeVo extends CommonVo {
 
     private String employeeCode;
+    @NotNull
     private String employeeName;
+    // 性别
     private String gender;
     private String genderName;
+    // 出生年月
     private Date birthday;
-    private String contry;
-    private String provience;
+    // 电话
     private String mobile;
+    // QQ
+    private String qq;
+    // 邮箱
     private String email;
-    private String extensionNumber;
-    private String city;
-    private String region;
+    // 地址
     private String address;
-    private String idType;
-    private String idNo;
+    // 民族
     private String nation;
     private String nationName;
+    // 政治面貌
     private String zzmm;
+    private String zzmmName;
+    // 婚姻状况
     private String marriage;
-    private String xueli;
-    private String xuewei;
-    private String school;
-    private String major;
-    private Date beginWorkDate;
-    private String workType;
-    private String workTypeName;
-    private String duty;
-    private String dutyName;
+    private String marriageName;
+    // 直属机构
+    @NotNull
     private String orgId;
     private String orgName;
-    private String employeeId;
-    private String statusName;
-    private Boolean isBlank;//是否为白名单
-    private String busiTypeName;
-    private String tel;
-    private String qq;
-
+    // 直属岗位
     private String positionId;
     private String positionName;
-    private String positionCode;
-    private String picture;
+    private String positionCode;    // 直属岗位的编号
+
     // 公司
     private String company;
+    // 头像
+    private String picture;
 
-    public String getCompany() {
-        return company;
+    // 证件号码
+    private String idNo;
+    // 职务
+    private String duty;
+
+    private String statusName;
+
+    public String getIdNo() {
+        return idNo;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
     }
 
-    public String getPositionCode() {
-        return positionCode;
+    public String getDuty() {
+        return duty;
     }
 
-    public void setPositionCode(String positionCode) {
-        this.positionCode = positionCode;
+    public void setDuty(String duty) {
+        this.duty = duty;
     }
 
-    public String getPositionId() {
-        return positionId;
+    public String getZzmm() {
+        return zzmm;
     }
 
-    public void setPositionId(String positionId) {
-        this.positionId = positionId;
+    public void setZzmm(String zzmm) {
+        this.zzmm = zzmm;
     }
 
-    public String getPositionName() {
-        return positionName;
+    public String getZzmmName() {
+        return zzmmName;
     }
 
-    public void setPositionName(String positionName) {
-        this.positionName = positionName;
+    public void setZzmmName(String zzmmName) {
+        this.zzmmName = zzmmName;
     }
 
-    public String getPicture() {
-        return picture;
+    public String getMarriage() {
+        return marriage;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setMarriage(String marriage) {
+        this.marriage = marriage;
     }
 
-    public String getTel() {
-        return tel;
+    public String getMarriageName() {
+        return marriageName;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
-    public String getQq() {
-        return qq;
-    }
-
-    public void setQq(String qq) {
-        this.qq = qq;
-    }
-
-    public String getGenderName() {
-        return genderName;
-    }
-
-    public void setGenderName(String genderName) {
-        this.genderName = genderName;
-    }
-
-    public String getNationName() {
-        return nationName;
-    }
-
-    public void setNationName(String nationName) {
-        this.nationName = nationName;
-    }
-
-    public String getBusiTypeName() {
-        return busiTypeName;
-    }
-
-    public void setBusiTypeName(String busiTypeName) {
-        this.busiTypeName = busiTypeName;
-    }
-
-    public String getOrgName() {
-        return orgName;
-    }
-
-    public void setOrgName(String orgName) {
-        this.orgName = orgName;
-    }
-
-    public String getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public String getStatusName() {
-        return statusName;
-    }
-
-    public void setStatusName(String statusName) {
-        this.statusName = statusName;
-    }
-
-    public String getWorkTypeName() {
-        return workTypeName;
-    }
-
-    public void setWorkTypeName(String workTypeName) {
-        this.workTypeName = workTypeName;
-    }
-
-    public String getDutyName() {
-        return dutyName;
-    }
-
-    public void setDutyName(String dutyName) {
-        this.dutyName = dutyName;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getExtensionNumber() {
-        return extensionNumber;
-    }
-
-    public void setExtensionNumber(String extensionNumber) {
-        this.extensionNumber = extensionNumber;
+    public void setMarriageName(String marriageName) {
+        this.marriageName = marriageName;
     }
 
     public String getEmployeeCode() {
@@ -223,6 +130,14 @@ public class EmployeeVo extends CommonVo {
         this.gender = gender;
     }
 
+    public String getGenderName() {
+        return genderName;
+    }
+
+    public void setGenderName(String genderName) {
+        this.genderName = genderName;
+    }
+
     public Date getBirthday() {
         return birthday;
     }
@@ -231,36 +146,20 @@ public class EmployeeVo extends CommonVo {
         this.birthday = birthday;
     }
 
-    public String getContry() {
-        return contry;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setContry(String contry) {
-        this.contry = contry;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
-    public String getProvience() {
-        return provience;
+    public String getEmail() {
+        return email;
     }
 
-    public void setProvience(String provience) {
-        this.provience = provience;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getRegion() {
-        return region;
-    }
-
-    public void setRegion(String region) {
-        this.region = region;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getAddress() {
@@ -271,22 +170,6 @@ public class EmployeeVo extends CommonVo {
         this.address = address;
     }
 
-    public String getIdType() {
-        return idType;
-    }
-
-    public void setIdType(String idType) {
-        this.idType = idType;
-    }
-
-    public String getIdNo() {
-        return idNo;
-    }
-
-    public void setIdNo(String idNo) {
-        this.idNo = idNo;
-    }
-
     public String getNation() {
         return nation;
     }
@@ -295,76 +178,12 @@ public class EmployeeVo extends CommonVo {
         this.nation = nation;
     }
 
-    public String getZzmm() {
-        return zzmm;
+    public String getNationName() {
+        return nationName;
     }
 
-    public void setZzmm(String zzmm) {
-        this.zzmm = zzmm;
-    }
-
-    public String getMarriage() {
-        return marriage;
-    }
-
-    public void setMarriage(String marriage) {
-        this.marriage = marriage;
-    }
-
-    public String getXueli() {
-        return xueli;
-    }
-
-    public void setXueli(String xueli) {
-        this.xueli = xueli;
-    }
-
-    public String getXuewei() {
-        return xuewei;
-    }
-
-    public void setXuewei(String xuewei) {
-        this.xuewei = xuewei;
-    }
-
-    public String getSchool() {
-        return school;
-    }
-
-    public void setSchool(String school) {
-        this.school = school;
-    }
-
-    public String getMajor() {
-        return major;
-    }
-
-    public void setMajor(String major) {
-        this.major = major;
-    }
-
-    public Date getBeginWorkDate() {
-        return beginWorkDate;
-    }
-
-    public void setBeginWorkDate(Date beginWorkDate) {
-        this.beginWorkDate = beginWorkDate;
-    }
-
-    public String getWorkType() {
-        return workType;
-    }
-
-    public void setWorkType(String workType) {
-        this.workType = workType;
-    }
-
-    public String getDuty() {
-        return duty;
-    }
-
-    public void setDuty(String duty) {
-        this.duty = duty;
+    public void setNationName(String nationName) {
+        this.nationName = nationName;
     }
 
     public String getOrgId() {
@@ -375,11 +194,67 @@ public class EmployeeVo extends CommonVo {
         this.orgId = orgId;
     }
 
-    public Boolean getIsBlank() {
-        return isBlank;
+    public String getOrgName() {
+        return orgName;
     }
 
-    public void setIsBlank(Boolean isBlank) {
-        this.isBlank = isBlank;
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    public String getPositionId() {
+        return positionId;
+    }
+
+    public void setPositionId(String positionId) {
+        this.positionId = positionId;
+    }
+
+    public String getPositionName() {
+        return positionName;
+    }
+
+    public void setPositionName(String positionName) {
+        this.positionName = positionName;
+    }
+
+    public String getPositionCode() {
+        return positionCode;
+    }
+
+    public void setPositionCode(String positionCode) {
+        this.positionCode = positionCode;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
     }
 }

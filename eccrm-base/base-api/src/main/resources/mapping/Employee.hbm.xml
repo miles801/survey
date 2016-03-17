@@ -12,38 +12,16 @@
         <property name="gender" column="SEX" type="string"/>
         <!--出生日期-->
         <property name="birthday" column="BIRTHDAY" type="timestamp"/>
-        <!--户籍-国家-->
-        <property name="contry" column="CONTRY" type="string"/>
-        <!-- 户籍-省-->
-        <property name="provience" column="PROVIENCE" type="string"/>
-        <!--户籍-市-->
-        <property name="city" column="CITY" type="string"/>
-        <!-- 户籍-区县-->
-        <property name="region" column="REGION" type="string"/>
         <!-- 户籍-地址-->
         <property name="address" column="ADDRESS" type="string"/>
-        <!-- 证件类型-->
-        <property name="idType" column="ID_TYPE" type="string"/>
-        <!--证件号码-->
-        <property name="idNo" column="ID_NO" type="string"/>
         <!--民族-->
         <property name="nation" column="NATION" type="string"/>
         <!--政治面貌-->
         <property name="zzmm" column="ZZMM" type="string"/>
         <!--婚姻状况-->
         <property name="marriage" column="MARRIAGE" type="string"/>
-        <!--最高学历-->
-        <property name="xueli" column="XUELI" type="string"/>
-        <!--学历-->
-        <property name="xuewei" column="XUEWEI" type="string"/>
-        <!--毕业院校-->
-        <property name="school" column="SCHOOL" type="string"/>
-        <!--专业-->
-        <property name="major" column="MAJOR" type="string"/>
-        <!--工作时间-->
-        <property name="beginWorkDate" column="START_WORK_DATE" type="timestamp"/>
-        <!--工作类型-->
-        <property name="workType" column="WORK_TYPE" type="string" length="40"/>
+        <!--证件号码-->
+        <property name="idNo" column="ID_NO" type="string"/>
         <!--职务-->
         <property name="duty" column="DUTY" type="string" length="40"/>
         <property name="orgId" column="ORG_ID" type="string" length="40"/>
@@ -54,8 +32,6 @@
         <property name="mobile" column="MOBILE" type="string" length="40"/>
         <property name="email" column="EMAIL" type="string" length="40"/>
         <property name="qq" column="QQ" type="string" length="20"/>
-        <property name="tel" column="TEL" type="string" length="20"/>
-        <property name="extensionNumber" column="EXTENSIONNUMBER" type="string" length="40"/>
         <property name="picture" column="PICTURE" type="string" length="40"/>
         <property name="company" column="COMPANY" type="string" length="200"/>
         <!-- 公共属性 -->

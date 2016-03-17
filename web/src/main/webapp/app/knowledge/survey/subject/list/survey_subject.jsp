@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en" >
 <head >
-    <title >问卷题目</title >
+    <title>试卷题目</title>
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css" >
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css" >
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/zTree/css/ztree.css" >

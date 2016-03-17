@@ -39,8 +39,8 @@ public interface SurveyAnswerService {
     void deleteByIds(String[] ids);
 
     /**
-     * 指定问卷是否已经被回答
-     * @param surveyId   问卷ID
+     * 指定试卷是否已经被回答
+     * @param surveyId   试卷ID
      * @param businessId 绑定的业务ID
      * @param userId     答题人ID
      * @return true已经回答，false未回答
@@ -48,8 +48,8 @@ public interface SurveyAnswerService {
     boolean hasAnswered(String surveyId, String businessId, String userId);
 
     /**
-     * 查询指定问卷，指定用户的回答情况
-     * @param surveyId   问卷ID
+     * 查询指定试卷，指定用户的回答情况
+     * @param surveyId   试卷ID
      * @param businessId 业务ID
      * @param userId     答题人ID
      * @return 答题情况

@@ -75,9 +75,17 @@ public class OrganizationCtrl {
     @RequestMapping(value = "/get", params = {"id"}, method = RequestMethod.GET)
     public void findById(@RequestParam String id, HttpServletResponse response) {
         OrganizationVo vo = organizationService.findById(id);
-//        String json = GsonUtils.toJsonInclude(vo);
-//        com.ycrl.utils.gson.GsonUtils.printJson(response, json);
         GsonUtils.printData(response, vo);
+    }
+
+    // 返回完整的机构树
+    // 这里需要注意的是，该方法仅仅用于组织机构的数据比较小的情况
+    // 如果组织机构的数据比较大， 可以使用静态化的方式进行优化
+    @ResponseBody
+    @RequestMapping(value = "/tree.json", method = RequestMethod.GET)
+    public void orgTree(HttpServletResponse response) {
+        List<OrganizationVo> data = organizationService.trees();
+        GsonUtils.printData(response, data);
     }
 
     @ResponseBody

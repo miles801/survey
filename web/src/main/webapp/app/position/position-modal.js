@@ -147,7 +147,7 @@
                 callback = callback || cfg.callback;
 
             },
-            //知识库==》调查问卷==》新增
+            //知识库==》调查试卷==》新增
             add: function (cfg, callback) {
                 var defaults = {
                     scope: null,

@@ -25,9 +25,9 @@ public interface SurveySubjectService {
     void updateSequenceNo(Map<String, Integer> sequences);
 
     /**
-     * 查询问卷的题目,不进行分页
+     * 查询试卷的题目,不进行分页
      *
-     * @param surveyId 问卷ID
+     * @param surveyId 试卷ID
      * @param bo       高级查询条件
      */
     List<SurveySubjectVo> querySubject(String surveyId, SubjectBo bo);
@@ -35,22 +35,22 @@ public interface SurveySubjectService {
     /**
      * 批量删除
      *
-     * @param surveyId   问卷ID
+     * @param surveyId   试卷ID
      * @param subjectIds 题目id
      */
     void delete(String surveyId, String[] subjectIds);
 
     /**
-     * 查询问卷的题目，并同时返回题目对应的选项
+     * 查询试卷的题目，并同时返回题目对应的选项
      *
-     * @param surveyId 问卷ID
+     * @param surveyId 试卷ID
      */
     List<SubjectVo> querySubjectWithItems(String surveyId);
 
     /**
-     * 检查指定的问卷是否设置了题目
+     * 检查指定的试卷是否设置了题目
      *
-     * @param surveyId 问卷ID
+     * @param surveyId 试卷ID
      * @return true 设置了题目，false 未添加题目
      * @throws IllegalArgumentException surveyId不能为空
      */

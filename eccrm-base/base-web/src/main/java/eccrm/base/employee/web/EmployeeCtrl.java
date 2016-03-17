@@ -126,15 +126,6 @@ public class EmployeeCtrl extends BaseController {
         GsonUtils.printData(response, employeeServices.isExists(decodedName));
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/queryByOrgId", params = {"id"}, method = RequestMethod.GET)
-    public void queryByOrgId(@RequestParam String id, HttpServletResponse response) {
-        List<Employee> employeeList = employeeServices.queryByOrgId(id);
-        PageVo vo = new PageVo();
-        vo.setTotal(Long.valueOf(employeeList.size()));
-        vo.setData(employeeList);
-        GsonUtils.printData(response, vo);
-    }
 
     @ResponseBody
     @RequestMapping(value = "/queryByRuleId", params = {"id", "orgId"}, method = RequestMethod.GET)

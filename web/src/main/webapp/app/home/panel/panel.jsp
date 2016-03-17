@@ -59,31 +59,12 @@
 
                         <p>民族：{{beans.nationName}}</p>
 
-                        <p>所属县区：{{beans.orgName}}</p>
+                        <p>所属部门：{{beans.orgName}}</p>
 
-                        <p>配对状态：{{beans.matched?'已配对':'未配对'}}</p>
                     </div>
 
                 </td>
-                <td style="text-align: right;">
-                    <img ng-if="youth" src="<%=contextPath%>/app/home/panel/toggle.png" width="150" height="120"/>
-                </td>
-                <td style="float: right;padding-right: 15px;" id="image2">
-                </td>
-                <td style="width: 200px;">
-                    <div ng-cloak ng-if="youth">
-                        <p>姓名：{{youth.name}}</p>
-
-                        <p>性别：{{youth.sexName}}</p>
-
-                        <p>年龄：{{youth.age}}</p>
-
-                        <p>电话：{{youth.mobile}}</p>
-
-                        <p>民族：{{youth.nationName}}</p>
-                    </div>
-                </td>
-                <td style="width: 150px;">
+                <td>
                     <div class="row mybtn">
                         <a type="button" class="btn btn-blue"
                            href="<%=contextPath%>/base/employee/modify/<%=userId%>"
@@ -102,7 +83,6 @@
 </body>
 <script type="text/javascript" src="<%=contextPath%>/app/employee/employee.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/app/base/user/user.js"></script>
-<script type="text/javascript" src="<%=contextPath%>/app/spec/youth/youth.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/app/home/panel/panel.js"></script>
 </html>
 

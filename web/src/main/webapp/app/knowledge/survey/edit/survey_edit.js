@@ -16,13 +16,16 @@
         // 页签
         /**
          *
-         * @param id 调查问卷ID
+         * @param id 调查试卷ID
          * @param pageType 页面类型，值为新增、更新、查看
          */
         var initTab = function (id, pageType) {
+            if (beans.isRandomSubject == true) {
+                return;
+            }
             var tabs = [
                 {
-                    title: '问卷题目',
+                    title: '试卷题目',
                     isRoot: true,
                     url: 'app/knowledge/survey/subject/list/survey_subject.jsp?surveyId=' + id + '&pageType=' + pageType,
                     targetObj: window.self
@@ -106,9 +109,26 @@
             load();
             $('input,select,textarea').attr('disabled', 'disabled');
         } else if (pageType == 'add') {
-            $scope.beans.creatorName = CommonUtils.loginContext().employeeName;
-            $scope.beans.createdDatetime = new Date().getTime();
-            $scope.beans.status = 'ACTIVE';
+            beans.creatorName = CommonUtils.loginContext().employeeName;
+            beans.createdDatetime = new Date().getTime();
+            beans.status = 'ACTIVE';
+            beans.xzCounts = 10;
+            beans.xzScore = 2;
+            beans.xzTotalScore = beans.xzCounts * beans.xzScore;
+            beans.dxCounts = 5;
+            beans.dxScore = 5;
+            beans.dxTotalScore = beans.dxCounts * beans.dxScore;
+            beans.pdCounts = 0;
+            beans.pdScore = 0;
+            beans.pdTotalScore = beans.pdCounts * beans.pdScore;
+            beans.tkCounts = 5;
+            beans.tkScore = 5;
+            beans.tkTotalScore = beans.tkCounts * beans.tkScore;
+            beans.jdCounts = 3;
+            beans.jdScore = 10;
+            beans.jdTotalScore = beans.jdCounts * beans.jdScore;
+            beans.startTime = new Date().getTime();
+            beans.isRandomSubject = true;     // 采用随机选题
         } else if (pageType == 'modify') {
             initTab(id, 'modify');
             load();
