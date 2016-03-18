@@ -3,7 +3,7 @@ package eccrm.knowledge.survey.domain;
 import com.ycrl.base.common.CommonDomain;
 
 /**
- * 调查试卷的题目(关联关系)
+ * 试卷的题目(关联关系)
  *
  * @author Michael
  */

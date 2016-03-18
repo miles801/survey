@@ -44,11 +44,6 @@
 
         // 修改
         $scope.modify = function (id, status) {
-            if (status !== 'INACTIVE') {
-                CommonUtils.errorDialog('只有未启用的题目才可以更改!');
-                return false;
-            }
-
             SubjectModal.modify({id: id}, $scope.query);
         };
 
@@ -76,6 +71,7 @@
         // 初始化题型
         Subject.type(function (data) {
             $scope.type = data;
+            $scope.type.unshift({name: '全部'});
         });
 
         // 初始化状态

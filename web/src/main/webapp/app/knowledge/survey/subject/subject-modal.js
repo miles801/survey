@@ -159,9 +159,9 @@
             add: function (options, callback) {
                 var $scope = common('add', options, callback);
                 var defaults = {
-                    status: 'INACTIVE',
-                    subjectType: '1',
-                    items: [{}]
+                    status: 'ACTIVE',
+                    subjectType: '1',   // 单选
+                    items: [{}, {}, {}, {}]
                 };
 
                 // 初始化
@@ -175,7 +175,10 @@
                     CommonUtils.loading(promise, '保存中...', function (data) {
                         if (data && data.success) {
                             if (createNew == true) {
-                                $scope.beans = angular.extend({}, defaults);
+                                $scope.beans.answer = null;
+                                titleEditor.html('');
+                                $scope.beans.title = '';
+                                $scope.beans.items = [{}, {}, {}, {}];
                                 return;
                             }
                             $scope.$hide();
@@ -194,8 +197,7 @@
                     if (!$scope.validate()) {
                         return;
                     }
-                    var promise = SubjectService.update($scope.beans);
-                    CommonUtils.loading(promise, '更新中...', function (data) {
+                    var promise = SubjectService.update($scope.beans, function (data) {
                         if (data && data.success) {
                             $scope.beans = null;
                             $scope.$hide();
@@ -205,6 +207,7 @@
                             }
                         }
                     });
+                    CommonUtils.loading(promise, '更新中...');
                 }
             },
             /**
@@ -230,7 +233,7 @@
                 $scope.condition = {
                     title: null,        // 题目
                     status: 'ACTIVE',    // 状态为有效的
-                    surveyId: options.surveyId,        // 排除指定调查试卷下的题目
+                    surveyId: options.surveyId,        // 排除指定试卷下的题目
                     subjectType: null,  // 题型
                     categoryId: null    // 题库
                 };

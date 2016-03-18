@@ -21,6 +21,36 @@ public class SubjectVo extends CrmBaseVo {
     private List radioList;     // 单选
     private List checkboxList;  // 复选
 
+    // 题目答案
+    private String answer;
+
+    // 是否手动评卷（一般针对于填空题和简答题）
+    private Boolean manualApprove;
+
+    public Boolean getManualApprove() {
+        return manualApprove;
+    }
+
+    public void setManualApprove(Boolean manualApprove) {
+        this.manualApprove = manualApprove;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public Boolean getRequired() {
+        return isRequired;
+    }
+
+    public void setRequired(Boolean required) {
+        isRequired = required;
+    }
+
     private List<SubjectItem> items;
 
 

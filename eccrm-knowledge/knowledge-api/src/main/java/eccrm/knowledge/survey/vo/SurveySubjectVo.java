@@ -6,7 +6,7 @@ import eccrm.knowledge.survey.domain.SubjectItem;
 import java.util.List;
 
 /**
- * 调查试卷的题目
+ * 试卷的题目
  *
  * @author Michael
  */

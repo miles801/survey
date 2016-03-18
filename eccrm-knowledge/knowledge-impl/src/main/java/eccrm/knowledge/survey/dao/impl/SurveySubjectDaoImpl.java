@@ -43,7 +43,7 @@ public class SurveySubjectDaoImpl extends HibernateDaoHelper implements SurveySu
     @Override
     @SuppressWarnings("unchecked")
     public List<String> querySubjectIds(String surveyId) {
-        Assert.hasText(surveyId, "查询试卷题目时,调查试卷ID不能为空!");
+        Assert.hasText(surveyId, "查询试卷题目时,试卷ID不能为空!");
         return createCriteria(SurveySubject.class)
                 .setProjection(Projections.property("subjectId"))
                 .add(Restrictions.eq("surveyId", surveyId))
@@ -53,7 +53,7 @@ public class SurveySubjectDaoImpl extends HibernateDaoHelper implements SurveySu
     @Override
     @SuppressWarnings("unchecked")
     public List<SurveySubject> queryBySurveyId(String surveyId) {
-        Assert.hasText(surveyId, "查询试卷题目时,调查试卷ID不能为空!");
+        Assert.hasText(surveyId, "查询试卷题目时,试卷ID不能为空!");
         return createCriteria(SurveySubject.class)
                 .add(Restrictions.eq("surveyId", surveyId))
                 .addOrder(Order.asc("sequenceNo"))
@@ -126,7 +126,7 @@ public class SurveySubjectDaoImpl extends HibernateDaoHelper implements SurveySu
 
     @Override
     public boolean hasSubject(String surveyId) {
-        Assert.hasText(surveyId, "调查试卷:查询试卷的是否设置了题目是,必须指定试卷ID!");
+        Assert.hasText(surveyId, "试卷:查询试卷的是否设置了题目是,必须指定试卷ID!");
         Long count = (Long) createRowCountsCriteria(SurveySubject.class)
                 .add(Restrictions.eq("surveyId", surveyId))
                 .uniqueResult();
@@ -135,8 +135,8 @@ public class SurveySubjectDaoImpl extends HibernateDaoHelper implements SurveySu
 
     @Override
     public void resetFirstSubject(String surveyId, String subjectId) {
-        Assert.hasText(surveyId, "调查试卷:设置试卷第一题时,必须指定试卷ID!");
-        Assert.hasText(surveyId, "调查试卷:设置试卷第一题时,必须指定题目ID!");
+        Assert.hasText(surveyId, "试卷:设置试卷第一题时,必须指定试卷ID!");
+        Assert.hasText(surveyId, "试卷:设置试卷第一题时,必须指定题目ID!");
         // 清空之前的设置
         Session session = getSession();
         session.createQuery("update " + SurveySubject.class.getName() + " ss set ss.isFirst=false where ss.surveyId=? and ss.isFirst=true")

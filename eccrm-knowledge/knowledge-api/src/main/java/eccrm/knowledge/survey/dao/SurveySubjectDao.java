@@ -28,9 +28,9 @@ public interface SurveySubjectDao {
     List<String> querySubjectIds(String surveyId);
 
     /**
-     * 查询指定调查试卷下的所有的题目
+     * 查询指定试卷下的所有的题目
      *
-     * @param surveyId 调查试卷ID
+     * @param surveyId 试卷ID
      */
     List<SurveySubject> queryBySurveyId(String surveyId);
 

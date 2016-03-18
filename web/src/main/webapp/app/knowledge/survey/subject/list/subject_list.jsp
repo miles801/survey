@@ -91,30 +91,30 @@
                         </div >
                     </div >
                     <div class="block-content" >
-                        <div class="table-responsive panel panel-table first-min" >
-                            <table class="table table-striped table-hover " >
+                        <div class="table-responsive panel panel-table">
+                            <table class="table table-striped table-hover text-center">
                                 <thead class="table-header" >
                                 <tr >
-                                    <td >
+                                    <td class="width-min">
                                         <div select-all-checkbox checkboxes="beans.data" selected-items="items"
                                              anyone-selected="anyone" ></div >
                                     </td >
                                     <td >题目</td >
-                                    <td style="width: 20px;" >题型</td >
-                                    <td style="width: 20px;" >分类</td >
-                                    <td style="width: 20px;" >状态</td >
-                                    <td >操作</td >
+                                    <td style="width: 120px;">题型</td>
+                                    <td style="width: 120px;">分类</td>
+                                    <td style="width: 120px;">状态</td>
+                                    <td style="width: 100px;">操作</td>
                                 </tr >
                                 </thead >
                                 <tbody class="table-body" >
                                 <tr ng-show="!beans.total" >
                                     <td colspan="6" class="text-center" >没有符合条件的记录！</td >
                                 </tr >
-                                <tr bindonce ng-repeat="foo in beans.data" >
+                                <tr bindonce ng-repeat="foo in beans.data" ng-cloak>
                                     <td >
                                         <input type="checkbox" ng-model="foo.isSelected" ng-disabled="{{foo.status==1}}" />
                                     </td >
-                                    <td title="点击查询明细！" style="cursor: pointer;" >
+                                    <td title="点击查询明细！" style="cursor: pointer;" class="text-left">
                                         <a ng-click="view(foo.id)" bo-text="foo.title | removeHTMLTag | limitTo:40" ></a >
                                     </td >
                                     <td bo-text="foo.subjectTypeName" ></td >

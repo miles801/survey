@@ -6,7 +6,7 @@ import eccrm.knowledge.survey.domain.Subject;
 import java.util.List;
 
 /**
- * 调查试卷--题目
+ * 试卷--题目
  */
 public interface SubjectDao {
 

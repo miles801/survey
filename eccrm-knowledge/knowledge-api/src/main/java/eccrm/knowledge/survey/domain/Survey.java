@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
- * 调查试卷（试卷）
+ * 试卷（试卷）
  *
  * @author Michael
  */

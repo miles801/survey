@@ -80,11 +80,7 @@
 
 
         // 参与调查
-        $scope.preview = function (id, status, startDate, endDate) {
-            if (status === 'INACTIVE') {
-                CommonUtils.errorDialog('"未启用"的试卷不可以预览!');
-                return false;
-            }
+        $scope.preview = function (id) {
             CommonUtils.addTab({
                 title: '预览试卷',
                 url: "/survey/preview?id=" + id

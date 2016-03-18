@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>调查试卷</title>
+    <title>试卷</title>
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css">
     <link rel="stylesheet" href="<%=contextPath%>/vendor/angular-motion-v0.3.2/angular-motion.min.css"/>
@@ -130,7 +130,7 @@
                                     </a>
 
                                     <a class="btn btn-tiny" title="预览/模拟考试"
-                                       ng-click="preview(foo.id,foo.status,foo.startTime,foo.endTime);">
+                                       ng-click="preview(foo.id);">
                                         <span class="icons view"></span>
                                     </a>
                                 </td>

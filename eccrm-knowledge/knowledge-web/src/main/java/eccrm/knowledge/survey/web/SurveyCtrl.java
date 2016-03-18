@@ -142,7 +142,7 @@ public class SurveyCtrl extends BaseController {
     public void addSubjects(HttpServletRequest request, HttpServletResponse response) {
         JsonObject jsonObject = com.ycrl.utils.gson.GsonUtils.wrapDataToEntity(request, JsonObject.class);
         String surveyId = JsonObjectUtils.getStringProperty(jsonObject, "surveyId");
-        Assert.hasText(surveyId, "没有获得调查试卷ID");
+        Assert.hasText(surveyId, "没有获得试卷ID");
         String subjectIds = JsonObjectUtils.getStringProperty(jsonObject, "subjectIds");
         Assert.hasText(subjectIds, "没有获得题目ID");
         surveySubjectService.saveBatch(surveyId, subjectIds.split(","));

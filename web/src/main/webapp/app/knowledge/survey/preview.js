@@ -1,5 +1,5 @@
 /**
- * 调查试卷答题、预览页面
+ * 试卷答题、预览页面
  * 通过pageType来判断页面的类型
  * Created by Michael on 2015/3/27.
  */
@@ -11,10 +11,10 @@
         'eccrm.knowledge.survey'
     ]);
     app.controller('SurveyPreviewCtrl', function ($scope, CommonUtils, AlertFactory, SurveyService, SurveyAnswerService) {
-        // 调查试卷ID
+        // 试卷ID
         var surveyId = $('#surveyId').val();
         if (!surveyId) {
-            AlertFactory.error($scope, '没有获得调查试卷ID!', '页面初始化失败');
+            AlertFactory.error($scope, '没有获得试卷ID!', '页面初始化失败');
             return false;
         }
         var surveyName = $('#surveyName').val();
@@ -159,9 +159,8 @@
 
         // 查询试卷题目
         var querySubject = function () {
-            var promise = SurveyService.querySubjectWithItems({surveyId: surveyId});
-            CommonUtils.loading(promise, '加载题目...', function (data) {
-                // 得到该调查试卷所有的题目
+            var promise = SurveyService.querySubjectWithItems({surveyId: surveyId}, function (data) {
+                // 得到该试卷所有的题目
                 subjects = data.data || [];
                 hasLoad.resolve(true);
                 var length = subjects.length;
@@ -179,13 +178,19 @@
                     $scope.beans = subjects;
                 }
             });
+            CommonUtils.loading(promise, '加载题目...');
         };
 
+        // 获取考卷信息
+        var querySurvey = function (id) {
+            var promise = SurveyService.get({id: id}, function (data) {
+                $scope.beans = data.data || {};
+            });
+            CommonUtils.loading(promise);
+        };
         // --------------------------------- HANDLE ---------------------
 
-
-        // 获取试卷的所有题目
-        querySubject();
+        querySurvey(surveyId);
 
         // 如果答题完成，则浏览
         if (pageType == 'VIEW') {

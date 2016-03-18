@@ -11,5 +11,6 @@
         <property name="sequenceNo" type="integer" column="SEQUENCE_NO"/>
         <property name="subjectId" type="string" column="SUBJECT_ID" length="40"/>
         <property name="subjectName" type="string" column="SUBJECT_NAME" length="200"/>
+        <property name="right" type="boolean" column="IS_RIGHT"/>
     </class>
 </hibernate-mapping>

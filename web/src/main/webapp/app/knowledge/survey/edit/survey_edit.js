@@ -16,7 +16,7 @@
         // 页签
         /**
          *
-         * @param id 调查试卷ID
+         * @param id 试卷ID
          * @param pageType 页面类型，值为新增、更新、查看
          */
         var initTab = function (id, pageType) {

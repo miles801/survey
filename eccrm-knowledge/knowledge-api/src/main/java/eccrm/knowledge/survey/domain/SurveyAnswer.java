@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
- * 调查试卷--用户对试卷进行作答
+ * 试卷--用户对试卷进行作答
  * @author Michael
  */
 public class SurveyAnswer extends CommonDomain {

@@ -130,4 +130,28 @@ public class Subject extends CrmBaseDomain {
     public void setItems(List<SubjectItem> items) {
         this.items = items;
     }
+
+    public Boolean getManualApprove() {
+        return manualApprove;
+    }
+
+    public void setManualApprove(Boolean manualApprove) {
+        this.manualApprove = manualApprove;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public Boolean getRequired() {
+        return isRequired;
+    }
+
+    public void setRequired(Boolean required) {
+        isRequired = required;
+    }
 }

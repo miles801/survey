@@ -19,6 +19,7 @@ public class SubjectItem extends CrmBaseDomain {
     // 是否为正确答案
     private Boolean isRight;
 
+
     public Boolean getRight() {
         return isRight;
     }

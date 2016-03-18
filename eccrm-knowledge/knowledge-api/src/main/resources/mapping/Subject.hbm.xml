@@ -16,6 +16,8 @@
         <property name="showSelect" type="boolean" column="SHOW_SELECT"/>
         <property name="showList" type="boolean" column="SHOW_LIST"/>
         <property name="subjectType" type="string" column="SUBJECT_TYPE" length="40"/>
+        <property name="answer" type="string" column="ANSWER" length="1000"/>
+        <property name="manualApprove" type="boolean" column="MANUAL_APPROVE"/>
 
         <!-- 公共属性 -->
         <property name="status" column="STATUS" type="string" length="40"/>

@@ -1,5 +1,5 @@
 /**
- * 调查试卷
+ * 试卷
  * Created by Michael on 2015/3/27.
  */
 (function (angular) {
@@ -10,7 +10,7 @@
     ]);
 
     /**
-     * 调查试卷
+     * 试卷
      */
     app.service('SurveyService', function ($resource, CommonUtils) {
 
@@ -27,7 +27,7 @@
             //  id：
             publish: {method: 'POST', params: {method: 'publish', id: '@id'}, isArray: false},
 
-            // 根据id查询新增调查试卷信息
+            // 根据id查询新增试卷信息
             get: {method: 'GET', params: {id: '@id', method: 'get'}, isArray: false},
 
             //分页查询，返回{total:,data:[{},{}]}
