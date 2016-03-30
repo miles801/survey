@@ -10,11 +10,16 @@ import com.ycrl.utils.gson.JsonObjectUtils;
 import eccrm.knowledge.survey.bo.SubjectBo;
 import eccrm.knowledge.survey.bo.SurveyBo;
 import eccrm.knowledge.survey.domain.Survey;
+import eccrm.knowledge.survey.domain.SurveyReportDetail;
+import eccrm.knowledge.survey.service.SurveyReportDetailService;
+import eccrm.knowledge.survey.service.SurveyReportService;
 import eccrm.knowledge.survey.service.SurveyService;
 import eccrm.knowledge.survey.service.SurveySubjectService;
 import eccrm.knowledge.survey.vo.SubjectVo;
+import eccrm.knowledge.survey.vo.SurveyReportVo;
 import eccrm.knowledge.survey.vo.SurveySubjectVo;
 import eccrm.knowledge.survey.vo.SurveyVo;
+import eccrm.utils.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +42,12 @@ import java.util.Map;
 public class SurveyCtrl extends BaseController {
     @Resource
     private SurveyService surveyService;
+
+    @Resource
+    private SurveyReportService surveyReportService;
+
+    @Resource
+    private SurveyReportDetailService surveyReportDetailService;
 
     @RequestMapping(value = {""}, method = RequestMethod.GET)
     public String toList() {
@@ -118,7 +129,12 @@ public class SurveyCtrl extends BaseController {
                           HttpServletRequest request, HttpServletResponse response) {
         SurveyVo survey = surveyService.findById(id);
         request.setAttribute("beans", survey);
+        String answer = request.getParameter("answer");
         request.setAttribute("pageType", "PREVIEW");
+        if (StringUtils.isNotEmpty(answer) && "true".equals(answer)) {
+            request.setAttribute("surveyReportId", request.getParameter("surveyReportId"));
+            request.setAttribute("pageType", "ANSWER");
+        }
         return "knowledge/survey/preview";
     }
 
@@ -187,5 +203,66 @@ public class SurveyCtrl extends BaseController {
         }
         surveySubjectService.updateSequenceNo(map);
         GsonUtils.printSuccess(response);
+    }
+
+
+    // =================================        SurveyReport       ===========================
+
+    // 查询个人可注册试卷
+    @ResponseBody
+    @RequestMapping(value = "/canregister", method = RequestMethod.GET)
+    public void queryAllPersonalCanRegisterSurvey(HttpServletRequest request, HttpServletResponse response) {
+        List<SurveyVo> data = surveyService.queryAllCanRegister();
+        GsonUtils.printData(response, data);
+    }
+
+    // 试卷注册
+    @ResponseBody
+    @RequestMapping(value = "/register", params = "id", method = RequestMethod.POST)
+    public void register(@RequestParam String id, HttpServletResponse response) {
+        surveyService.register(id);
+        GsonUtils.printSuccess(response);
+    }
+
+    // 查询个人未完成（可考试）试卷
+    @ResponseBody
+    @RequestMapping(value = "/unfinished", method = RequestMethod.GET)
+    public void queryPersonalUnfinishedSurvey(HttpServletResponse response) {
+        List<SurveyReportVo> data = surveyReportService.queryUnfinish();
+        GsonUtils.printData(response, data);
+    }
+
+    // 获取指定试卷的下一题
+    // ID:已注册的试卷的ID
+    @ResponseBody
+    @RequestMapping(value = "/nextsubject", params = "id", method = RequestMethod.GET)
+    public void queryNextSubject(@RequestParam String id, HttpServletResponse response) {
+        SubjectVo data = surveyReportService.getNextSubject(id);
+        GsonUtils.printData(response, data);
+    }
+
+    // 答题
+    @ResponseBody
+    @RequestMapping(value = "/answer", method = RequestMethod.POST)
+    public void answer(HttpServletRequest request, HttpServletResponse response) {
+        SurveyReportDetail detail = GsonUtils.wrapDataToEntity(request, SurveyReportDetail.class);
+        boolean isRight = surveyReportDetailService.answer(detail.getId(), detail.getAnswer());
+        GsonUtils.printData(response, isRight);
+    }
+
+    // 查询个人已完成试卷
+    @ResponseBody
+    @RequestMapping(value = "/finished", method = RequestMethod.GET)
+    public void queryPersonalFinishedSurvey(HttpServletResponse response) {
+        List<SurveyReportVo> data = surveyReportService.queryFinish();
+        GsonUtils.printData(response, data);
+    }
+
+    // 查询指定试卷的成绩（答题情况）
+    @ResponseBody
+    @RequestMapping(value = "/score", params = "id", method = RequestMethod.GET)
+    public void querySurveyScore(@RequestParam String id, HttpServletResponse response) {
+        SurveyReportVo data = surveyReportService.findById(id);
+        GsonUtils.printData(response, data);
     }
 }

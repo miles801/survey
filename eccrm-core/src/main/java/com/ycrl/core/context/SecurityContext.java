@@ -29,6 +29,7 @@ public class SecurityContext {
      *
      */
     private static ThreadLocal<String> _empId = new ThreadLocal<String>();
+    private static ThreadLocal<String> _ip = new ThreadLocal<String>();
 
 
     public static String getUserId() {
@@ -59,6 +60,7 @@ public class SecurityContext {
         _empName.remove();
         _empId.remove();
         _login.remove();
+        _ip.remove();
     }
 
     public static void set(String userId, String username, String tenementId) {
@@ -66,6 +68,18 @@ public class SecurityContext {
         _username.set(username);
         _tenementId.set(tenementId);
         _login.set(true);
+    }
+
+    public static void setIp(String ip) {
+        _ip.set(ip);
+    }
+
+    public static String getIp() {
+        return _ip.get();
+    }
+
+    public static void removeIp() {
+        _ip.remove();
     }
 
     public static void setLogin(boolean login) {

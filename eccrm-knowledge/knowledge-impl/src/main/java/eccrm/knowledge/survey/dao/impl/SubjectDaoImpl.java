@@ -78,6 +78,12 @@ public class SubjectDaoImpl extends HibernateDaoHelper implements SubjectDao {
                     .add(Restrictions.eq("surveyId", surveyId));
             criteria.add(Property.forName("id").notIn(detachedCriteria));
         }
+
+        // 是否为随机获取数据
+        boolean isRandomLoad = bo != null && bo.getRandom() != null && bo.getRandom();
+        if (isRandomLoad) {
+            criteria.add(Restrictions.sqlRestriction(" 1=1 order by rand()"));
+        }
     }
 
 

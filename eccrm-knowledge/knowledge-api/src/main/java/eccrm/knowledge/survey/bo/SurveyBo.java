@@ -22,10 +22,37 @@ public class SurveyBo implements BO {
     private String status;
 
     @Condition(matchMode = MatchModel.GE)
-    private Date startDate;
+    private Date startTime;
 
     @Condition(matchMode = MatchModel.LT)
-    private Date endDate;
+    private Date endTime;
+
+    // 如果值为true，表示还没有注册过答题（需要依赖当前登录人）
+    private Boolean notRegister;
+
+    public Boolean getNotRegister() {
+        return notRegister;
+    }
+
+    public void setNotRegister(Boolean notRegister) {
+        this.notRegister = notRegister;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
 
     public String getCode() {
         return code;
@@ -35,13 +62,6 @@ public class SurveyBo implements BO {
         this.code = code;
     }
 
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
 
     public String getName() {
         return name;
@@ -49,14 +69,6 @@ public class SurveyBo implements BO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
     }
 
     public String getStatus() {

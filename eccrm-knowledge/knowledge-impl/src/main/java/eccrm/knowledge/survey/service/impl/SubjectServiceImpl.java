@@ -14,6 +14,7 @@ import eccrm.knowledge.survey.domain.SubjectItem;
 import eccrm.knowledge.survey.service.SubjectService;
 import eccrm.knowledge.survey.vo.SubjectVo;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -77,11 +78,13 @@ public class SubjectServiceImpl implements SubjectService {
     public void save(Subject subject) {
         String id = subjectDao.save(subject);
         saveSubjectItems(subject, id);
+        Assert.hasText(subject.getAnswer(), "新增题目失败!请填写该题目的正确答案!");
     }
 
     private void saveSubjectItems(Subject subject, String id) {
         List<SubjectItem> items = subject.getItems();
         if (items != null && !items.isEmpty()) {
+            String rightAnswer = "";
             int i = 1;
             for (SubjectItem item : items) {
                 if (StringUtils.isEmpty(item.getName())) {
@@ -90,8 +93,13 @@ public class SubjectServiceImpl implements SubjectService {
                 item.setSubjectId(id);
                 item.setSubjectName(subject.getTitle());
                 item.setSequenceNo(i++);
-                subjectItemDao.save(item);
+                String answerId = subjectItemDao.save(item);
+                if (item.getRight() != null && item.getRight()) {
+                    rightAnswer += "," + answerId;
+                }
             }
+            Assert.isTrue(rightAnswer.length() > 0, "题目新增失败,请保证至少有一个选项是正确的!");
+            subject.setAnswer(rightAnswer.substring(1));
         }
     }
 
@@ -103,5 +111,6 @@ public class SubjectServiceImpl implements SubjectService {
         subjectItemDao.deleteBySubjectId(id);
         // 重建关系
         saveSubjectItems(subject, id);
+        Assert.hasText(subject.getAnswer(), "新增题目失败!请填写该题目的正确答案!");
     }
 }

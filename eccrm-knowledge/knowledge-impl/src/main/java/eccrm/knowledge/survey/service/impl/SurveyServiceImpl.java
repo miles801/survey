@@ -3,17 +3,24 @@ package eccrm.knowledge.survey.service.impl;
 import com.ycrl.base.common.CommonStatus;
 import com.ycrl.core.beans.BeanWrapBuilder;
 import com.ycrl.core.beans.BeanWrapCallback;
+import com.ycrl.core.context.SecurityContext;
 import com.ycrl.core.hibernate.validator.ValidatorUtils;
 import com.ycrl.core.pager.PageVo;
+import com.ycrl.core.pager.Pager;
 import com.ycrl.utils.number.IntegerUtils;
 import eccrm.base.parameter.service.ParameterContainer;
+import eccrm.knowledge.survey.bo.SubjectBo;
 import eccrm.knowledge.survey.bo.SurveyBo;
-import eccrm.knowledge.survey.dao.SurveyDao;
-import eccrm.knowledge.survey.dao.SurveySubjectDao;
+import eccrm.knowledge.survey.dao.*;
+import eccrm.knowledge.survey.domain.Subject;
 import eccrm.knowledge.survey.domain.Survey;
+import eccrm.knowledge.survey.domain.SurveyReport;
+import eccrm.knowledge.survey.domain.SurveyReportDetail;
 import eccrm.knowledge.survey.service.SurveyService;
 import eccrm.knowledge.survey.vo.SurveyVo;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -29,6 +36,15 @@ public class SurveyServiceImpl implements SurveyService {
 
     @Resource
     private SurveySubjectDao surveySubjectDao;
+
+    @Resource
+    private SurveyReportDao surveyReportDao;
+
+    @Resource
+    private SubjectDao subjectDao;
+
+    @Resource
+    private SurveyReportDetailDao surveyReportDetailDao;
 
     @Override
     public String save(Survey survey) {
@@ -125,12 +141,132 @@ public class SurveyServiceImpl implements SurveyService {
             throw new RuntimeException("发布失败!该试卷已经过期!");
         }
         // 检查是否包含题目
-        boolean hasSubject = surveySubjectDao.hasSubject(id);
+        /*boolean hasSubject = surveySubjectDao.hasSubject(id);
         if (!hasSubject) {
             throw new RuntimeException("发布失败!该试卷还未设置题目!");
-        }
+        }*/
+
+        // 检查题库是否有足够的题
 
 
         survey.setStatus(Survey.STATUS_PUBLISHED);
+    }
+
+
+    @Override
+    public List<SurveyVo> queryAllCanRegister() {
+        SurveyBo bo = new SurveyBo();
+        bo.setStatus(Survey.STATUS_PUBLISHED);
+        Date now = new Date();
+//        bo.setStartTime(now);
+//        bo.setEndTime(now);
+        bo.setNotRegister(true);
+        List<Survey> surveys = surveyDao.query(bo);
+        return BeanWrapBuilder.newInstance().wrapList(surveys, SurveyVo.class);
+    }
+
+    @Override
+    public void register(String surveyId) {
+        Logger logger = Logger.getLogger(this.getClass());
+        logger.info(SecurityContext.getEmpName() + "--申请考试....");
+        Assert.hasText(surveyId, "未知错误!申请考试时没有获取试卷ID!");
+        Survey survey = surveyDao.findById(surveyId);
+        Assert.notNull(survey, "申请考试失败!试卷不存在，请刷新后重试!");
+        Date now = new Date();
+        long nowTime = now.getTime();
+        Assert.isTrue(survey.getEndTime().getTime() > nowTime, "申请考试失败!试卷已过期，请刷新后重试!");
+        Assert.isTrue(survey.getStartTime().getTime() < nowTime, "申请考试失败!试卷还未开放，请耐心等待!");
+        Assert.isTrue(Survey.STATUS_PUBLISHED.equals(survey.getStatus()), "申请考试失败!试卷还未发布,请刷新后重试!");
+
+        // 生成试卷
+        SurveyReport report = new SurveyReport();
+        report.setFinish(false);
+        report.setAccept(true);
+        report.setAcceptDate(now);
+        report.setRegisterDate(now);
+        report.setEffectDate(survey.getEndTime());
+        report.setEmpId(SecurityContext.getEmpId());
+        report.setEmpName(SecurityContext.getEmpName());
+        report.setIp(SecurityContext.getIp());
+        report.setScore(0);
+        report.setSurveyId(surveyId);
+        report.setSurveyName(survey.getName());
+        report.setTotalCounts(survey.getTotalSubjects());
+        report.setTotalScore(survey.getTotalScore());
+        report.setCurrent(0);
+        String reportId = surveyReportDao.save(report);
+
+        // 往试卷中插入题目
+
+        SubjectBo bo = new SubjectBo();
+        bo.setRandom(true);
+        bo.setStatus(CommonStatus.ACTIVE.getValue());
+        Integer danxuan = survey.getXzCounts();
+        int index = 1;
+        if (IntegerUtils.isBigger(danxuan, 0)) {
+            bo.setSubjectType("1");// 单选
+            Pager.setLimit(danxuan);
+            List<Subject> subjects = subjectDao.query(bo);
+            Assert.notEmpty(subjects, "试卷生成失败!没有足够的单选题，请与管理员联系或刷新后重试!");
+            index = addReportDetail(surveyId, reportId, index, subjects, survey.getXzScore());
+        }
+
+        Integer duoxuan = survey.getDxCounts();
+        if (IntegerUtils.isBigger(duoxuan, 0)) {
+            bo.setSubjectType("2"); // 多选
+            Pager.setLimit(duoxuan);
+            List<Subject> subjects = subjectDao.query(bo);
+            Assert.notEmpty(subjects, "试卷生成失败!没有足够的多选题，请与管理员联系或刷新后重试!");
+            index = addReportDetail(surveyId, reportId, index, subjects, survey.getDxScore());
+        }
+
+        Integer panduan = survey.getPdCounts();
+        if (IntegerUtils.isBigger(panduan, 0)) {
+            bo.setSubjectType("3"); // 判断
+            Pager.setLimit(panduan);
+            List<Subject> subjects = subjectDao.query(bo);
+            Assert.notEmpty(subjects, "试卷生成失败!没有足够的判断题，请与管理员联系或刷新后重试!");
+            index = addReportDetail(surveyId, reportId, index, subjects, survey.getPdScore());
+        }
+
+        Integer tiankong = survey.getTkCounts();
+        if (IntegerUtils.isBigger(tiankong, 0)) {
+            bo.setSubjectType("4"); // 填空
+            Pager.setLimit(tiankong);
+            List<Subject> subjects = subjectDao.query(bo);
+            Assert.notEmpty(subjects, "试卷生成失败!没有足够的填空题，请与管理员联系或刷新后重试!");
+            index = addReportDetail(surveyId, reportId, index, subjects, survey.getXzScore());
+        }
+
+        logger.info(SecurityContext.getEmpName() + "--申请考试成功，共计" + index + "题....");
+
+    }
+
+    /**
+     * 生成题目明细
+     *
+     * @param surveyId 试卷
+     * @param reportId 所属注册的试卷
+     * @param index    索引
+     * @param subjects 题目
+     * @return 更新后索引
+     */
+    private int addReportDetail(String surveyId, String reportId, int index, List<Subject> subjects, int score) {
+        for (Subject subject : subjects) {
+            SurveyReportDetail detail = new SurveyReportDetail();
+            detail.setSurveyId(surveyId);
+            detail.setSurveyReportId(reportId);
+            detail.setSubjectId(subject.getId());
+            detail.setSubjectName(subject.getTitle());
+            detail.setSubjectType(subject.getSubjectType());
+            detail.setScore(0);
+            detail.setRightAnswer(subject.getAnswer());
+            detail.setEmpId(SecurityContext.getEmpId());
+            detail.setEmpName(SecurityContext.getEmpName());
+            detail.setSequenceNo(index++);
+            detail.setScore(score);
+            surveyReportDetailDao.save(detail);
+        }
+        return index;
     }
 }

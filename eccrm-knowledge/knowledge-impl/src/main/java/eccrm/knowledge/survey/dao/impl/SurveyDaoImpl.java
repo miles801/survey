@@ -1,12 +1,18 @@
 package eccrm.knowledge.survey.dao.impl;
 
 import com.ycrl.core.HibernateDaoHelper;
+import com.ycrl.core.context.SecurityContext;
 import com.ycrl.core.exception.Argument;
 import com.ycrl.core.hibernate.criteria.CriteriaUtils;
 import eccrm.knowledge.survey.bo.SurveyBo;
 import eccrm.knowledge.survey.dao.SurveyDao;
 import eccrm.knowledge.survey.domain.Survey;
+import eccrm.knowledge.survey.domain.SurveyReport;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
@@ -68,6 +74,16 @@ public class SurveyDaoImpl extends HibernateDaoHelper implements SurveyDao {
             throw new IllegalArgumentException("criteria must not be null!");
         }
         CriteriaUtils.addCondition(criteria, bo);
+
+        // 只查询还未注册的
+        boolean notRegister = bo != null && bo.getNotRegister() != null && bo.getNotRegister();
+        if (notRegister) {
+            // 过滤掉当前用户已经注册的试卷
+            DetachedCriteria detachedCriteria = DetachedCriteria.forClass(SurveyReport.class)
+                    .setProjection(Projections.distinct(Projections.property("surveyId")))
+                    .add(Restrictions.eq("empId", SecurityContext.getEmpId()));
+            criteria.add(Property.forName("id").notIn(detachedCriteria));
+        }
     }
 
     @Override

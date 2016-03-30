@@ -77,12 +77,95 @@
             </tbody>
         </table>
     </div>
-    <div class="row" id="report">
+    <%-- 可注册试卷 --%>
+    <div class="row" style="width: 80%;margin: 0 auto;">
+        <h3>可注册试卷 <i class="icons refresh" ng-click="queryCanRegisterSurvey()" title="刷新"></i></h3>
+        <div class="table-responsive panel panel-table">
+            <table class="table table-striped table-hover text-center">
+                <thead class="table-header">
+                <tr>
+                    <td style="border-left:1px solid #7acac1;">试卷名称</td>
+                    <td>总题数</td>
+                    <td>总分数</td>
+                    <td>单选</td>
+                    <td>多选</td>
+                    <td>判断</td>
+                    <td>填空</td>
+                    <td>简答</td>
+                    <td>生效时间</td>
+                    <td>截止时间</td>
+                    <td>操作</td>
+                </tr>
+                </thead>
+                <tbody class="table-body">
+                <tr ng-show="!canRegisterData.length">
+                    <td colspan="11" class="text-center">没有可参加的考试！</td>
+                </tr>
+
+                <tr bindonce ng-repeat="foo in canRegisterData" ng-cloak>
+                    <td title="点击查询明细！" style="cursor: pointer;">
+                        <a ng-click="view(foo.id)" bo-text=" foo.name"></a>
+                    </td>
+                    <td bo-text="foo.totalSubjects"></td>
+                    <td bo-text="foo.totalScore"></td>
+                    <td bo-text="foo.xzCounts"></td>
+                    <td bo-text="foo.dxCounts"></td>
+                    <td bo-text="foo.pdCounts"></td>
+                    <td bo-text="foo.tkCounts"></td>
+                    <td bo-text="foo.jdCounts"></td>
+                    <td bo-text="foo.startTime | eccrmDatetime"></td>
+                    <td bo-text="foo.endTime | eccrmDatetime"></td>
+                    <td>
+                        <a class="btn btn-tiny" title="注册" ng-click="register(foo.id)">
+                            <span class="icons card"></span>
+                        </a>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <%-- 可答题试卷 --%>
+    <div class="row" style="width: 80%;margin: 15px auto;">
+        <h3>已注册试卷 <i class="icons refresh" ng-click="queryUnfinishSurvey()" title="刷新"></i></h3>
+        <div class="table-responsive panel panel-table">
+            <table class="table table-striped table-hover text-center">
+                <thead class="table-header">
+                <tr>
+                    <td style="border-left:1px solid #7acac1;">试卷名称</td>
+                    <td>截止时间</td>
+                    <td>注册时间</td>
+                    <td>操作</td>
+                </tr>
+                </thead>
+                <tbody class="table-body">
+                <tr ng-show="!registerData.length">
+                    <td colspan="4" class="text-center">没有可参加的考试！</td>
+                </tr>
+
+                <tr bindonce ng-repeat="foo in registerData" ng-cloak>
+                    <td title="点击查询明细！" style="cursor: pointer;">
+                        <a ng-click="view(foo.id)" bo-text=" foo.surveyName"></a>
+                    </td>
+                    <td bo-text="foo.effectDate | eccrmDatetime"></td>
+                    <td bo-text="foo.registerDate | eccrmDatetime"></td>
+                    <td>
+                        <a class="btn btn-tiny" title="答题" ng-click="answer(foo.id,foo.surveyId)">
+                            <span class="icons handle"></span>
+                        </a>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 </body>
 <script type="text/javascript" src="<%=contextPath%>/app/employee/employee.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/app/base/user/user.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/app/knowledge/survey/survey.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/app/home/panel/panel.js"></script>
 </html>
 

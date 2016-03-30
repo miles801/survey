@@ -15,8 +15,8 @@ import java.util.List;
 @Repository("subjectItemDao")
 public class SubjectItemDaoImpl extends HibernateDaoHelper implements SubjectItemDao {
     @Override
-    public void save(SubjectItem subjectItem) {
-        getSession().save(subjectItem);
+    public String save(SubjectItem subjectItem) {
+        return (String) getSession().save(subjectItem);
     }
 
     @Override

@@ -48,4 +48,17 @@ public interface SurveyService {
      * @throws RuntimeException 试卷未设置题目
      */
     void publish(String id);
+
+    /**
+     * 查询所有“已发布”，在有效期内，且个人还未参与的试卷列表
+     *
+     * @return
+     */
+    List<SurveyVo> queryAllCanRegister();
+
+    /**
+     * 注册试卷（即用户申请考试）
+     * 注册人：依赖当前登录人的相关信息
+     */
+    void register(String surveyId);
 }

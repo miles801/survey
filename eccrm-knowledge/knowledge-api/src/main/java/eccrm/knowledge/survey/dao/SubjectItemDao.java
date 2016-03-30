@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface SubjectItemDao {
 
-    public void save(SubjectItem subjectItem);
+    public String save(SubjectItem subjectItem);
 
 
     /**

@@ -20,12 +20,24 @@ public class SubjectVo extends CrmBaseVo {
     private Boolean showList;   // 横向显示
     private List radioList;     // 单选
     private List checkboxList;  // 复选
+    // 该题目将在哪一个试卷中
+    private String surveyReportDetailId;
 
     // 题目答案
     private String answer;
 
     // 是否手动评卷（一般针对于填空题和简答题）
     private Boolean manualApprove;
+
+    private List<SubjectItem> items;
+
+    public String getSurveyReportDetailId() {
+        return surveyReportDetailId;
+    }
+
+    public void setSurveyReportDetailId(String surveyReportDetailId) {
+        this.surveyReportDetailId = surveyReportDetailId;
+    }
 
     public Boolean getManualApprove() {
         return manualApprove;
@@ -50,9 +62,6 @@ public class SubjectVo extends CrmBaseVo {
     public void setRequired(Boolean required) {
         isRequired = required;
     }
-
-    private List<SubjectItem> items;
-
 
     public List getCheckboxList() {
         return checkboxList;

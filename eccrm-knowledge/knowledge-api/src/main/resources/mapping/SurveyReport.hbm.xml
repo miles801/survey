@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.knowledge.survey.domain">
+    <class name="SurveyReport" table="KN_SURVEY_REPORT">
+        <id name="id" column="ID" length="40">
+            <generator class="uuid"/>
+        </id>
+
+        <property name="surveyId" column="SURVEY_ID" type="string" length="40" not-null="true" update="false"/>
+        <property name="surveyName" column="SURVEY_NAME" type="string" length="40" not-null="true"/>
+        <property name="empId" column="EMP_ID" type="string" length="40" not-null="true" update="false"/>
+        <property name="empName" column="EMP_NAME" type="string" length="40" not-null="true"/>
+        <property name="effectDate" column="EFFECT_DATE" type="timestamp"/>
+        <property name="registerDate" column="REGISTER_DATE" type="timestamp" update="false"/>
+        <property name="accept" column="IS_ACCEPT" type="boolean"/>
+        <property name="acceptDate" column="ACCEPT_DATE" type="timestamp"/>
+        <property name="finish" column="IS_FINISH" type="boolean"/>
+        <property name="startDate" column="START_DATE" type="timestamp"/>
+        <property name="endDate" column="END_DATE" type="timestamp"/>
+        <property name="duration" column="DURATION" type="long"/>
+        <property name="score" column="SCORE" type="int"/>
+        <property name="totalScore" column="TOTAL_SCORE" type="int"/>
+        <property name="totalCounts" column="TOTAL_COUNTS" type="int"/>
+        <property name="current" column="I_CURRENT" type="int"/>
+        <property name="ip" column="IP" type="string" length="20"/>
+
+
+        <!-- 公共属性 -->
+        <property name="creatorId" column="CREATOR_ID" type="string" length="40" update="false"/>
+        <property name="creatorName" column="CREATOR_NAME" type="string" length="40"/>
+        <property name="createdDatetime" column="CREATED_DATETIME" type="timestamp" update="false"/>
+        <property name="tenementId" column="TENEMENT_ID" type="string" length="40" update="false"/>
+
+    </class>
+</hibernate-mapping>

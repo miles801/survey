@@ -24,6 +24,17 @@ public class SubjectBo implements BO {
      */
     private String surveyId;        // 试卷ID
 
+    // 是否随机获取题目
+    private Boolean random;
+
+    public Boolean getRandom() {
+        return random;
+    }
+
+    public void setRandom(Boolean random) {
+        this.random = random;
+    }
+
     public String getCategoryId() {
         return categoryId;
     }

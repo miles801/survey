@@ -65,7 +65,7 @@
             }
             ModalFactory.confirm({
                 scope: $scope,
-                content: '确认要发布该试卷?'
+                content: '试卷发布后，所有数据都无法进行更改，确认要发布该试卷?'
             }, function () {
                 SurveyService.publish({id: id}, function (data) {
                     if (data && data.success) {

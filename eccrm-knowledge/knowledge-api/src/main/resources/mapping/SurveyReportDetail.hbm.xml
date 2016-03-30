@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="eccrm.knowledge.survey.domain">
+    <class name="SurveyReportDetail" table="KN_SURVEY_REPORT_DETAIL">
+        <id name="id" column="ID" length="40">
+            <generator class="uuid"/>
+        </id>
+
+        <property name="surveyId" column="SURVEY_ID" type="string" length="40" not-null="true" update="false"/>
+        <property name="surveyReportId" column="SURVEY_REPORT_ID" type="string" length="40" not-null="true"
+                  update="false"/>
+        <property name="subjectId" column="SUBJECT_ID" type="string" length="40" not-null="true" update="false"/>
+        <property name="subjectName" column="SUBJECT_NAME" type="string" length="1000" not-null="true" update="false"/>
+        <property name="subjectType" column="SUBJECT_TYPE" type="string" length="40" not-null="true" update="false"/>
+        <property name="rightAnswer" column="RIGHT_ANSWER" type="string" length="1000" not-null="true" update="false"/>
+        <property name="empId" column="EMP_ID" type="string" length="40" not-null="true" update="false"/>
+        <property name="empName" column="EMP_NAME" type="string" length="40" not-null="true"/>
+        <property name="answer" column="ANSWER" type="string" length="100"/>
+        <property name="answerDate" column="ANSWER_DATE" type="timestamp"/>
+        <property name="right" column="IS_RIGHT" type="boolean"/>
+        <property name="score" column="SCORE" type="int"/>
+        <property name="sequenceNo" column="SEQ_NO" type="int"/>
+
+
+        <!-- 公共属性 -->
+        <property name="creatorId" column="CREATOR_ID" type="string" length="40" update="false"/>
+        <property name="creatorName" column="CREATOR_NAME" type="string" length="40"/>
+        <property name="createdDatetime" column="CREATED_DATETIME" type="timestamp" update="false"/>
+        <property name="tenementId" column="TENEMENT_ID" type="string" length="40" update="false"/>
+
+    </class>
+</hibernate-mapping>
