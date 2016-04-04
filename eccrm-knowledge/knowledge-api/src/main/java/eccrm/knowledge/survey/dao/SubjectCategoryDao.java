@@ -18,4 +18,12 @@ public interface SubjectCategoryDao {
     SubjectCategory findById(String id);
 
     int deleteById(String id);
+
+    /**
+     * 根据分类的名称获取分类的ID
+     *
+     * @param categoryName 分类名称
+     * @return ID
+     */
+    String findByName(String categoryName);
 }

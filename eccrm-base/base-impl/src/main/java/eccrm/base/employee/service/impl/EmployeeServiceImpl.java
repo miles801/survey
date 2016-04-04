@@ -184,11 +184,11 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
             AttachmentVo vo = AttachmentProvider.getInfo(id);
             Assert.notNull(vo, "附件已经不存在，请刷新后重试!");
             File file = AttachmentHolder.newInstance().getTempFile(id);
-            logger.info("准备导入黑名单数据：" + file.getAbsolutePath());
+            logger.info("准备导入数据：" + file.getAbsolutePath());
             logger.info("初始化导入引擎....");
             long start = System.currentTimeMillis();
 
-            //根据黑名单类型选择对应的DTO
+            // 初始化引擎
             Configuration configuration = new AnnotationCfgAdapter(EmployeeDTO.class).parse();
             configuration.setStartRow(1);
             String newFilePath = file.getAbsolutePath() + vo.getFileName().substring(vo.getFileName().lastIndexOf(".")); //获取路径

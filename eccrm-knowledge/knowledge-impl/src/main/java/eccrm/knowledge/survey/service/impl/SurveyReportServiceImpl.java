@@ -1,5 +1,10 @@
 package eccrm.knowledge.survey.service.impl;
 
+import com.michael.poi.adapter.AnnotationCfgAdapter;
+import com.michael.poi.core.Handler;
+import com.michael.poi.core.ImportEngine;
+import com.michael.poi.imp.cfg.Configuration;
+import com.ycrl.base.common.CommonStatus;
 import com.ycrl.core.SystemContainer;
 import com.ycrl.core.beans.BeanWrapBuilder;
 import com.ycrl.core.beans.BeanWrapCallback;
@@ -7,11 +12,12 @@ import com.ycrl.core.context.SecurityContext;
 import com.ycrl.core.hibernate.validator.ValidatorUtils;
 import com.ycrl.core.pager.PageVo;
 import com.ycrl.utils.number.IntegerUtils;
+import com.ycrl.utils.string.StringUtils;
+import eccrm.base.attachment.AttachmentProvider;
+import eccrm.base.attachment.utils.AttachmentHolder;
+import eccrm.base.attachment.vo.AttachmentVo;
 import eccrm.knowledge.survey.bo.SurveyReportBo;
-import eccrm.knowledge.survey.dao.SubjectDao;
-import eccrm.knowledge.survey.dao.SubjectItemDao;
-import eccrm.knowledge.survey.dao.SurveyReportDao;
-import eccrm.knowledge.survey.dao.SurveyReportDetailDao;
+import eccrm.knowledge.survey.dao.*;
 import eccrm.knowledge.survey.domain.Subject;
 import eccrm.knowledge.survey.domain.SubjectItem;
 import eccrm.knowledge.survey.domain.SurveyReport;
@@ -19,12 +25,16 @@ import eccrm.knowledge.survey.domain.SurveyReportDetail;
 import eccrm.knowledge.survey.service.SurveyReportService;
 import eccrm.knowledge.survey.vo.SubjectVo;
 import eccrm.knowledge.survey.vo.SurveyReportVo;
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 /**
  * @author Michael
@@ -141,5 +151,101 @@ public class SurveyReportServiceImpl implements SurveyReportService {
                 .addProperties(new String[]{"answer", "status"})
                 .exclude()
                 .wrap(subject, SubjectVo.class);
+    }
+
+    @Override
+    public void importData(String[] attachmentIds, final String type) {
+        Assert.notEmpty(attachmentIds, "导入题目失败!附件不存在，请刷新后重试!");
+        Assert.hasText(type, "导入题目失败!请指定题型!");
+
+        Logger logger = Logger.getLogger(SurveyReportServiceImpl.class);
+
+        for (String id : attachmentIds) {
+            AttachmentVo vo = AttachmentProvider.getInfo(id);
+            Assert.notNull(vo, "附件已经不存在，请刷新后重试!");
+            File file = AttachmentHolder.newInstance().getTempFile(id);
+            logger.info("准备导入数据：" + file.getAbsolutePath());
+            logger.info("初始化导入引擎....");
+            long start = System.currentTimeMillis();
+
+            Configuration configuration = new AnnotationCfgAdapter(SubjectDTO.class).parse();
+            configuration.setStartRow(1);
+            String newFilePath = file.getAbsolutePath() + vo.getFileName().substring(vo.getFileName().lastIndexOf(".")); //获取路径
+            final Map<String, String> category = new HashMap<String, String>();   // 用于存放各个分类的名称和ID
+            final SubjectCategoryDao categoryDao = SystemContainer.getInstance().getBean(SubjectCategoryDao.class);
+            try {
+                FileUtils.copyFile(file, new File(newFilePath));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            configuration.setPath(newFilePath);
+            configuration.setHandler(new Handler<SubjectDTO>() {
+                @Override
+                public void execute(SubjectDTO dto) {
+                    // 当标题和分类都是空的的时候，跳过
+                    if (StringUtils.isEmpty(dto.getCategoryName()) && StringUtils.isEmpty(dto.getTitle())) {
+                        return;
+                    }
+
+                    Assert.hasText(dto.getCategoryName(), "数据错误，分类不能为空!");
+                    Assert.hasText(dto.getTitle(), "数据错误，题目不能为空!");
+                    Assert.hasText(dto.getAnswer(), "数据错误，请指定正确答案!");
+                    // 分类
+                    String categoryId = category.get(dto.getCategoryName());
+                    if (StringUtils.isEmpty(categoryId)) {
+                        categoryId = categoryDao.findByName(dto.getCategoryName());
+                        Assert.hasText(categoryId, String.format("数据错误!第%d行的分类[%s]不存在", 0, dto.getCategoryName()));
+                        category.put(dto.getCategoryName(), categoryId);
+                    }
+                    dto.setCategoryId(categoryId);
+                    dto.setSubjectType(type);
+
+                    // 保存题目
+                    Subject subject = new Subject();
+                    if ("3".equals(type)) {
+                        dto.setAnswer("对".equals(dto.getAnswer()) ? "true" : "false");
+                    }
+                    subject.setStatus(CommonStatus.ACTIVE.getValue());
+                    org.springframework.beans.BeanUtils.copyProperties(dto, subject);
+                    SubjectDao subjectDao = SystemContainer.getInstance().getBean(SubjectDao.class);
+                    String subjectId = subjectDao.save(subject);
+
+                    // 保存题目选项
+                    SubjectItemDao subjectItemDao = SystemContainer.getInstance().getBean(SubjectItemDao.class);
+                    if ("1".equals(type) || "2".equals(type)) {
+                        Set<String> rightSet = new HashSet<String>();
+                        String[] array = dto.getAnswer().split("\\D");
+                        Collections.addAll(rightSet, array);
+                        for (int i = 1; i < 10; i++) {
+                            try {
+                                String value = (String) dto.getClass().getMethod("getItem" + i).invoke(dto);
+                                if (StringUtils.isNotEmpty(value)) {
+                                    SubjectItem item = new SubjectItem();
+                                    item.setName(value);
+                                    if (rightSet.contains(i + "")) {
+                                        item.setRight(true);
+                                    }
+                                    item.setSequenceNo(i);
+                                    item.setSubjectId(subjectId);
+                                    item.setSubjectName(dto.getTitle());
+                                    subjectItemDao.save(item);
+                                }
+                            } catch (IllegalAccessException e) {
+                                e.printStackTrace();
+                            } catch (InvocationTargetException e) {
+                                e.printStackTrace();
+                            } catch (NoSuchMethodException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            });
+            logger.info("开始导入数据....");
+            ImportEngine engine = new ImportEngine(configuration);
+            engine.execute();
+            logger.info(String.format("导入数据成功,用时(%d)s....", (System.currentTimeMillis() - start) / 1000));
+            new File(newFilePath).delete();
+        }
     }
 }

@@ -20,6 +20,7 @@ import eccrm.knowledge.survey.vo.SurveyReportVo;
 import eccrm.knowledge.survey.vo.SurveySubjectVo;
 import eccrm.knowledge.survey.vo.SurveyVo;
 import eccrm.utils.StringUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -264,5 +269,43 @@ public class SurveyCtrl extends BaseController {
     public void querySurveyScore(@RequestParam String id, HttpServletResponse response) {
         SurveyReportVo data = surveyReportService.findById(id);
         GsonUtils.printData(response, data);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/template", params = "type", method = RequestMethod.GET)
+    public void downloadTemplate(@RequestParam String type, HttpServletResponse response) {
+        InputStream input = SurveyCtrl.class.getClassLoader().getResourceAsStream("survey_import" + type + ".xlsx");
+        response.setContentType("application/vnd.ms-excel");
+        String disposition = null;//
+        try {
+            String fileName = "导入模板.xlsx";
+            if ("1".equals(type)) {
+                fileName = "单选题" + fileName;
+            } else if ("2".equals(type)) {
+                fileName = "多选题" + fileName;
+            } else if ("3".equals(type)) {
+                fileName = "判断题" + fileName;
+            } else if ("4".equals(type)) {
+                fileName = "填空题" + fileName;
+            } else {
+                Assert.isTrue(false, "错误的模板类型!");
+            }
+            disposition = "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        response.setHeader("Content-disposition", disposition);
+        try {
+            IOUtils.copy(input, response.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/import", params = {"attachmentIds", "type"}, method = RequestMethod.POST)
+    public void importData(@RequestParam String attachmentIds, @RequestParam String type, HttpServletResponse response) {
+        surveyReportService.importData(attachmentIds.split(","), type);
+        GsonUtils.printSuccess(response);
     }
 }

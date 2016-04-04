@@ -61,4 +61,12 @@ public interface SurveyReportService {
      * @return
      */
     SubjectVo getNextSubject(String id);
+
+    /**
+     * 给指定题型导入题目
+     *
+     * @param attachmentIds 题目数据来源（附件ID）
+     * @param type          题型编号
+     */
+    void importData(String[] attachmentIds, String type);
 }

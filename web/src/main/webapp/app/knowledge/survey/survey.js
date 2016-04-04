@@ -22,6 +22,13 @@
             // 更新
             update: {method: 'POST', params: {method: 'update'}, isArray: false},
 
+            // 导入指定题型的题目
+            importSubject: {
+                method: 'POST',
+                params: {method: 'import', attachmentIds: '@attachmentIds', type: '@type'},
+                isArray: false
+            },
+
             // 发布
             // 必须参数：
             //  id：

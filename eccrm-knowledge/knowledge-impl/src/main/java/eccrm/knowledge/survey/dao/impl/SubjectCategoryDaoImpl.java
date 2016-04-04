@@ -1,5 +1,6 @@
 package eccrm.knowledge.survey.dao.impl;
 
+import com.ycrl.base.common.CommonStatus;
 import com.ycrl.core.HibernateDaoHelper;
 import com.ycrl.core.hibernate.criteria.CriteriaUtils;
 import com.ycrl.utils.tree.TreeUtils;
@@ -12,6 +13,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
 
 import java.util.List;
 
@@ -91,5 +93,19 @@ public class SubjectCategoryDaoImpl extends HibernateDaoHelper implements Subjec
         CriteriaUtils.addCondition(criteria, bo);
     }
 
-
+    @Override
+    @SuppressWarnings("unchecked")
+    public String findByName(String categoryName) {
+        Assert.hasText(categoryName, "查询错误，分类的名称不能为空!");
+        List<String> ids = createCriteria(SubjectCategory.class)
+                .setProjection(Projections.id())
+                .add(Restrictions.eq("name", categoryName))
+                .add(Restrictions.eq("status", CommonStatus.ACTIVE.getValue()))
+                .setMaxResults(1)
+                .list();
+        if (ids == null || ids.isEmpty()) {
+            return null;
+        }
+        return ids.get(0);
+    }
 }
