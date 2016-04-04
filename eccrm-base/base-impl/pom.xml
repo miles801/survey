@@ -103,6 +103,12 @@
             <groupId>com.ycrl.thirdparty</groupId>
             <artifactId>utils-pinyin</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.michael</groupId>
+            <artifactId>poi-utils</artifactId>
+            <version>1.1</version>
+        </dependency>
     </dependencies>
 
 </project>

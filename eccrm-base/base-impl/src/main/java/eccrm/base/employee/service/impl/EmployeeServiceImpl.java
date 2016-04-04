@@ -1,23 +1,45 @@
 package eccrm.base.employee.service.impl;
 
+import com.michael.poi.adapter.AnnotationCfgAdapter;
+import com.michael.poi.core.Handler;
+import com.michael.poi.core.ImportEngine;
+import com.michael.poi.core.RuntimeContext;
+import com.michael.poi.imp.cfg.Configuration;
+import com.ycrl.core.SystemContainer;
 import com.ycrl.core.beans.BeanWrapBuilder;
 import com.ycrl.core.beans.BeanWrapCallback;
 import com.ycrl.core.pager.PageVo;
+import com.ycrl.utils.md5.MD5Utils;
 import com.ycrl.utils.string.StringUtils;
+import com.ycrl.utils.uuid.UUIDGenerator;
+import eccrm.base.attachment.AttachmentProvider;
+import eccrm.base.attachment.utils.AttachmentHolder;
+import eccrm.base.attachment.vo.AttachmentVo;
 import eccrm.base.employee.bo.EmployeeBo;
 import eccrm.base.employee.dao.EmployeeDao;
 import eccrm.base.employee.domain.Employee;
 import eccrm.base.employee.service.ContactType;
 import eccrm.base.employee.service.EmployeeService;
 import eccrm.base.employee.vo.EmployeeVo;
+import eccrm.base.org.dao.OrganizationDao;
+import eccrm.base.org.domain.Organization;
 import eccrm.base.parameter.service.ParameterContainer;
 import eccrm.base.position.dao.PositionDao;
 import eccrm.base.position.dao.PositionEmpDao;
 import eccrm.base.position.domain.PositionEmp;
 import eccrm.base.position.service.PositionEmpService;
+import eccrm.base.user.dao.UserDao;
+import eccrm.base.user.domain.User;
+import eccrm.base.user.enums.UserStatus;
+import eccrm.utils.BeanCopyUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -153,4 +175,84 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
         return query(bo);
     }
 
+    @Override
+    public void importData(String[] attachmentIds) {
+        Logger logger = Logger.getLogger(EmployeeServiceImpl.class);
+        Assert.notEmpty(attachmentIds, "数据文件不能为空，请重试!");
+
+        for (String id : attachmentIds) {
+            AttachmentVo vo = AttachmentProvider.getInfo(id);
+            Assert.notNull(vo, "附件已经不存在，请刷新后重试!");
+            File file = AttachmentHolder.newInstance().getTempFile(id);
+            logger.info("准备导入黑名单数据：" + file.getAbsolutePath());
+            logger.info("初始化导入引擎....");
+            long start = System.currentTimeMillis();
+
+            //根据黑名单类型选择对应的DTO
+            Configuration configuration = new AnnotationCfgAdapter(EmployeeDTO.class).parse();
+            configuration.setStartRow(1);
+            String newFilePath = file.getAbsolutePath() + vo.getFileName().substring(vo.getFileName().lastIndexOf(".")); //获取路径
+            try {
+                FileUtils.copyFile(file, new File(newFilePath));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            configuration.setPath(newFilePath);
+            configuration.setHandler(new Handler<EmployeeDTO>() {
+                @Override
+                public void execute(EmployeeDTO dto) {
+
+                    String username = dto.getEmployeeCode();
+                    String empName = dto.getEmployeeName();
+                    // 用户名和姓名均为空时，直接跳过这条数据
+                    if (StringUtils.isEmpty(username) && StringUtils.isEmpty(empName)) {
+                        return;
+                    }
+                    Assert.hasText(username, String.format("数据错误!请指明[用户名],第%d行!", RuntimeContext.get().getRowIndex() + 1));
+                    Assert.hasText(empName, String.format("数据错误!请指明[姓名],第%d行!", RuntimeContext.get().getRowIndex() + 1));
+                    String mobile = dto.getMobile();
+                    Assert.hasText(mobile, String.format("数据错误!请指明[手机号(座机号)],第%d行!", RuntimeContext.get().getRowIndex() + 1));
+                    Boolean outer = dto.getOuter();
+                    if (outer != null && outer) {
+                        Assert.hasText(dto.getCompany(), String.format("数据错误!当员工为外协人员时，请指明[班组],第%d行!", RuntimeContext.get().getRowIndex() + 1));
+                    }
+                    String orgName = dto.getOrgName();
+                    Assert.hasText(orgName, String.format("数据错误!请指明[部门],第%d行!", RuntimeContext.get().getRowIndex() + 1));
+
+
+                    Employee employee = new Employee();
+                    employee.setId(UUIDGenerator.generate());
+                    BeanCopyUtils.copyProperties(dto, employee);
+                    employee.setPositionCode("NORMAL"); // 导入的普通学员
+                    OrganizationDao orgDao = SystemContainer.getInstance().getBean(OrganizationDao.class);
+                    List<Organization> orgs = orgDao.findByName(orgName);
+                    Assert.notEmpty(orgs, "组织机构[" + orgName + "]不存在!");
+                    employee.setOrgId(orgs.get(0).getId());
+                    employee.setStatus("2");
+                    save(employee);
+
+                    // 创建用户
+                    UserDao userDao = SystemContainer.getInstance().getBean(UserDao.class);
+                    User user = new User();
+                    user.setUsername(username);
+                    user.setEmployeeId(employee.getId());
+                    user.setEmployeeName(employee.getEmployeeName());
+                    user.setPosition("NORMAL");
+                    user.setPassword(MD5Utils.encode("123456"));
+                    user.setStatus(UserStatus.ACTIVE.getValue());
+                    user.setOrgId(employee.getOrgId());
+                    user.setOrgName(employee.getOrgName());
+                    // 验证用户名是否重复
+                    User oldUser = userDao.findByUsername(user.getUsername());
+                    Assert.isNull(oldUser, String.format("用户名已经存在!请清洗数据后重新导入!第%d行", RuntimeContext.get().getRowIndex()));
+                    userDao.save(user);
+                }
+            });
+            logger.info("开始导入数据....");
+            ImportEngine engine = new ImportEngine(configuration);
+            engine.execute();
+            logger.info(String.format("导入数据成功,用时(%d)s....", (System.currentTimeMillis() - start) / 1000));
+            new File(newFilePath).delete();
+        }
+    }
 }

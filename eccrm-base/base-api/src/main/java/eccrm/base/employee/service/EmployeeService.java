@@ -59,4 +59,7 @@ public interface EmployeeService {
      * @param bo 高级查询对象
      */
     PageVo permissionPageQuery(EmployeeBo bo);
+
+
+    void importData(String[] attachmentIds);
 }

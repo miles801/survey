@@ -79,7 +79,7 @@
     </div>
     <%-- 可注册试卷 --%>
     <div class="row" style="width: 80%;margin: 0 auto;">
-        <h3>可注册试卷 <i class="icons refresh" ng-click="queryCanRegisterSurvey()" title="刷新"></i></h3>
+        <h3>可注册试卷 <i class="icons refresh cp" ng-click="queryCanRegisterSurvey()" title="刷新"></i></h3>
         <div class="table-responsive panel panel-table">
             <table class="table table-striped table-hover text-center">
                 <thead class="table-header">
@@ -128,7 +128,7 @@
     </div>
     <%-- 可答题试卷 --%>
     <div class="row" style="width: 80%;margin: 15px auto;">
-        <h3>已注册试卷 <i class="icons refresh" ng-click="queryUnfinishSurvey()" title="刷新"></i></h3>
+        <h3>已注册试卷 <i class="icons refresh cp" ng-click="queryUnfinishSurvey()" title="刷新"></i></h3>
         <div class="table-responsive panel panel-table">
             <table class="table table-striped table-hover text-center">
                 <thead class="table-header">

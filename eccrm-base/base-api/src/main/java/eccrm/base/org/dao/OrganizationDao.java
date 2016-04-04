@@ -123,4 +123,11 @@ public interface OrganizationDao extends PathTreeDao<Organization, String> {
      */
     List<Organization> permissionRootQuery();
 
+    /**
+     * 查找名称为指定值的组织机构
+     *
+     * @param name 名称
+     */
+    List<Organization> findByName(String name);
+
 }

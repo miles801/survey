@@ -8,12 +8,17 @@ import eccrm.base.employee.bo.EmployeeBo;
 import eccrm.base.employee.domain.Employee;
 import eccrm.base.employee.service.EmployeeService;
 import eccrm.base.employee.vo.EmployeeVo;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -142,4 +147,30 @@ public class EmployeeCtrl extends BaseController {
         GsonUtils.printSuccess(response);
     }
 
+
+    @ResponseBody
+    @RequestMapping(value = "/template", method = RequestMethod.GET)
+    public void downloadTemplate(HttpServletResponse response) {
+        InputStream input = EmployeeCtrl.class.getClassLoader().getResourceAsStream("employee_import.xlsx");
+        response.setContentType("application/vnd.ms-excel");
+        String disposition = null;//
+        try {
+            disposition = "attachment;filename=" + URLEncoder.encode("员工数据导入模板.xlsx", "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        response.setHeader("Content-disposition", disposition);
+        try {
+            IOUtils.copy(input, response.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/import", params = {"attachmentIds"}, method = RequestMethod.POST)
+    public void importData(@RequestParam String attachmentIds, HttpServletResponse response) {
+        employeeServices.importData(attachmentIds.split(","));
+        GsonUtils.printSuccess(response);
+    }
 }

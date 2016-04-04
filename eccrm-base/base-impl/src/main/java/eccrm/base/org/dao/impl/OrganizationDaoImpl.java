@@ -13,6 +13,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.*;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
 
 import java.io.Serializable;
 import java.util.*;
@@ -341,5 +342,14 @@ public class OrganizationDaoImpl extends HibernateDaoHelper implements Organizat
             }
         }
         return filterList;
+    }
+
+
+    @Override
+    public List<Organization> findByName(String name) {
+        Assert.hasText(name, "机构名称不能为空!");
+        return createCriteria(Organization.class)
+                .add(Restrictions.eq("name", name))
+                .list();
     }
 }

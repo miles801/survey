@@ -47,11 +47,19 @@ public class Employee extends CommonDomain implements AttachmentSymbol {
     private String positionName;
     private String positionCode;    // 直属岗位的编号
 
-    // 公司
+    private Boolean outer;  // 是否为外协
+    // 公司&班组
     private String company;
     // 头像
     private String picture;
 
+    public Boolean getOuter() {
+        return outer;
+    }
+
+    public void setOuter(Boolean outer) {
+        this.outer = outer;
+    }
 
     public String getDuty() {
         return duty;

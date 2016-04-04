@@ -58,6 +58,16 @@ public class EmployeeVo extends CommonVo {
 
     private String statusName;
 
+    private Boolean outer;  // 是否为外协
+
+    public Boolean getOuter() {
+        return outer;
+    }
+
+    public void setOuter(Boolean outer) {
+        this.outer = outer;
+    }
+
     public String getIdNo() {
         return idNo;
     }
