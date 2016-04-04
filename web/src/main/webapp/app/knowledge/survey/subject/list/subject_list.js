@@ -7,7 +7,7 @@
         'eccrm.angularstrap',
         'eccrm.angular.ztree'
     ]);
-    app.controller('SubjectListCtrl', function ($scope, CommonUtils, Subject, SubjectCategoryTree, ModalFactory, SubjectModal, SubjectService) {
+    app.controller('SubjectListCtrl', function ($scope, CommonUtils, Subject, SubjectCategoryTree, ModalFactory, SubjectModal, SubjectService, AlertFactory) {
 
         $scope.condition = {};
 
@@ -80,6 +80,21 @@
             $scope.status = data;
         });
 
+        $scope.exportData = function () {
+            if (!$scope.condition.subjectType) {
+                AlertFactory.error('请选择题型并查询后再尝试导出!');
+                return false;
+            }
+
+            if ($scope.pager.total == 0) {
+                AlertFactory.error('没有可以导出的数据!请重新指定查询条件后重试!');
+                return false;
+            }
+            var param = $.param(angular.extend({}, $scope.condition));
+            param = encodeURI(encodeURI(param));
+            window.open(CommonUtils.contextPathURL('/survey/subject/exportInfo?' + param))
+
+        };
         // 初始化树
         initTree();
     });

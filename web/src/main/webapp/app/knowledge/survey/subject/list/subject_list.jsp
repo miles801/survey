@@ -82,9 +82,12 @@
                             <span >题目列表</span >
                         </div >
                         <div class="header-button" >
-                            <a type="button" class="btn btn-green btn-min" ng-click="add();" >
-                                新增
+                            <a type="button" class="btn btn-green btn-min" ng-click="exportData();">
+                                导出
                             </a >
+                            <a type="button" class="btn btn-green btn-min" ng-click="add();">
+                                新增
+                            </a>
                             <a type="button" class="btn btn-green btn-min" ng-click="remove();" ng-disabled="!anyone" >
                                 删除
                             </a >

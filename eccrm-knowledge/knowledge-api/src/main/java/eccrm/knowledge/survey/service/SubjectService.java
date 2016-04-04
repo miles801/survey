@@ -5,6 +5,8 @@ import eccrm.knowledge.survey.bo.SubjectBo;
 import eccrm.knowledge.survey.domain.Subject;
 import eccrm.knowledge.survey.vo.SubjectVo;
 
+import java.util.List;
+
 public interface SubjectService {
 
     /**
@@ -23,5 +25,13 @@ public interface SubjectService {
     SubjectVo findById(String id);
 
     void deleteByIds(String[] ids);
+
+    /**
+     * 获取需要导出的数据
+     *
+     * @param bo
+     * @return
+     */
+    List<SubjectVo> exportData(SubjectBo bo);
 
 }

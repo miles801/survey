@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -112,5 +113,53 @@ public class SubjectServiceImpl implements SubjectService {
         // 重建关系
         saveSubjectItems(subject, id);
         Assert.hasText(subject.getAnswer(), "新增题目失败!请填写该题目的正确答案!");
+    }
+
+    @Override
+    public List<SubjectVo> exportData(SubjectBo bo) {
+        Assert.notNull(bo, "导出数据失败!请指定题目类型等过滤条件!");
+        Assert.hasText(bo.getSubjectType(), "导出数据失败!请指定要导出的题目类型!");
+        bo.setStatus(CommonStatus.ACTIVE.getValue());
+        List<Subject> data = subjectDao.query(bo);
+        return BeanWrapBuilder.newInstance()
+                .setCallback(new BeanWrapCallback<Subject, SubjectVo>() {
+                    @Override
+                    public void doCallback(Subject subject, SubjectVo vo) {
+                        String subjectType = subject.getSubjectType();
+                        vo.setSubjectTypeName(ParameterContainer.getInstance().getSystemName(Subject.TYPE, subjectType));
+                        String title = org.apache.commons.lang3.StringUtils.removePattern(subject.getTitle(), "<[^>]+>");
+                        vo.setTitle(title);
+                        Assert.hasText(subjectType, "数据错误!题目[" + subject.getTitle() + "]的类型不可能为空!请与管理员联系!");
+                        if ("1,2".contains(subjectType)) {
+                            // 设置选项
+                            List<SubjectItem> items = subjectItemDao.queryBySubjectId(subject.getId());
+                            Assert.notEmpty(items, "数据错误!题目[" + subject.getTitle() + "]下没有设置题目选项，请与管理员联系!");
+                            int size = items.size() + 1;
+                            String answer = "";
+                            for (int i = 1; i < size; i++) {
+                                try {
+                                    SubjectItem item = items.get(i - 1);
+                                    vo.getClass().getMethod("setItem" + i, String.class).invoke(vo, item.getName());
+                                    if (item.getRight() != null && item.getRight()) {
+                                        answer += "," + i;
+                                    }
+                                } catch (NoSuchMethodException e) {
+                                    e.printStackTrace();
+                                } catch (InvocationTargetException e) {
+                                    e.printStackTrace();
+                                } catch (IllegalAccessException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            vo.setAnswer(answer.substring(1));
+                        } else if ("3".equals(subjectType)) {
+                            if ("true".equals(subject.getAnswer())) {
+                                vo.setAnswer("对");
+                            } else {
+                                vo.setAnswer("错");
+                            }
+                        }
+                    }
+                }).wrapList(data, SubjectVo.class);
     }
 }
