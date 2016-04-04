@@ -14,11 +14,6 @@
             $scope.sex = data;
             $scope.sex.unshift({name: '请选择...'});
         });
-        // 加载民族
-        EmployeeConstant.nation(function (data) {
-            $scope.nation = data;
-            $scope.nation.unshift({name: '请选择'});
-        });
         // 加载政治面貌
         EmployeeConstant.zzmm(function (data) {
             $scope.zzmm = data;
@@ -69,6 +64,13 @@
             }
         };
 
+        var validate = function () {
+            if ($scope.employee.outer == true && !$scope.employee.company) {
+                AlertFactory.error('如果是“外协人员”，请指定班组!');
+                return false;
+            }
+            return true;
+        };
         // 移除头像
         $scope.removePicture = function () {
             $scope.uploadOptions.removeAll();
@@ -77,33 +79,29 @@
 
         //保存
         $scope.save = function () {
-            EmployeeService.save($scope.employee, function (data) {
-                data = data || {};
-                if (data && data.success) {
-                    if (self.frameElement.tagName == "IFRAME" && self.frameElement.id && self.frameElement.id.indexOf("iframe_") == 0) {
-                        CommonUtils.addTab('update');
-                    }
-                    CommonUtils.back();
-                } else {
-                    AlertFactory.error($scope, '[' + (data['fail'] || data['error'] || '') + ']');
-                }
-            });
+            if (validate()) {
+                var promise = EmployeeService.save($scope.employee, function (data) {
+                    $scope.form.$setValidity('committed', false);
+                    AlertFactory.success('保存成功!');
+                    CommonUtils.addTab('update');
+                    CommonUtils.delay($scope.back, 2000);
+                });
+                CommonUtils.loading(promise);
+            }
         };
 
 
         //更新
         $scope.update = function () {
-            EmployeeService.update($scope.employee, function (data) {
-                data = data || {};
-                if (data && data.success) {
-                    if (self.frameElement.tagName == "IFRAME" && self.frameElement.id && self.frameElement.id.indexOf("iframe_") == 0) {
-                        CommonUtils.addTab('update');
-                    }
-                    CommonUtils.back();
-                } else {
-                    AlertFactory.error($scope, '[' + (data['fail'] || data['error'] || '') + ']');
-                }
-            });
+            if (validate()) {
+                var promise = EmployeeService.update($scope.employee, function (data) {
+                    $scope.form.$setValidity('committed', false);
+                    AlertFactory.success('更新成功!');
+                    CommonUtils.addTab('update');
+                    CommonUtils.delay($scope.back, 2000);
+                });
+                CommonUtils.loading(promise);
+            }
         };
         var originalName;
         var load = function (id, callback) {

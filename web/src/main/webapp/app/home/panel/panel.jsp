@@ -52,13 +52,10 @@
                 <td style="width: 200px;">
                     <div ng-cloak>
                         <p>姓名：{{beans.employeeName}}</p>
-
                         <p>性别：{{beans.genderName}}</p>
-
-                        <p>职务：{{beans.duty}}</p>
-
-                        <p>民族：{{beans.nationName}}</p>
-
+                        <p>是否为外协人员：{{beans.outer?'是':'否'}}</p>
+                        <p>班组：{{beans.company}}</p>
+                        <p>电话：{{beans.mobile}}</p>
                         <p>所属部门：{{beans.orgName}}</p>
 
                     </div>

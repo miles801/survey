@@ -96,14 +96,15 @@
                                        ng-model="employee.orgName" validate validate-required/>
                                     <span class="add-on">
                                        <i class="icons circle_fork icon" title="清空"
-                                          ng-click="employee..organization.id=null;employee.organization.name=null;"></i>
+                                          ng-click="employee.orgId=null;employee.orgName=null;"></i>
                                     </span>
                             </div>
 
                             <div class="form-label col-1-half">
                                 <label>手机号码:</label>
                             </div>
-                            <input class="col-2-half" type="text" validate validate-int validate-max-length="20"
+                            <input class="col-2-half" type="text" validate validate-required validate-int
+                                   validate-max-length="20"
                                    ng-model="employee.mobile"/>
                         </div>
                         <div class="row">
@@ -111,24 +112,8 @@
                             <div class="form-label col-1-half">
                                 <label>身份证号:</label>
                             </div>
-                            <input class="col-2-half" type="text" validate validate-min-length="18"
+                            <input class="col-2-half" type="text" validate validate-required validate-min-length="18"
                                    validate-max-length="18" ng-model="employee.idNo"/>
-
-                            <div class="form-label col-1-half">
-                                <label>职务:</label>
-                            </div>
-                            <input class="col-2-half" type="text" validate validate-max-length="40"
-                                   ng-model="employee.duty"/>
-
-                        </div>
-
-                        <div class="row">
-                            <div class="form-label col-1-half">
-                                <label>民族:</label>
-                            </div>
-                            <select ng-model="employee.nation" class="col-2-half"
-                                    ng-options="foo.value as foo.name for foo in nation">
-                            </select>
                             <div class="form-label col-1-half">
                                 <label>政治面貌:</label>
                             </div>
@@ -136,6 +121,21 @@
                                     ng-options="foo.value as foo.name for foo in zzmm">
                             </select>
 
+
+                        </div>
+
+                        <div class="row">
+                            <div class="form-label col-1-half">
+                                <label>外协人员:</label>
+                            </div>
+                            <div class="col-2-half">
+                                <input class="col-half" type="checkbox" ng-model="employee.outer"/>
+                            </div>
+                            <div class="form-label col-1-half">
+                                <label>班组:</label>
+                            </div>
+                            <input class="col-2-half" type="text" validate validate-max-length="100"
+                                   ng-model="employee.company"/>
                         </div>
                         <div class="row">
                             <div class="form-label col-1-half">
@@ -144,13 +144,6 @@
                             <input class="col-6-half" type="text" validate validate-max-length="100"
                                    ng-model="employee.email"/>
 
-                        </div>
-                        <div class="row">
-                            <div class="form-label col-1-half">
-                                <label>班组:</label>
-                            </div>
-                            <input class="col-6-half" type="text" validate validate-max-length="100"
-                                   ng-model="employee.company"/>
                         </div>
                         <div class="row">
                             <div class="form-label col-1-half">
