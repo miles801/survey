@@ -34,6 +34,7 @@
         <property name="qq" column="QQ" type="string" length="20"/>
         <property name="picture" column="PICTURE" type="string" length="40"/>
         <property name="company" column="COMPANY" type="string" length="200"/>
+        <property name="outer" column="IS_OUTER" type="boolean"/>
         <!-- 公共属性 -->
         <property name="status" column="STATUS" type="string" length="40"/>
         <property name="description" column="DESCRIPTION" type="string" length="1000"/>
