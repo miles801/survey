@@ -8,6 +8,7 @@ import com.ycrl.core.pager.PageVo;
 import com.ycrl.utils.gson.ResponseData;
 import eccrm.base.employee.dao.EmployeeDao;
 import eccrm.base.employee.domain.Employee;
+import eccrm.base.employee.service.EmployeeService;
 import eccrm.base.parameter.service.ParameterContainer;
 import eccrm.base.position.dao.PositionDao;
 import eccrm.base.position.domain.Position;
@@ -104,7 +105,8 @@ public class UserServiceImpl implements UserService {
             employee.setPositionName(positions.get(0).getName());
             employee.setPositionCode("NORMAL");
         }
-        employeeDao.save(employee);
+        EmployeeService employeeService = SystemContainer.getInstance().getBean(EmployeeService.class);
+        employeeService.save(employee);
         // 保存用户
         user.setEmployeeId(empId);
         user.setEmployeeName(employee.getEmployeeName());
