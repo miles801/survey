@@ -162,10 +162,10 @@
                     <%-- 判断 --%>
                     <div class="subject" ng-if="subject.subjectType=='3'" ng-cloak>
                 <span>
-                <label><input type="radio" name="{{subject.id}}" ng-model="subject.answer" ng-value="true"/> 正确</label>
+                <label><input type="radio" name="{{subject.id}}" ng-model="subject.answer" value="true"/> 正确</label>
                 </span>
                 <span style="margin-left: 20px;">
-                <label><input type="radio" name="{{subject.id}}" ng-model="subject.answer" ng-value="false"/> 错误</label>
+                <label><input type="radio" name="{{subject.id}}" ng-model="subject.answer" value="false"/> 错误</label>
                 </span>
                     </div>
 

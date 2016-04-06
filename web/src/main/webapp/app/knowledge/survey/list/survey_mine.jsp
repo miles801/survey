@@ -61,21 +61,23 @@
                                 <td>试卷名称</td>
                                 <td>总题数</td>
                                 <td>总分数</td>
-                                <td>我的得分</td>
+                                <td>答题人</td>
+                                <td>得分</td>
                                 <td>开始答题时间</td>
                                 <td>结束答题时间</td>
                                 <td style="width: 150px;">答题时长(分)</td>
                             </tr>
                             </thead>
                             <tbody class="table-body">
-                            <tr ng-show="!beans.length">
-                                <td colspan="7" class="text-center">没有符合条件的记录！</td>
+                            <tr ng-show="!beans.total">
+                                <td colspan="8" class="text-center">没有符合条件的记录！</td>
                             </tr>
 
-                            <tr bindonce ng-repeat="foo in beans" ng-cloak>
+                            <tr bindonce ng-repeat="foo in beans.data" ng-cloak>
                                 <td bo-text="foo.surveyName"></td>
                                 <td bo-text="foo.totalCounts"></td>
                                 <td bo-text="foo.totalScore"></td>
+                                <td bo-text="foo.empName"></td>
                                 <td bo-text="foo.score"></td>
                                 <td bo-text="foo.startDate | eccrmDatetime"></td>
                                 <td bo-text="foo.endDate | eccrmDatetime"></td>

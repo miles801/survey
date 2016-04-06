@@ -52,7 +52,7 @@ public interface SurveyReportService {
     /**
      * 查询个人已完成试卷
      */
-    List<SurveyReportVo> queryFinish();
+    PageVo queryFinish(SurveyReportBo bo);
 
     /**
      * 获取下一题
@@ -69,4 +69,11 @@ public interface SurveyReportService {
      * @param type          题型编号
      */
     void importData(String[] attachmentIds, String type);
+
+    /**
+     * 查询所有在线考试的IP
+     *
+     * @return
+     */
+    List<SurveyReportVo> queryAllOnlineIP();
 }

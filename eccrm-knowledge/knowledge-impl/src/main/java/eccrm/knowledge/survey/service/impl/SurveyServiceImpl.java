@@ -9,6 +9,7 @@ import com.ycrl.core.pager.PageVo;
 import com.ycrl.core.pager.Pager;
 import com.ycrl.utils.number.IntegerUtils;
 import eccrm.base.parameter.service.ParameterContainer;
+import eccrm.base.parameter.vo.BusinessParamItemVo;
 import eccrm.knowledge.survey.bo.SubjectBo;
 import eccrm.knowledge.survey.bo.SurveyBo;
 import eccrm.knowledge.survey.dao.*;
@@ -166,10 +167,23 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public void register(String surveyId) {
+    public void register(String surveyId, String ip) {
         Logger logger = Logger.getLogger(this.getClass());
         logger.info(SecurityContext.getEmpName() + "--申请考试....");
         Assert.hasText(surveyId, "未知错误!申请考试时没有获取试卷ID!");
+        Assert.hasText(ip, "未知错误!申请考试时没有获取到当前机器的IP!");
+        ParameterContainer parameterContainer = ParameterContainer.getInstance();
+        List<BusinessParamItemVo> vos = parameterContainer.getBusinessItems("IP");
+        Assert.notEmpty(vos, "数据错误!没有获取到可以考试的机器的IP，请与管理员联系!");
+        boolean flag = false;
+        for (BusinessParamItemVo vo : vos) {
+            if (vo.getValue().equals(ip)) {
+                flag = true;
+                break;
+            }
+        }
+        Assert.isTrue(flag, "操作错误!申请考试的这台机器[" + ip + "]没有在系统中注册!请与管理员联系!");
+
         Survey survey = surveyDao.findById(surveyId);
         Assert.notNull(survey, "申请考试失败!试卷不存在，请刷新后重试!");
         Date now = new Date();
@@ -194,6 +208,7 @@ public class SurveyServiceImpl implements SurveyService {
         report.setTotalCounts(survey.getTotalSubjects());
         report.setTotalScore(survey.getTotalScore());
         report.setCurrent(0);
+        report.setIp(ip);
         String reportId = surveyReportDao.save(report);
 
         // 往试卷中插入题目

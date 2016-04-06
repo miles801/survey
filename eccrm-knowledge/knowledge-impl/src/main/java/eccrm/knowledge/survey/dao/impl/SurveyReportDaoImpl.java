@@ -2,10 +2,12 @@ package eccrm.knowledge.survey.dao.impl;
 
 import com.ycrl.core.HibernateDaoHelper;
 import com.ycrl.core.hibernate.criteria.CriteriaUtils;
+import com.ycrl.core.hibernate.filter.FilterFieldType;
 import eccrm.knowledge.survey.bo.SurveyReportBo;
 import eccrm.knowledge.survey.dao.SurveyReportDao;
 import eccrm.knowledge.survey.domain.SurveyReport;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
@@ -31,14 +33,14 @@ public class SurveyReportDaoImpl extends HibernateDaoHelper implements SurveyRep
     @Override
     @SuppressWarnings("unchecked")
     public List<SurveyReport> query(SurveyReportBo bo) {
-        Criteria criteria = createCriteria(SurveyReport.class);
+        Criteria criteria = createCriteria(SurveyReport.class, "SURVEY_REPORT_FILTER", "empId", FilterFieldType.EMPLOYEE);
         initCriteria(criteria, bo);
         return criteria.list();
     }
 
     @Override
     public Long getTotal(SurveyReportBo bo) {
-        Criteria criteria = createRowCountsCriteria(SurveyReport.class);
+        Criteria criteria = createRowCountsCriteria(SurveyReport.class, "SURVEY_REPORT_FILTER", "empId", FilterFieldType.EMPLOYEE);
         initCriteria(criteria, bo);
         return (Long) criteria.uniqueResult();
     }
@@ -61,6 +63,16 @@ public class SurveyReportDaoImpl extends HibernateDaoHelper implements SurveyRep
     public SurveyReport findById(String id) {
         Assert.hasText(id, "ID不能为空!");
         return (SurveyReport) getSession().get(SurveyReport.class, id);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<SurveyReport> queryAllOnlineIP() {
+        return createCriteria(SurveyReport.class)
+                .add(Restrictions.eq("finish", false))
+                .add(Restrictions.isNotNull("startDate"))
+                .add(Restrictions.isNull("endDate"))
+                .list();
     }
 
     private void initCriteria(Criteria criteria, SurveyReportBo bo) {

@@ -33,4 +33,6 @@ public interface SurveyReportDao {
      * 必须保证该实体是存在的（一般是get或者load得到的对象）
      */
     void delete(SurveyReport surveyReport);
+
+    public List<SurveyReport> queryAllOnlineIP();
 }

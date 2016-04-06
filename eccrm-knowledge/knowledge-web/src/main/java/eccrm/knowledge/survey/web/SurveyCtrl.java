@@ -19,6 +19,7 @@ import eccrm.knowledge.survey.vo.SubjectVo;
 import eccrm.knowledge.survey.vo.SurveyReportVo;
 import eccrm.knowledge.survey.vo.SurveySubjectVo;
 import eccrm.knowledge.survey.vo.SurveyVo;
+import eccrm.utils.NetUtils;
 import eccrm.utils.StringUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
@@ -224,8 +225,8 @@ public class SurveyCtrl extends BaseController {
     // 试卷注册
     @ResponseBody
     @RequestMapping(value = "/register", params = "id", method = RequestMethod.POST)
-    public void register(@RequestParam String id, HttpServletResponse response) {
-        surveyService.register(id);
+    public void register(@RequestParam String id, HttpServletRequest request, HttpServletResponse response) {
+        surveyService.register(id, NetUtils.getClientIpAddress(request));
         GsonUtils.printSuccess(response);
     }
 
@@ -259,7 +260,7 @@ public class SurveyCtrl extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/finished", method = RequestMethod.GET)
     public void queryPersonalFinishedSurvey(HttpServletResponse response) {
-        List<SurveyReportVo> data = surveyReportService.queryFinish();
+        PageVo data = surveyReportService.queryFinish(null);
         GsonUtils.printData(response, data);
     }
 
@@ -307,5 +308,13 @@ public class SurveyCtrl extends BaseController {
     public void importData(@RequestParam String attachmentIds, @RequestParam String type, HttpServletResponse response) {
         surveyReportService.importData(attachmentIds.split(","), type);
         GsonUtils.printSuccess(response);
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/online", method = RequestMethod.GET)
+    public void queryAllOnlineIP(HttpServletResponse response) {
+        List<SurveyReportVo> data = surveyReportService.queryAllOnlineIP();
+        GsonUtils.printData(response, data);
     }
 }

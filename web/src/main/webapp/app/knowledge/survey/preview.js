@@ -112,7 +112,7 @@
                     AlertFactory.success('回答完毕!');
                     // 查看总成绩
                     var p = SurveyService.score({id: surveyReportId}, function (o) {
-                        alert('总分:' + o.score)
+                        alert('总分:' + o.data.score || 0);
                     });
                     CommonUtils.loading(p);
                 }

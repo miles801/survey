@@ -102,13 +102,22 @@ public class SurveyReportServiceImpl implements SurveyReportService {
     }
 
     @Override
-    public List<SurveyReportVo> queryFinish() {
-        SurveyReportBo bo = new SurveyReportBo();
+    public PageVo queryFinish(SurveyReportBo bo) {
+        if (bo == null) {
+            bo = new SurveyReportBo();
+        }
         bo.setFinish(true);
-        bo.setEmpId(SecurityContext.getEmpId());
         bo.setAccept(true);
+        Long total = surveyReportDao.getTotal(bo);
+        PageVo vo = new PageVo();
+        vo.setTotal(total);
+        if (total == null || total == 0) {
+            return vo;
+        }
         List<SurveyReport> data = surveyReportDao.query(bo);
-        return BeanWrapBuilder.newInstance().wrapList(data, SurveyReportVo.class);
+        List<SurveyReportVo> vos = BeanWrapBuilder.newInstance().wrapList(data, SurveyReportVo.class);
+        vo.setData(vos);
+        return vo;
     }
 
     @Override
@@ -117,9 +126,6 @@ public class SurveyReportServiceImpl implements SurveyReportService {
         bo.setFinish(false);
         bo.setEmpId(SecurityContext.getEmpId());
         bo.setAccept(true);
-        Date now = new Date();
-//        bo.setEffectDate1(now);
-//        bo.setEffectDate2(now);
         List<SurveyReport> data = surveyReportDao.query(bo);
         return BeanWrapBuilder.newInstance().wrapList(data, SurveyReportVo.class);
     }
@@ -248,4 +254,11 @@ public class SurveyReportServiceImpl implements SurveyReportService {
             new File(newFilePath).delete();
         }
     }
+
+    @Override
+    public List<SurveyReportVo> queryAllOnlineIP() {
+        List<SurveyReport> data = surveyReportDao.queryAllOnlineIP();
+        return BeanWrapBuilder.newInstance().wrapList(data, SurveyReportVo.class);
+    }
+
 }

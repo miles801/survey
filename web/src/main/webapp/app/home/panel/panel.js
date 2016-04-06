@@ -4,13 +4,14 @@
         'eccrm.angular',
         'eccrm.angularstrap',
         'eccrm.base.employee',
+        'eccrm.base.param',
         'eccrm.base.user',
         'eccrm.knowledge.survey'    // 试卷
     ]);
 
 
     //
-    app.controller('BaseCtrl', function ($http, User, EmployeeService, $scope, CommonUtils, ModalFactory, AlertFactory, SurveyService) {
+    app.controller('BaseCtrl', function ($http, User, EmployeeService, $scope, CommonUtils, AsideFactory, ModalFactory, AlertFactory, SurveyService, ParameterLoader) {
         $scope.beans = {};
         $scope.isShow = false;
         var id = $('#userId').val();
@@ -25,6 +26,48 @@
                 } else {
                     $('#imageId').html('<img src="' + CommonUtils.contextPathURL('/style/standard/images/default_tx.png') + '" width="150" height="180">');
                 }
+
+                // 获取所有的IP
+                if ($scope.beans.positionCode === 'SYS') {
+                    $scope.ips = [];
+                    ParameterLoader.loadBusinessParam('IP', function () {
+                        $scope.ips = arguments[0];
+                    });
+
+                    // 定时查询在线考试的用户列表
+                    var repeatQuery = function () {
+                        SurveyService.queryOnline(function (online) {
+                            setTimeout(repeatQuery, 15000);
+                            online = online.data || [];
+                            angular.forEach($scope.ips || [], function (ip) {
+
+                                var isOnline = false;
+                                for (var i = 0; i < online.length; i++) {
+                                    if (ip.value == online[i].ip) {
+                                        isOnline = true;
+                                        ip.nowId = online[i].id;
+                                        break;
+                                    }
+                                }
+                                ip.isOnline = isOnline;
+                                // 下线则表示刚答题结束
+                                if (!isOnline && ip.nowId) {
+                                    SurveyService.score({id: ip.nowId}, function (data) {
+                                        ip.nowId = null;
+                                        data = data.data || {};
+                                        AsideFactory.info({
+                                            title: '通知',
+                                            content: ip.name + '(' + data.empName + ')答完题了，分数为:' + data.score + '!'
+                                        });
+                                    });
+                                }
+
+                            });
+                        });
+                    };
+                    repeatQuery();
+                }
+
             });
             CommonUtils.loading(promise);
         };

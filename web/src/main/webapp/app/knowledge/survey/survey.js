@@ -118,6 +118,11 @@
             // 获取所有个人已经完成的试卷
             finished: {method: 'GET', params: {method: 'finished'}, isArray: false},
 
+            // 查询所有在线考试的IP地址
+            queryOnline: {method: 'GET', params: {method: 'online'}, isArray: false},
+
+            queryLastByIp: {method: 'GET', params: {method: 'queryLastByIp', ip: '@ip'}, isArray: false},
+
             // 获取个人指定试卷的答题情况
             score: {method: 'GET', params: {method: 'score', id: '@id'}, isArray: false}
 
