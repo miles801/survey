@@ -22,6 +22,7 @@
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-ztree-all.js"></script>
 
     <script type="text/javascript" src="<%=contextPath%>/vendor/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="<%=contextPath%>/app/knowledge/survey/category/category.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/app/knowledge/survey/survey.js"></script>
     <script type="text/javascript">
         window.angular.contextPathURL = '<%=contextPath%>';
@@ -73,6 +74,16 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="form-label col-1-half">
+                                <label>题库:</label>
+                            </div>
+                            <div class="col-2-half">
+                                <input class="col-12" type="text" ng-model="beans.categoryName" validate
+                                       validate-required
+                                       ztree-single="categoryTree" readonly/>
+                                <span class="add-on"><i class="icons icon fork cp" title="清除"
+                                                        ng-click="clearCategory();"></i></span>
+                            </div>
                             <div class="form-label col-1-half">
                                 <label>生效时间:</label>
                             </div>
@@ -195,11 +206,11 @@
                             <div class="form-label col-1-half">
                                 <label>总题数:</label>
                             </div>
-                            <span class="col-2-half" ng-cloak>{{beans.xzCounts+beans.dxCounts+beans.pdCounts+beans.tkCounts+beans.jdCounts}} 题</span>
+                            <span class="col-2-half" ng-cloak>{{beans.totalSubjects}} 题</span>
                             <div class="form-label col-1-half">
                                 <label>总分数:</label>
                             </div>
-                            <span class="col-2-half" ng-cloak>{{beans.xzTotalScore+beans.dxTotalScore+beans.pdTotalScore+beans.tkTotalScore+beans.jdTotalScore}} 分</span>
+                            <span class="col-2-half" ng-cloak> {{beans.totalScore}} 分</span>
                         </div>
                         <div class="row" ng-cloak>
                             <div class="form-label col-1-half">

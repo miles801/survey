@@ -109,12 +109,16 @@
                 // 得到该试卷所有的题目
                 subjects = data.data;
                 if (!subjects) {
-                    AlertFactory.success('回答完毕!');
+                    AlertFactory.info('回答完毕!');
                     // 查看总成绩
                     var p = SurveyService.score({id: surveyReportId}, function (o) {
-                        alert('总分:' + o.data.score || 0);
+                        $scope.currentScore = o.data.score || 0;
+                        alert('回答完毕!总分:' + o.data.score || 0);
                     });
                     CommonUtils.loading(p);
+                } else {
+                    $scope.currentIndex = subjects.currentIndex || 1;
+                    $scope.currentScore = subjects.currentScore || 0;
                 }
                 // 按照分页显示类型获取值
                 $scope.subjects = [subjects];

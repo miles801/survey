@@ -10,6 +10,8 @@
 
         <property name="name" column="NAME" type="string" length="200"/>
         <property name="code" column="CODE" type="string" length="40"/>
+        <property name="categoryId" column="CATEGORY_ID" type="string" length="40" not-null="true"/>
+        <property name="categoryName" column="CATEGORY_NAME" type="string" length="40" not-null="true"/>
         <property name="navContent" column="NAV_CONTENT" type="string" length="2000"/>
         <property name="startTime" column="START_TIME" type="timestamp"/>
         <property name="endTime" column="END_TIME" type="timestamp"/>

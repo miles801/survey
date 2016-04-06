@@ -17,7 +17,7 @@
         <property name="rightAnswer" column="RIGHT_ANSWER" type="string" length="1000" not-null="true" update="false"/>
         <property name="empId" column="EMP_ID" type="string" length="40" not-null="true" update="false"/>
         <property name="empName" column="EMP_NAME" type="string" length="40" not-null="true"/>
-        <property name="answer" column="ANSWER" type="string" length="100"/>
+        <property name="answer" column="ANSWER" type="string" length="2000"/>
         <property name="answerDate" column="ANSWER_DATE" type="timestamp"/>
         <property name="right" column="IS_RIGHT" type="boolean"/>
         <property name="score" column="SCORE" type="int"/>

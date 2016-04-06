@@ -12,6 +12,10 @@ public class SurveyVo extends CommonVo {
     // 试卷名称
     private String name;
 
+    // 所属题型
+    private String categoryId;
+    private String categoryName;
+
     // 试卷编号
     private String code;
 
@@ -78,6 +82,22 @@ public class SurveyVo extends CommonVo {
 
     // 选题模式：随机选题、手动选题
     private Boolean isRandomSubject;
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
 
     public Boolean getRandomSubject() {
         return isRandomSubject;

@@ -1,6 +1,7 @@
 package eccrm.knowledge.survey.domain;
 
 import eccrm.base.tenement.domain.CrmBaseDomain;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -30,6 +31,13 @@ public class Survey extends CrmBaseDomain {
     // 试卷名称
     @NotNull
     private String name;
+
+    // 试卷所属分类，表示试卷只能从指定的题型分类中获取
+    @NotNull
+    private String categoryId;
+    @NotNull
+    @Length(max = 20)
+    private String categoryName;
 
     // 前导页内容
     private String navContent;
@@ -102,6 +110,22 @@ public class Survey extends CrmBaseDomain {
     // 选题模式：随机选题、手动选题
     private Boolean isRandomSubject;
 
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
 
     public Boolean getRandomSubject() {
         return isRandomSubject;

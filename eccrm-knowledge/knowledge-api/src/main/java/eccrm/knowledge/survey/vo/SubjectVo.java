@@ -22,6 +22,8 @@ public class SubjectVo extends CrmBaseVo {
     private List checkboxList;  // 复选
     // 该题目将在哪一个试卷中
     private String surveyReportDetailId;
+    private Integer currentIndex;   // 当前答题个数
+    private Integer currentScore;   // 当前分数
 
     // 题目答案
     private String answer;
@@ -30,6 +32,22 @@ public class SubjectVo extends CrmBaseVo {
     private Boolean manualApprove;
 
     private List<SubjectItem> items;
+
+    public Integer getCurrentScore() {
+        return currentScore;
+    }
+
+    public void setCurrentScore(Integer currentScore) {
+        this.currentScore = currentScore;
+    }
+
+    public Integer getCurrentIndex() {
+        return currentIndex;
+    }
+
+    public void setCurrentIndex(Integer currentIndex) {
+        this.currentIndex = currentIndex;
+    }
 
     private String item1;
     private String item2;

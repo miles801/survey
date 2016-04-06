@@ -19,16 +19,28 @@ public class SurveyBo implements BO {
     private String code;
 
     @Condition
+    private String categoryId;
+
+    @Condition
     private String status;
 
-    @Condition(matchMode = MatchModel.GE)
+    @Condition(matchMode = MatchModel.LT)
     private Date startTime;
 
-    @Condition(matchMode = MatchModel.LT)
+    @Condition(matchMode = MatchModel.GT)
     private Date endTime;
 
     // 如果值为true，表示还没有注册过答题（需要依赖当前登录人）
     private Boolean notRegister;
+
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
 
     public Boolean getNotRegister() {
         return notRegister;

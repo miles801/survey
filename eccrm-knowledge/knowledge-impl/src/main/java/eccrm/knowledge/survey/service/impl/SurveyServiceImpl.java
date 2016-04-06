@@ -159,8 +159,8 @@ public class SurveyServiceImpl implements SurveyService {
         SurveyBo bo = new SurveyBo();
         bo.setStatus(Survey.STATUS_PUBLISHED);
         Date now = new Date();
-//        bo.setStartTime(now);
-//        bo.setEndTime(now);
+        bo.setStartTime(now);
+        bo.setEndTime(now);
         bo.setNotRegister(true);
         List<Survey> surveys = surveyDao.query(bo);
         return BeanWrapBuilder.newInstance().wrapList(surveys, SurveyVo.class);
@@ -214,6 +214,7 @@ public class SurveyServiceImpl implements SurveyService {
         // 往试卷中插入题目
 
         SubjectBo bo = new SubjectBo();
+        bo.setCategoryId(survey.getCategoryId());   // 只选择指定类型下的题目
         bo.setRandom(true);
         bo.setStatus(CommonStatus.ACTIVE.getValue());
         Integer danxuan = survey.getXzCounts();

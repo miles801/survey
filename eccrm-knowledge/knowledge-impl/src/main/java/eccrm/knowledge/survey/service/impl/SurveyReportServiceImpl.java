@@ -133,7 +133,7 @@ public class SurveyReportServiceImpl implements SurveyReportService {
     @Override
     public SubjectVo getNextSubject(String id) {
         Assert.hasText(id, "获取题目失败!没有指定试卷!");
-        SurveyReport report = surveyReportDao.findById(id);
+        final SurveyReport report = surveyReportDao.findById(id);
         Assert.notNull(report, "获取题目失败!该试卷不存在，请刷新后重试!");
         // 如果试卷已完成则直接返回null
         if (report.getFinish() || IntegerUtils.nullEqual(report.getCurrent(), report.getTotalCounts())) {
@@ -150,6 +150,8 @@ public class SurveyReportServiceImpl implements SurveyReportService {
                     @Override
                     public void doCallback(Subject o, SubjectVo vo) {
                         vo.setSurveyReportDetailId(detail.getId());
+                        vo.setCurrentIndex(report.getCurrent());
+                        vo.setCurrentScore(report.getScore());
                         List<SubjectItem> items = subjectItemDao.queryBySubjectId(o.getId());
                         vo.setItems(items);
                     }

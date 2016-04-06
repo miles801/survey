@@ -73,7 +73,7 @@
             border-left: 1px solid #ddd;
         }
 
-        .desc span {
+        .desc .row > span {
             display: inline-block;
             width: 120px;
             height: 24px;
@@ -137,11 +137,16 @@
                 <span>每题：{{beans.jdScore}} 分</span>
                 <span>共： {{beans.jdTotalScore}} 分</span>
             </div>
+            <div class="row">
+                <h5 style="font-weight: 700;font-size: 14px;">当前得分：<span
+                        style="color: #ff0000">{{currentScore}} 分</span></h5>
+            </div>
         </div>
         <div class="article-box">
             <form role="form" name="form">
                 <div class="row survey" bindonce ng-repeat="subject in subjects">
 
+                    <span ng-cloak style="position: absolute;">{{currentIndex}}. </span>
                     <div class="title" bo-html="subject.title"></div>
                     <%-- 单选 --%>
                     <ul class="subject" ng-if="subject.subjectType=='1'" ng-cloak>

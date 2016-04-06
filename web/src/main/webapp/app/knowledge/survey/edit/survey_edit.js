@@ -1,13 +1,14 @@
 (function (window, angular, $) {
     var app = angular.module('eccrm.knowledge.survey.edit', [
         'eccrm.knowledge.survey',
+        'knowledge.survey.category',
         'eccrm.angular',
         'eccrm.angular.ztree',
         'eccrm.angularstrap'
     ]);
 
     // 入口
-    app.controller("SurveyEditCtrl", function ($scope, Survey, CommonUtils, SurveyService, AlertFactory) {
+    app.controller("SurveyEditCtrl", function ($scope, Survey, CommonUtils, SurveyService, AlertFactory, SubjectCategoryTree) {
         var pageType = $("#pageType").val();    // 页面类型
         var id = $("#id").val();                // ID
         var beans = $scope.beans = {};          // 数据区
@@ -34,6 +35,16 @@
             angular.forEach(tabs, function (tab) {
                 CommonUtils.addTab(tab);
             });
+        };
+
+        $scope.categoryTree = SubjectCategoryTree.pick(function (o) {
+            $scope.beans.categoryId = o.id;
+            $scope.beans.categoryName = o.name;
+        });
+
+        $scope.clearCategory = function () {
+            $scope.beans.categoryId = null;
+            $scope.beans.categoryName = null;
         };
 
         var check = function () {
@@ -103,6 +114,17 @@
             $scope.status = data;
         });
 
+        // 重置分数、题目总和
+        var resetScore = function () {
+            var beans = $scope.beans;
+            beans.xzTotalScore = (beans.xzCounts || 0) * (beans.xzScore || 0);
+            beans.dxTotalScore = (beans.dxCounts || 0) * ( beans.dxScore || 0);
+            beans.pdTotalScore = (beans.pdCounts || 0) * ( beans.pdScore || 0);
+            beans.tkTotalScore = (beans.tkCounts || 0) * ( beans.tkScore || 0);
+            beans.jdTotalScore = (beans.jdCounts || 0) * ( beans.jdScore || 0);
+            beans.totalSubjects = parseInt(beans.xzCounts || 0) + parseInt(beans.dxCounts || 0) + parseInt(beans.pdCounts || 0) + parseInt(beans.tkCounts || 0) + parseInt(beans.jdCounts || 0);
+            beans.totalScore = beans.xzTotalScore + beans.dxTotalScore + beans.pdTotalScore + beans.tkTotalScore + beans.jdTotalScore;
+        };
         if (pageType == 'view' || pageType == 'detail') {
             editor.readonly(true);
             initTab(id, 'view');
@@ -114,25 +136,28 @@
             beans.status = 'ACTIVE';
             beans.xzCounts = 10;
             beans.xzScore = 2;
-            beans.xzTotalScore = beans.xzCounts * beans.xzScore;
             beans.dxCounts = 5;
             beans.dxScore = 5;
-            beans.dxTotalScore = beans.dxCounts * beans.dxScore;
             beans.pdCounts = 0;
             beans.pdScore = 0;
-            beans.pdTotalScore = beans.pdCounts * beans.pdScore;
-            beans.tkCounts = 5;
-            beans.tkScore = 5;
-            beans.tkTotalScore = beans.tkCounts * beans.tkScore;
-            beans.jdCounts = 3;
-            beans.jdScore = 10;
-            beans.jdTotalScore = beans.jdCounts * beans.jdScore;
+            beans.tkCounts = 0;
+            beans.tkScore = 0;
+            beans.jdCounts = 0;
+            beans.jdScore = 0;
             beans.startTime = new Date().getTime();
             beans.isRandomSubject = true;     // 采用随机选题
         } else if (pageType == 'modify') {
             initTab(id, 'modify');
             load();
         }
+
+
+        // 当值改变时，重置模型
+        $scope.$watch(function () {
+            var b = $scope.beans;
+            return b.xzCounts + ',' + b.xzScore + ',' + b.dxCounts + ',' + b.dxScore + ',' + b.pdCounts + ',' + b.pdScore + ',' + b.tkCounts + ',' + b.tkScore + ',' + b.jdCounts + ',' + b.jdScore;
+        }, resetScore);
+
 
     });
 })(window, angular, jQuery);
