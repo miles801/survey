@@ -146,7 +146,7 @@
             <form role="form" name="form">
                 <div class="row survey" bindonce ng-repeat="subject in subjects">
 
-                    <span ng-cloak style="position: absolute;">{{currentIndex}}. </span>
+                    <span ng-cloak style="position: absolute;" ng-if="subject">{{currentIndex+1}}. </span>
                     <div class="title" bo-html="subject.title"></div>
                     <%-- 单选 --%>
                     <ul class="subject" ng-if="subject.subjectType=='1'" ng-cloak>

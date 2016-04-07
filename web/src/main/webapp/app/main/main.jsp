@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>“国网江阴市供电公司“安规”考试” </title>
+    <title>国网江阴市供电公司“安规”考试系统 </title>
     <link rel="stylesheet" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css"/>
     <link rel="stylesheet" href="<%=contextPath%>/app/main/css/main.css"/>

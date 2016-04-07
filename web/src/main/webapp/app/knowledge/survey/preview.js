@@ -117,7 +117,7 @@
                     });
                     CommonUtils.loading(p);
                 } else {
-                    $scope.currentIndex = subjects.currentIndex || 1;
+                    $scope.currentIndex = subjects.currentIndex || 0;
                     $scope.currentScore = subjects.currentScore || 0;
                 }
                 // 按照分页显示类型获取值

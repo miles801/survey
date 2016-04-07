@@ -187,7 +187,10 @@
         <h3 style="text-align: center">在线考试</h3>
         <div class="ycrl split"></div>
         <div style="padding: 20px;border:1px solid #dcdcdc;display: block;width: 90%;margin:0 auto;min-height: 300px;">
-            <div ng-repeat="foo in ips" ng-class="{online:foo.isOnline}" class="box" ng-cloak>{{foo.name}}</div>
+            <div ng-repeat="foo in ips" ng-class="{online:foo.isOnline}" class="box" ng-cloak>
+                <span ng-if="!foo.isOnline">{{foo.name}}</span>
+                <span ng-if="foo.isOnline">{{foo.employeeName}}</span>
+            </div>
         </div>
     </div>
 </div>

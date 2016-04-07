@@ -45,6 +45,7 @@
                                 for (var i = 0; i < online.length; i++) {
                                     if (ip.value == online[i].ip) {
                                         isOnline = true;
+                                        ip.employeeName = online[i].empName;
                                         ip.nowId = online[i].id;
                                         break;
                                     }

@@ -85,13 +85,13 @@ body {
 #header .top .logo {
     overflow: hidden;
     height: 60px;
-    width: 165px;
+    width: 160px;
     top: -3px;
     left: 5px;
     background: url('../images/logo.png') no-repeat 0 5px;
     position: absolute;
     z-index: 2;
-    background-size: contain;
+    /*background-size: contain;*/
 }
 
 #header .top .login {
