@@ -37,7 +37,7 @@
                     // 定时查询在线考试的用户列表
                     var repeatQuery = function () {
                         SurveyService.queryOnline(function (online) {
-                            setTimeout(repeatQuery, 15000);
+                            setTimeout(repeatQuery, 5000);
                             online = online.data || [];
                             angular.forEach($scope.ips || [], function (ip) {
 
