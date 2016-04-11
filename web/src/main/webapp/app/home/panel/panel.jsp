@@ -39,14 +39,14 @@
 
         .box {
             display: inline-block;
-            width: 130px;
-            height: 40px;
+            width: 110px;
+            height: 35px;
             text-align: center;
             float: left;
             margin-left: 20px;
             margin-top: 20px;
             border: 1px solid #DCDCDC;
-            line-height: 40px;
+            line-height: 35px;
         }
 
         .online {
