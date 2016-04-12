@@ -83,24 +83,26 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     private void saveSubjectItems(Subject subject, String id) {
-        List<SubjectItem> items = subject.getItems();
-        if (items != null && !items.isEmpty()) {
-            String rightAnswer = "";
-            int i = 1;
-            for (SubjectItem item : items) {
-                if (StringUtils.isEmpty(item.getName())) {
-                    continue;
+        if (subject.getSubjectType().equals("2") || subject.getSubjectType().equals("1")) {
+            List<SubjectItem> items = subject.getItems();
+            if (items != null && !items.isEmpty()) {
+                String rightAnswer = "";
+                int i = 1;
+                for (SubjectItem item : items) {
+                    if (StringUtils.isEmpty(item.getName())) {
+                        continue;
+                    }
+                    item.setSubjectId(id);
+                    item.setSubjectName(subject.getTitle());
+                    item.setSequenceNo(i++);
+                    String answerId = subjectItemDao.save(item);
+                    if (item.getRight() != null && item.getRight()) {
+                        rightAnswer += "," + answerId;
+                    }
                 }
-                item.setSubjectId(id);
-                item.setSubjectName(subject.getTitle());
-                item.setSequenceNo(i++);
-                String answerId = subjectItemDao.save(item);
-                if (item.getRight() != null && item.getRight()) {
-                    rightAnswer += "," + answerId;
-                }
+                Assert.isTrue(rightAnswer.length() > 0, "题目新增失败,请保证至少有一个选项是正确的!");
+                subject.setAnswer(rightAnswer.substring(1));
             }
-            Assert.isTrue(rightAnswer.length() > 0, "题目新增失败,请保证至少有一个选项是正确的!");
-            subject.setAnswer(rightAnswer.substring(1));
         }
     }
 

@@ -197,6 +197,7 @@ public class SurveyServiceImpl implements SurveyService {
         report.setFinish(false);
         report.setAccept(true);
         report.setAcceptDate(now);
+        report.setStartDate(now);   // 开始答题
         report.setRegisterDate(now);
         report.setEffectDate(survey.getEndTime());
         report.setEmpId(SecurityContext.getEmpId());

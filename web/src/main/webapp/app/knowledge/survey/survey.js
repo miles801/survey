@@ -100,6 +100,8 @@
 
             // 获取所有个人可注册的试卷
             canregister: {method: 'GET', params: {method: 'canregister'}, isArray: false},
+
+
             // 试卷注册
             // 必须参数：原始试卷的ID
             register: {method: 'POST', params: {method: 'register', id: '@id'}, isArray: false},
@@ -110,10 +112,20 @@
             // 答题时，获取指定试卷的下一题
             // 必须参数：注册试卷的ID
             nextsubject: {method: 'GET', params: {method: 'nextsubject', id: '@id'}, isArray: false},
+            // 答题时，获取指定试卷的下一题
+            // 必须参数：注册试卷的ID
+            prevsubject: {method: 'GET', params: {method: 'prevsubject', id: '@id', index: '@index'}, isArray: false},
 
             // 答题
             // 必须参数：原始试卷的ID、答案
             answer: {method: 'POST', params: {method: 'answer'}, isArray: false},
+
+            // 获得答案
+            getAnswer: {
+                method: 'GET',
+                params: {method: 'answer', a: '@surveyReportId', 'subjectId': '@subjectId'},
+                isArray: false
+            },
 
             // 获取所有个人已经完成的试卷
             finished: {method: 'GET', params: {method: 'finished'}, isArray: false},

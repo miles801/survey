@@ -1,7 +1,6 @@
 package eccrm.knowledge.survey.service.impl;
 
 import com.ycrl.core.beans.BeanWrapBuilder;
-import com.ycrl.core.beans.BeanWrapCallback;
 import com.ycrl.utils.string.StringUtils;
 import eccrm.base.parameter.service.ParameterContainer;
 import eccrm.knowledge.survey.bo.SubjectBo;
@@ -10,10 +9,8 @@ import eccrm.knowledge.survey.dao.SubjectDao;
 import eccrm.knowledge.survey.dao.SubjectItemDao;
 import eccrm.knowledge.survey.dao.SurveySubjectDao;
 import eccrm.knowledge.survey.domain.Subject;
-import eccrm.knowledge.survey.domain.SubjectItem;
 import eccrm.knowledge.survey.domain.SurveySubject;
 import eccrm.knowledge.survey.service.SurveySubjectService;
-import eccrm.knowledge.survey.vo.SubjectVo;
 import eccrm.knowledge.survey.vo.SurveySubjectVo;
 import eccrm.utils.ArrayUtils;
 import org.springframework.stereotype.Service;
@@ -103,27 +100,6 @@ public class SurveySubjectServiceImpl implements SurveySubjectService {
         }
         return BeanWrapBuilder.newInstance()
                 .wrapList(surveySubjects, SurveySubjectVo.class);
-    }
-
-    @Override
-    public List<SubjectVo> querySubjectWithItems(final String surveyId) {
-        // 查询所有题目
-        List<String> ids = surveySubjectDao.querySubjectIds(surveyId);
-        if (ids == null || ids.isEmpty()) {
-            return null;
-        }
-        List<Subject> subjects = subjectDao.queryByIds(ArrayUtils.listToArray(ids), null);
-
-        // 查询题目对应的选项
-        return BeanWrapBuilder.newInstance()
-                .setCallback(new BeanWrapCallback<Subject, SubjectVo>() {
-                    @Override
-                    public void doCallback(Subject o, SubjectVo vo) {
-                        List<SubjectItem> items = subjectItemDao.queryBySubjectId(o.getId());
-                        vo.setItems(items);
-                    }
-                })
-                .wrapList(subjects, SubjectVo.class);
     }
 
     @Override

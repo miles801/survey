@@ -1,7 +1,6 @@
 package eccrm.knowledge.survey.service;
 
 import eccrm.knowledge.survey.bo.SubjectBo;
-import eccrm.knowledge.survey.vo.SubjectVo;
 import eccrm.knowledge.survey.vo.SurveySubjectVo;
 
 import java.util.List;
@@ -39,13 +38,6 @@ public interface SurveySubjectService {
      * @param subjectIds 题目id
      */
     void delete(String surveyId, String[] subjectIds);
-
-    /**
-     * 查询试卷的题目，并同时返回题目对应的选项
-     *
-     * @param surveyId 试卷ID
-     */
-    List<SubjectVo> querySubjectWithItems(String surveyId);
 
     /**
      * 检查指定的试卷是否设置了题目

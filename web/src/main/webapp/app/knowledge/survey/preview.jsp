@@ -12,6 +12,7 @@
 
     <script type="text/javascript" src="<%=contextPath%>/vendor/jquery-v1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-all.js"></script>
+    <script type="text/javascript" src="<%=contextPath%>/vendor/angular-v1.2.9/angular-animate.min.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-strap-all.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/app/knowledge/survey/survey.js"></script>
     <style>
@@ -66,8 +67,8 @@
         }
 
         .article-box {
-            padding: 10px 0 0 420px;
-            width: 100%;
+            padding: 10px 0 0 10px;
+            float: left;
             min-height: 300px;
             position: relative;
             border-left: 1px solid #ddd;
@@ -78,6 +79,38 @@
             width: 120px;
             height: 24px;
             line-height: 24px;
+        }
+
+        .item {
+            width: 30px;
+            height: 30px;
+            float: left;
+            margin: 8px;
+            border: 1px solid #dcdcdc;
+            text-align: center;
+            vertical-align: middle;
+            padding-top: 5px;
+            cursor: pointer;
+        }
+
+        .item.active {
+            border-bottom: 4px solid red;
+        }
+
+        .item.hasAnswer {
+            color: #fff;
+            background-color: #00B83F;
+        }
+
+        .button-row .btn {
+            width: 120px;
+            float: left;
+            margin-left: 20px;
+        }
+
+        .error {
+            font-weight: 700;
+            color: red;
         }
     </style>
     <script type="text/javascript">
@@ -90,14 +123,8 @@
     <div class="dn">
         <input type="hidden" id="surveyId" value="${beans.id}"/>
         <input type="hidden" id="surveyReportId" value="${surveyReportId}"/>
-        <input type="hidden" id="multiPage" value="${beans.multiPage}"/>
         <input type="hidden" id="surveyName" value="${beans.name}"/>
         <input type="hidden" id="pageType" value="${pageType}"/>
-        <input type="hidden" id="businessId" value="${businessId}"/>
-        <input type="hidden" id="userId" value="${userId}"/>
-        <input type="hidden" id="userName" value="${userName}"/>
-        <input type="hidden" id="userType" value="${userType}"/>
-        <input type="hidden" id="batchId" value="${batchId}"/>
     </div>
     <div class="row">
         <h3 style="text-align: center;">${beans.name}</h3>
@@ -113,88 +140,96 @@
                 <span>总分数：{{beans.totalScore}}</span>
             </div>
             <div class="row" ng-if="beans.xzCounts>0">
-                <span>单选题：{{beans.xzCounts}} 个</span>
-                <span>每题：{{beans.xzScore}} 分</span>
-                <span>共： {{beans.xzTotalScore}} 分</span>
+                <div class="row">单选题：(每题{{beans.xzScore}} 分)</div>
             </div>
             <div class="row" ng-if="beans.dxCounts>0">
-                <span>多选题：{{beans.dxCounts}} 个</span>
-                <span>每题：{{beans.dxScore}} 分</span>
-                <span>共： {{beans.dxTotalScore}} 分</span>
+                <div class="row">多选题：(每题{{beans.dxScore}} 分)</div>
             </div>
             <div class="row" ng-if="beans.pdCounts>0">
-                <span>判断题：{{beans.pdCounts}} 个</span>
-                <span>每题：{{beans.pdScore}} 分</span>
-                <span>共： {{beans.pdTotalScore}} 分</span>
+                <div class="row">判断题：(每题{{beans.pdScore}} 分)</div>
             </div>
             <div class="row" ng-if="beans.tkCounts>0">
-                <span>填空题：{{beans.tkCounts}} 个</span>
-                <span>每题：{{beans.tkScore}} 分</span>
-                <span>共： {{beans.tkTotalScore}} 分</span>
+                <div class="row">填空题：(每题{{beans.tkScore}} 分)</div>
             </div>
-            <div class="row" ng-if="beans.jdCounts>0">
-                <span>简答题：{{beans.jdCounts}} 个</span>
-                <span>每题：{{beans.jdScore}} 分</span>
-                <span>共： {{beans.jdTotalScore}} 分</span>
-            </div>
-            <div class="row">
-                <h5 style="font-weight: 700;font-size: 14px;">当前得分：<span
-                        style="color: #ff0000">{{currentScore}} 分</span></h5>
-            </div>
+            <div class="item" ng-class="{active:$index==$parent.index,hasAnswer:!!s.answer}" bindonce
+                 ng-repeat="s in subjects" ng-click="changeIndex($index);">
+                <span>{{$index+1}}</span></div>
+
         </div>
         <div class="article-box">
             <form role="form" name="form">
-                <div class="row survey" bindonce ng-repeat="subject in subjects">
-
-                    <span ng-cloak style="position: absolute;" ng-if="subject">{{currentIndex+1}}. </span>
+                <div class="row survey" bindonce ng-repeat="subject in subjects"
+                     ng-show="$index==$parent.index || subject.error">
+                    <span ng-cloak style="position: absolute;">{{$index+1}}. </span>
                     <div class="title" bo-html="subject.title"></div>
                     <%-- 单选 --%>
                     <ul class="subject" ng-if="subject.subjectType=='1'" ng-cloak>
                         <li bindonce ng-repeat="i in subject.items" ng-class="{oneline:subject.showList===true}">
-                            <label><input type="radio" name="{{subject.id}}" ng-model="subject.answer" ng-value="i.id"/><span
-                                    bo-text="i.name"></span></label>
+                            <label>
+                                <input type="radio" name="{{subject.id}}" ng-model="subject.answer" ng-value="i.id"
+                                       validate validate-required/>
+                                <span bo-text="i.name"></span>
+                            </label>
+                            <span ng-show="subject.error && subject.rightAnswer==i.id"><i
+                                    class="icons icon yes"></i></span>
                         </li>
                     </ul>
 
                     <%-- 多选 --%>
                     <ul class="subject" ng-if="subject.subjectType=='2'" ng-cloak>
                         <li bindonce ng-repeat="i in subject.items" ng-class="{oneline:subject.showList===true}">
-                            <label><input type="checkbox" name="{{subject.id}}" ng-model="i.isSelected"/><span
-                                    bo-text="i.name"></span></label>
+                            <label>
+                                <input type="checkbox" name="{{subject.id}}" ng-model="i.isSelected" validate
+                                       validate-required ng-change="changeValue();"/>
+                                <span bo-text="i.name"></span>
+                            </label>
+                            <span ng-show="subject.error && i.isRight"><i class="icons icon yes"></i></span>
                         </li>
                     </ul>
 
                     <%-- 判断 --%>
                     <div class="subject" ng-if="subject.subjectType=='3'" ng-cloak>
-                <span>
-                <label><input type="radio" name="{{subject.id}}" ng-model="subject.answer" value="true"/> 正确</label>
-                </span>
-                <span style="margin-left: 20px;">
-                <label><input type="radio" name="{{subject.id}}" ng-model="subject.answer" value="false"/> 错误</label>
-                </span>
+                            <span>
+                                <label><input type="radio" name="{{subject.id}}" ng-model="subject.answer" value="true"
+                                              validate validate-required/> 正确</label>
+                                <span ng-show="subject.error && subject.rightAnswer=='true'"><i
+                                        class="icons icon yes"></i></span>
+                            </span>
+                            <span style="margin-left: 20px;">
+                                <label><input type="radio" name="{{subject.id}}" ng-model="subject.answer" value="false"
+                                              validate validate-required/> 错误</label>
+                                <span ng-show="subject.error && subject.rightAnswer=='false'"><i
+                                        class="icons icon yes"></i></span>
+                            </span>
                     </div>
 
                     <%-- 填空 --%>
                     <div class="subject" ng-if="subject.subjectType=='4'" ng-cloak>
-                        <span>答：</span><input type="text" eccrm-aw style="width: 240px;padding: 2px 8px;"
-                                              ng-model="subject.answer"/>
+                        <span>答： </span>
+                        <input type="text" eccrm-aw style="width: 240px;padding: 2px 8px;" ng-model="subject.answer"
+                               validate validate-required/>
+                        <span style="margin-left:10px;" ng-show="subject.error" class="error">正确答案: {{subject.rightAnswer}}</span>
+
                     </div>
                     <%-- 简答 --%>
                     <div class="subject" ng-if="subject.subjectType=='5'" ng-cloak>
                         <span>答：</span><textarea eccrm-aw style="width: 240px;padding: 2px 8px;"
-                                                 ng-model="subject.answer"></textarea>
+                                                 ng-model="subject.answer" validate validate-required></textarea>
                     </div>
                 </div>
-                <div class="row" style="padding: 20px;text-align: center;" ng-cloak>
-                    <%--<button class="btn btn-blue fl" style="height: 30px;" ng-show="index>0"
+                <div class="row text-center" ng-if="finish" ng-cloak>
+                    <h5 style="color: #E50000; font-size: 20px;">答题结束：总得分 {{score}} 分</h5>
+                </div>
+                <div class="row button-row" ng-if="!finish" style="padding: 20px;text-align: center;" ng-cloak>
+                    <button class="btn btn-blue" ng-show="index>0"
                             ng-click="prev();">上一题
-                    </button>--%>
-                    <button class="btn btn-blue" style="height: 30px;margin-left: -30px;" ng-click="commitAnswer()"
-                            ng-disabled="form.$invalid" ng-if="pageType=='ANSWER' && subjects[0]">提交答案
                     </button>
-                    <%--<button class="btn btn-blue fr" style="height: 30px;" ng-show="index<total-1"
+                    <button class="btn btn-blue" ng-click="commitAnswer()"
+                            ng-disabled="form.$invalid" ng-if="pageType=='ANSWER'">提交答案
+                    </button>
+                    <button class="btn btn-blue" ng-show="index<beans.totalSubjects-1"
                             ng-click="next();">下一题
-                    </button>--%>
+                    </button>
                 </div>
             </form>
         </div>

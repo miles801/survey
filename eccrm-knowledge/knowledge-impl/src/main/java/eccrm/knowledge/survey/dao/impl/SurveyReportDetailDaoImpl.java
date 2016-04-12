@@ -4,8 +4,12 @@ import com.ycrl.core.HibernateDaoHelper;
 import com.ycrl.core.hibernate.criteria.CriteriaUtils;
 import eccrm.knowledge.survey.bo.SurveyReportDetailBo;
 import eccrm.knowledge.survey.dao.SurveyReportDetailDao;
+import eccrm.knowledge.survey.domain.Subject;
 import eccrm.knowledge.survey.domain.SurveyReportDetail;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
@@ -72,6 +76,38 @@ public class SurveyReportDetailDaoImpl extends HibernateDaoHelper implements Sur
     public SurveyReportDetail findById(String id) {
         Assert.hasText(id, "ID不能为空!");
         return (SurveyReportDetail) getSession().get(SurveyReportDetail.class, id);
+    }
+
+    @Override
+    public String getAnswer(String surveyReportId, String subjectId) {
+        Assert.hasText(surveyReportId, "查看答案失败!试卷ID不能为空!");
+        Assert.hasText(subjectId, "查看答案失败!题目ID不能为空!");
+        return (String) createCriteria(SurveyReportDetail.class)
+                .setProjection(Projections.property("answer"))
+                .add(Restrictions.eq("surveyReportId", surveyReportId))
+                .add(Restrictions.eq("subjectId", subjectId))
+                .uniqueResult();
+    }
+
+
+    @Override
+    public SurveyReportDetail findBySubject(String surveyReportId, String subjectId) {
+        Assert.hasText(surveyReportId, "获取题目明细失败!试卷ID不能为空!");
+        Assert.hasText(subjectId, "获取题目明细失败!题目ID不能为空!");
+        return (SurveyReportDetail) createCriteria(SurveyReportDetail.class)
+                .add(Restrictions.eq("surveyReportId", surveyReportId))
+                .add(Restrictions.eq("subjectId", subjectId))
+                .uniqueResult();
+    }
+
+    @Override
+    public List<Subject> querySubjectById(String surveyReportId) {
+        Criteria criteria = createCriteria(Subject.class);
+        DetachedCriteria detachedCriteria = DetachedCriteria.forClass(SurveyReportDetail.class)
+                .setProjection(Projections.property("subjectId"))
+                .add(Restrictions.eq("surveyReportId", surveyReportId));
+        return criteria.add(Property.forName("id").in(detachedCriteria))
+                .list();
     }
 
     private void initCriteria(Criteria criteria, SurveyReportDetailBo bo) {

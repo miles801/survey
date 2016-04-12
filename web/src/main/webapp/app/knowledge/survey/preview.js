@@ -5,25 +5,27 @@
  */
 (function (angular) {
     var app = angular.module("eccrm.knowledge.survey.preview", [
+        'ngAnimate',    // 动画
         'eccrm.angular',
         'eccrm.angularstrap',
         'eccrm.base.param',
         'eccrm.knowledge.survey'
     ]);
     app.controller('SurveyPreviewCtrl', function ($scope, CommonUtils, AlertFactory, SurveyService) {
+
+        $scope.danx = [];
+        $scope.duox = [];
+        $scope.pd = [];
+        $scope.tk = [];
         // 试卷ID
         var surveyId = $('#surveyId').val();
         if (!surveyId) {
             AlertFactory.error($scope, '没有获得试卷ID!', '页面初始化失败');
             return false;
         }
-        var surveyName = $('#surveyName').val();
         // 业务类型
-        var businessId = $('#businessId').val();
-        var userId = $('#userId').val();
         var userName = $('#userName').val();
         var userType = $('#userType').val();
-        var batchId = $('#batchId').val();
         // 页面类型
         var pageType = $('#pageType').val();
         if ("ANSWER|PREVIEW|VIEW".indexOf(pageType) === -1) {
@@ -58,7 +60,7 @@
                     if (o.isSelected == true) {
                         checked.push(o.id);
                     }
-                })
+                });
                 answer = checked.join(',');
             }
 
@@ -73,12 +75,24 @@
             return data;
         };
 
+        // 多选题的值发生变化时
+        $scope.changeValue = function () {
+            var bean = $scope.subjects[$scope.index];
+            var checked = [];
+            angular.forEach(bean.items || [], function (o) {
+                if (o.isSelected === true) {
+                    checked.push(o.id);
+                }
+            });
+            bean.answer = checked.join(',');
+        };
+
         /**
          * 可以下一页的条件
          * 多页显示 && 不是最后一页
          */
         $scope.next = function () {
-            $scope.beans.splice(0, 1, subjects[++$scope.index]);
+            $scope.index++;
         };
 
         /**
@@ -86,56 +100,87 @@
          * 多页显示 && 不是第一页
          */
         $scope.prev = function () {
-            $scope.beans.splice(0, 1, subjects[--$scope.index]);
+            $scope.index--;
         };
 
+        $scope.changeIndex = function (index) {
+            $scope.index = index;
+        };
+
+        $scope.finish = false;        // 是否答题完成
         // 提交答案
         $scope.commitAnswer = function () {
-            var data = validate();
-            if (typeof data === 'string') {
-                CommonUtils.errorDialog(data);
-            } else {
-                var promise = SurveyService.answer(data, function (resp) {
-                    querySubject();
+            var beans = [];
+            angular.forEach($scope.subjects, function (o) {
+                beans.push({
+                    subjectId: o.id,
+                    surveyReportId: surveyReportId,
+                    answer: o.answer
                 });
-                CommonUtils.loading(promise, '保存中...')
-            }
+            });
+            var promise = SurveyService.answer(beans, function (data) {
+                data = data.data || {};
+                $scope.finish = true;
+                $scope.index = -1;              // 将索引切换到不存在的值
+                $scope.changeIndex = $.noop;  // 禁用切换按钮
+                AlertFactory.success('答题完成!总得分:' + data.score);
+                $scope.score = data.score;
+                angular.forEach($scope.subjects, function (subject) {
+                    var errors = data.errors;
+                    for (var i = 0; i < errors.length; i++) {
+                        if (subject.id == errors[i].subjectId) {   // 错题
+                            subject.error = true;
+                            if (subject.subjectType == '2') {       // 多选题的话
+                                var rightAnswer = errors[i].rightAnswer.split(',');
+                                angular.forEach(subject.items || [], function (item) {
+                                    if ($.inArray(item.id, rightAnswer) != -1) {
+                                        item.isRight = true;
+                                    }
+                                })
+                            } else {
+                                subject.rightAnswer = errors[i].rightAnswer;
+                            }
+                            break;
+                        }
+                    }
+
+                });
+            });
+            CommonUtils.loading(promise, '提交中...');
         };
 
 
         // 查询试卷题目
-        var querySubject = function () {
-            var promise = SurveyService.nextsubject({id: surveyReportId}, function (data) {
-                // 得到该试卷所有的题目
-                subjects = data.data;
-                if (!subjects) {
-                    AlertFactory.info('回答完毕!');
-                    // 查看总成绩
-                    var p = SurveyService.score({id: surveyReportId}, function (o) {
-                        $scope.currentScore = o.data.score || 0;
-                        alert('回答完毕!总分:' + o.data.score || 0);
-                    });
-                    CommonUtils.loading(p);
-                } else {
-                    $scope.currentIndex = subjects.currentIndex || 0;
-                    $scope.currentScore = subjects.currentScore || 0;
-                }
-                // 按照分页显示类型获取值
-                $scope.subjects = [subjects];
-            });
-            CommonUtils.loading(promise, '加载题目...');
+        $scope.nowIndex = 0;  // 当前已答题目的序号
+
+
+        var fillNumber = function (arr) {
+            for (var i = 0; i < arr.length; i++) {
+                arr[i] = i + 1;
+            }
         };
-        if (pageType == 'ANSWER') {
-            querySubject();
-        }
-
-
         // 获取考卷信息
         var querySurvey = function (id) {
             var promise = SurveyService.get({id: id}, function (data) {
                 $scope.beans = data.data || {};
+                $scope.danxuan = new Array($scope.beans.xzCounts || 0);
+                $scope.duoxuan = new Array($scope.beans.dxCounts || 0);
+                $scope.pd = new Array($scope.beans.pdCounts || 0);
+                $scope.tk = new Array($scope.beans.tkCounts || 0);
+                fillNumber($scope.danxuan);
+                fillNumber($scope.duoxuan);
+                fillNumber($scope.pd);
+                fillNumber($scope.tk);
             });
             CommonUtils.loading(promise);
+
+            // 获取所有题目
+            SurveyService.querySubjectWithItems({
+                surveyReportId: surveyReportId
+            }, function (data) {
+                $scope.subjects = data.data || [];
+                $scope.index = 0;
+            });
         };
         // --------------------------------- HANDLE ---------------------
 

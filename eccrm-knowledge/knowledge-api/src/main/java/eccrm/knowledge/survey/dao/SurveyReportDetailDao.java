@@ -1,6 +1,7 @@
 package eccrm.knowledge.survey.dao;
 
 import eccrm.knowledge.survey.bo.SurveyReportDetailBo;
+import eccrm.knowledge.survey.domain.Subject;
 import eccrm.knowledge.survey.domain.SurveyReportDetail;
 
 import java.util.List;
@@ -41,4 +42,18 @@ public interface SurveyReportDetailDao {
      * @param seq            索引
      */
     SurveyReportDetail findBySeq(String surveyReportId, int seq);
+
+    String getAnswer(String surveyReportId, String subjectId);
+
+
+    /**
+     * 根据试卷和题目ID获取具体的一道题
+     *
+     * @param surveyReportId 试卷ID
+     * @param subjectId      题目ID
+     * @return
+     */
+    SurveyReportDetail findBySubject(String surveyReportId, String subjectId);
+
+    List<Subject> querySubjectById(String surveyReportId);
 }

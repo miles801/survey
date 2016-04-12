@@ -162,6 +162,42 @@ public class SurveyReportServiceImpl implements SurveyReportService {
     }
 
     @Override
+    public SubjectVo getPrevSubject(String id, Integer index) {
+        Assert.hasText(id, "获取题目失败!没有指定试卷!");
+        final SurveyReport report = surveyReportDao.findById(id);
+        Assert.notNull(report, "获取题目失败!该试卷不存在，请刷新后重试!");
+        // 如果试卷已完成则直接返回null
+        if (report.getCurrent() == null || report.getCurrent() == 0) {
+            return null;
+        }
+
+        final SurveyReportDetail detail = surveyReportDetailDao.findBySeq(id, index);
+        Assert.notNull(detail, "获取题目信息失败!没有获取到上一题!");
+        String subjectId = detail.getSubjectId();
+        Subject subject = subjectDao.findById(subjectId);
+        Assert.notNull(subject, "获取上一题失败!试卷中的题目已经不存在!");
+        final SubjectItemDao subjectItemDao = SystemContainer.getInstance().getBean(SubjectItemDao.class);
+        return BeanWrapBuilder.newInstance()
+                .setCallback(new BeanWrapCallback<Subject, SubjectVo>() {
+                    @Override
+                    public void doCallback(Subject o, SubjectVo vo) {
+                        vo.setSurveyReportDetailId(detail.getId());
+                        vo.setCurrentIndex(report.getCurrent());
+                        vo.setCurrentScore(report.getScore());
+                        List<SubjectItem> items = subjectItemDao.queryBySubjectId(o.getId());
+                        // 不回显这个字段
+                        for (SubjectItem item : items) {
+                            item.setRight(null);
+                        }
+                        vo.setItems(items);
+                    }
+                })
+                .addProperties(new String[]{"answer", "status"})
+                .exclude()
+                .wrap(subject, SubjectVo.class);
+    }
+
+    @Override
     public void importData(String[] attachmentIds, final String type) {
         Assert.notEmpty(attachmentIds, "导入题目失败!附件不存在，请刷新后重试!");
         Assert.hasText(type, "导入题目失败!请指定题型!");
@@ -255,6 +291,31 @@ public class SurveyReportServiceImpl implements SurveyReportService {
             logger.info(String.format("导入数据成功,用时(%d)s....", (System.currentTimeMillis() - start) / 1000));
             new File(newFilePath).delete();
         }
+    }
+
+
+    @Override
+    public List<SubjectVo> querySubjectWithItems(String surveyReportId) {
+        Assert.hasText(surveyReportId, "获取题目失败!试卷ID不能为空!");
+        List<Subject> subjects = surveyReportDetailDao.querySubjectById(surveyReportId);
+        // 查询题目对应的选项
+        return BeanWrapBuilder.newInstance()
+                .setCallback(new BeanWrapCallback<Subject, SubjectVo>() {
+                    @Override
+                    public void doCallback(Subject o, SubjectVo vo) {
+                        // 不将答案返回
+                        vo.setAnswer(null);
+                        // 如果是选择题则查询子选项
+                        if (o.getSubjectType().equals("1") || o.getSubjectType().equals("2")) {
+                            List<SubjectItem> items = SystemContainer.getInstance().getBean(SubjectItemDao.class).queryBySubjectId(o.getId());
+                            for (SubjectItem item : items) {
+                                item.setRight(null);
+                            }
+                            vo.setItems(items);
+                        }
+                    }
+                })
+                .wrapList(subjects, SubjectVo.class);
     }
 
     @Override

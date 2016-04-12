@@ -39,7 +39,7 @@ public class SurveyReportDetail extends CommonDomain {
     private String empName;
 
     // 回答答案
-    @Length(max = 100, message = "目前答案过长，只支持100个字符以内!")
+    @Length(max = 1000, message = "目前答案过长，只支持1000个字符以内!")
     private String answer;
 
     // 答题时间

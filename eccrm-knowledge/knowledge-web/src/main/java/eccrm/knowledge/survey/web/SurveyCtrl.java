@@ -11,10 +11,7 @@ import eccrm.knowledge.survey.bo.SubjectBo;
 import eccrm.knowledge.survey.bo.SurveyBo;
 import eccrm.knowledge.survey.domain.Survey;
 import eccrm.knowledge.survey.domain.SurveyReportDetail;
-import eccrm.knowledge.survey.service.SurveyReportDetailService;
-import eccrm.knowledge.survey.service.SurveyReportService;
-import eccrm.knowledge.survey.service.SurveyService;
-import eccrm.knowledge.survey.service.SurveySubjectService;
+import eccrm.knowledge.survey.service.*;
 import eccrm.knowledge.survey.vo.SubjectVo;
 import eccrm.knowledge.survey.vo.SurveyReportVo;
 import eccrm.knowledge.survey.vo.SurveySubjectVo;
@@ -180,9 +177,9 @@ public class SurveyCtrl extends BaseController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/querySubjectWithItems", params = {"surveyId"}, method = RequestMethod.GET)
-    public void querySubjectWithItems(@RequestParam String surveyId, HttpServletResponse response) {
-        List<SubjectVo> subjectVos = surveySubjectService.querySubjectWithItems(surveyId);
+    @RequestMapping(value = "/querySubjectWithItems", params = {"surveyReportId"}, method = RequestMethod.GET)
+    public void querySubjectWithItems(@RequestParam String surveyReportId, HttpServletResponse response) {
+        List<SubjectVo> subjectVos = surveyReportService.querySubjectWithItems(surveyReportId);
         GsonUtils.printData(response, subjectVos);
     }
 
@@ -238,6 +235,16 @@ public class SurveyCtrl extends BaseController {
         GsonUtils.printData(response, data);
     }
 
+    // 获取指定试卷的上一题
+    // ID:已注册的试卷的ID
+    @ResponseBody
+    @RequestMapping(value = "/prevsubject", params = {"id", "index"}, method = RequestMethod.GET)
+    public void queryPrevSubject(@RequestParam String id,
+                                 @RequestParam Integer index, HttpServletResponse response) {
+        SubjectVo data = surveyReportService.getPrevSubject(id, index);
+        GsonUtils.printData(response, data);
+    }
+
     // 获取指定试卷的下一题
     // ID:已注册的试卷的ID
     @ResponseBody
@@ -251,9 +258,16 @@ public class SurveyCtrl extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/answer", method = RequestMethod.POST)
     public void answer(HttpServletRequest request, HttpServletResponse response) {
-        SurveyReportDetail detail = GsonUtils.wrapDataToEntity(request, SurveyReportDetail.class);
-        boolean isRight = surveyReportDetailService.answer(detail.getId(), detail.getAnswer());
-        GsonUtils.printData(response, isRight);
+        SurveyReportDetail[] detail = GsonUtils.wrapDataToEntity(request, SurveyReportDetail[].class);
+        SurveyResult data = surveyReportDetailService.answer(detail);
+        GsonUtils.printData(response, data);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/answer", params = {"surveyReportId", "subjectId"}, method = RequestMethod.GET)
+    public void answer(@RequestParam String surveyReportId,
+                       @RequestParam String subjectId, HttpServletResponse response) {
+        GsonUtils.printData(response, surveyReportDetailService.getAnswer(surveyReportId, subjectId));
     }
 
     // 查询个人已完成试卷
@@ -317,4 +331,5 @@ public class SurveyCtrl extends BaseController {
         List<SurveyReportVo> data = surveyReportService.queryAllOnlineIP();
         GsonUtils.printData(response, data);
     }
+
 }

@@ -76,4 +76,20 @@ public interface SurveyReportService {
      * @return
      */
     List<SurveyReportVo> queryAllOnlineIP();
+
+    /**
+     * 获得上一题
+     *
+     * @param id 试卷ID
+     * @return
+     */
+    SubjectVo getPrevSubject(String id, Integer index);
+
+    /**
+     * 查询指定问卷下的所有题目以及题目对应的选项
+     *
+     * @param surveyReportId 个人试卷ID
+     * @return
+     */
+    List<SubjectVo> querySubjectWithItems(String surveyReportId);
 }

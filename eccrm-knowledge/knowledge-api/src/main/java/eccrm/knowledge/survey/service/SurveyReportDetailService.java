@@ -43,4 +43,20 @@ public interface SurveyReportDetailService {
      * @return 是否正确
      */
     boolean answer(String id, String answer);
+
+    /**
+     * 批量答题
+     *
+     * @param details
+     */
+    SurveyResult answer(SurveyReportDetail[] details);
+
+    /**
+     * 查询某套试卷、某一套题具体人(由试卷决定）的答题情况
+     *
+     * @param surveyReportId 注册人试卷ID
+     * @param subjectId      题目ID
+     * @return 答案
+     */
+    String getAnswer(String surveyReportId, String subjectId);
 }
