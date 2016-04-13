@@ -163,6 +163,10 @@
         var querySurvey = function (id) {
             var promise = SurveyService.get({id: id}, function (data) {
                 $scope.beans = data.data || {};
+                if ($scope.beans.finish) {
+                    AlertFactory.error('该试卷已经完成!');
+                    return;
+                }
                 $scope.danxuan = new Array($scope.beans.xzCounts || 0);
                 $scope.duoxuan = new Array($scope.beans.dxCounts || 0);
                 $scope.pd = new Array($scope.beans.pdCounts || 0);
@@ -174,11 +178,62 @@
             });
             CommonUtils.loading(promise);
 
+            // 获取考卷信息
+            SurveyService.score({id: surveyReportId}, function (data) {
+                data = data.data || {};
+                if (data.finish) {
+                    $scope.finish = true;
+                    $scope.index = -1;              // 将索引切换到不存在的值
+                    $scope.changeIndex = $.noop;  // 禁用切换按钮
+                    AlertFactory.success('答题完成!总得分:' + data.score);
+                    $scope.score = data.score;
+                    angular.forEach($scope.subjects, function (subject) {
+                        var errors = data.errors;
+                        for (var i = 0; i < errors.length; i++) {
+                            if (subject.id == errors[i].subjectId) {   // 错题
+                                subject.error = true;
+                                if (subject.subjectType == '2') {       // 多选题的话
+                                    var rightAnswer = errors[i].rightAnswer.split(',');
+                                    angular.forEach(subject.items || [], function (item) {
+                                        if ($.inArray(item.id, rightAnswer) != -1) {
+                                            item.isRight = true;
+                                        }
+                                    })
+                                } else {
+                                    subject.rightAnswer = errors[i].rightAnswer;
+                                }
+                                break;
+                            }
+                        }
+
+                    });
+                }
+
+            });
+
             // 获取所有题目
             SurveyService.querySubjectWithItems({
                 surveyReportId: surveyReportId
             }, function (data) {
                 $scope.subjects = data.data || [];
+                $scope.xzSubjects = []; // 单选
+                $scope.dxSubjects = []; // 多选
+                $scope.pdSubjects = []; // 判断
+                $scope.tkSubjects = []; // 填空
+                angular.forEach($scope.subjects || [], function (o, index) {
+                    o.index = index;
+                    if (o.subjectType == '1') {
+                        $scope.xzSubjects.push(o);
+                    } else if (o.subjectType == '2') {
+                        $scope.dxSubjects.push(o);
+                    } else if (o.subjectType == '3') {
+                        $scope.pdSubjects.push(o);
+                    } else if (o.subjectType == '4') {
+                        $scope.tkSubjects.push(o);
+                    } else {
+                        AlertFactory.error('不支持的题型!');
+                    }
+                });
                 $scope.index = 0;
             });
         };

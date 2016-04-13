@@ -7,10 +7,7 @@ import eccrm.knowledge.survey.dao.SurveyReportDetailDao;
 import eccrm.knowledge.survey.domain.Subject;
 import eccrm.knowledge.survey.domain.SurveyReportDetail;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Property;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
@@ -107,6 +104,7 @@ public class SurveyReportDetailDaoImpl extends HibernateDaoHelper implements Sur
                 .setProjection(Projections.property("subjectId"))
                 .add(Restrictions.eq("surveyReportId", surveyReportId));
         return criteria.add(Property.forName("id").in(detachedCriteria))
+                .addOrder(Order.asc("subjectType"))
                 .list();
     }
 

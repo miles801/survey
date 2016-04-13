@@ -22,6 +22,7 @@
 
         .survey {
             padding: 5px 15px;
+            width: 600px;
         }
 
         .survey .title {
@@ -97,6 +98,11 @@
             border-bottom: 4px solid red;
         }
 
+        .item.error {
+            color: #fff;
+            background-color: red !important;
+        }
+
         .item.hasAnswer {
             color: #fff;
             background-color: #00B83F;
@@ -141,20 +147,28 @@
             </div>
             <div class="row" ng-if="beans.xzCounts>0">
                 <div class="row">单选题：(每题{{beans.xzScore}} 分)</div>
+                <div class="item" ng-class="{active:s.index==$parent.index,hasAnswer:!!s.answer,error:s.error}" bindonce
+                     ng-repeat="s in xzSubjects" ng-click="changeIndex(s.index);">
+                    <span>{{$index+1}}</span></div>
             </div>
             <div class="row" ng-if="beans.dxCounts>0">
                 <div class="row">多选题：(每题{{beans.dxScore}} 分)</div>
+                <div class="item" ng-class="{active:s.index==$parent.index,hasAnswer:!!s.answer,error:s.error}" bindonce
+                     ng-repeat="s in dxSubjects" ng-click="changeIndex(s.index);">
+                    <span>{{$index+1}}</span></div>
             </div>
             <div class="row" ng-if="beans.pdCounts>0">
                 <div class="row">判断题：(每题{{beans.pdScore}} 分)</div>
+                <div class="item" ng-class="{active:s.index==$parent.index,hasAnswer:!!s.answer,error:s.error}" bindonce
+                     ng-repeat="s in pdSubjects" ng-click="changeIndex(s.index);">
+                    <span>{{$index+1}}</span></div>
             </div>
             <div class="row" ng-if="beans.tkCounts>0">
                 <div class="row">填空题：(每题{{beans.tkScore}} 分)</div>
+                <div class="item" ng-class="{active:s.index==$parent.index,hasAnswer:!!s.answer,error:s.error}" bindonce
+                     ng-repeat="s in tkSubjects" ng-click="changeIndex(s.index);">
+                    <span>{{$index+1}}</span></div>
             </div>
-            <div class="item" ng-class="{active:$index==$parent.index,hasAnswer:!!s.answer}" bindonce
-                 ng-repeat="s in subjects" ng-click="changeIndex($index);">
-                <span>{{$index+1}}</span></div>
-
         </div>
         <div class="article-box">
             <form role="form" name="form">
@@ -185,6 +199,7 @@
                             </label>
                             <span ng-show="subject.error && i.isRight"><i class="icons icon yes"></i></span>
                         </li>
+                        <input type="hidden" ng-model="subject.answer" validate validate-required/>
                     </ul>
 
                     <%-- 判断 --%>

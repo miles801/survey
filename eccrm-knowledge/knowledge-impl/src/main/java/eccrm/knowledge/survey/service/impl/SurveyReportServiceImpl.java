@@ -260,6 +260,7 @@ public class SurveyReportServiceImpl implements SurveyReportService {
                         Set<String> rightSet = new HashSet<String>();
                         String[] array = dto.getAnswer().split("\\D");
                         Collections.addAll(rightSet, array);
+                        String rightAnswer = "";
                         for (int i = 1; i < 10; i++) {
                             try {
                                 String value = (String) dto.getClass().getMethod("getItem" + i).invoke(dto);
@@ -268,11 +269,16 @@ public class SurveyReportServiceImpl implements SurveyReportService {
                                     item.setName(value);
                                     if (rightSet.contains(i + "")) {
                                         item.setRight(true);
+                                    } else {
+                                        item.setRight(false);
                                     }
                                     item.setSequenceNo(i);
                                     item.setSubjectId(subjectId);
                                     item.setSubjectName(dto.getTitle());
-                                    subjectItemDao.save(item);
+                                    String itemId = subjectItemDao.save(item);
+                                    if (item.getRight()) {
+                                        rightAnswer += "," + itemId;
+                                    }
                                 }
                             } catch (IllegalAccessException e) {
                                 e.printStackTrace();
@@ -282,6 +288,7 @@ public class SurveyReportServiceImpl implements SurveyReportService {
                                 e.printStackTrace();
                             }
                         }
+                        subject.setAnswer(rightAnswer.substring(1));
                     }
                 }
             });

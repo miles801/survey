@@ -191,6 +191,7 @@
                 <span ng-if="!foo.isOnline">{{foo.name}}</span>
                 <span ng-if="foo.isOnline">{{foo.employeeName}}</span>
             </div>
+            <div style="clear: left">&nbsp;</div>
         </div>
     </div>
 </div>
