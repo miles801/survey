@@ -1,7 +1,6 @@
 package eccrm.knowledge.survey.service.impl;
 
 import com.ycrl.core.beans.BeanWrapBuilder;
-import com.ycrl.utils.string.StringUtils;
 import eccrm.base.parameter.service.ParameterContainer;
 import eccrm.knowledge.survey.bo.SubjectBo;
 import eccrm.knowledge.survey.bo.SurveySubjectBo;
@@ -85,9 +84,6 @@ public class SurveySubjectServiceImpl implements SurveySubjectService {
             }
             String id = entry.getKey();
             SurveySubject ss = surveySubjectDao.findById(id);
-            if (ss != null) {
-                ss.setSequenceNo(value);
-            }
         }
     }
 
@@ -147,13 +143,5 @@ public class SurveySubjectServiceImpl implements SurveySubjectService {
             throw new EntityNotFoundException(Subject.class.getName() + ":" + nextId);
         }
 
-        surveySubject.setNextSubjectId(nextId);
-        surveySubject.setNextSubjectName(subject.getTitle());
-        if (StringUtils.isNotEmpty(condition)) {
-            surveySubject.setSubjectType(SurveySubject.ROUTE_CONDITION);
-            surveySubject.setCondition(condition);
-        } else {
-            surveySubject.setSubjectType(SurveySubject.ROUTE_DIRECT);
-        }
     }
 }

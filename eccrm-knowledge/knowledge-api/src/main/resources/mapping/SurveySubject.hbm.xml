@@ -15,13 +15,7 @@
         <property name="subjectType" column="SUBJECT_TYPE" type="string" length="40"/>
         <property name="subjectTypeName" column="SUBJECT_TYPE_NAME" type="string" length="40"/>
         <property name="surveyId" column="SURVEY_ID" type="string" length="40" not-null="true" update="false"/>
-        <property name="sequenceNo" column="SEQUENCE_NO" type="integer"/>
 
-        <property name="nextSubjectId" type="string" column="NEXT_SUBJECT_ID" length="40"/>
-        <property name="nextSubjectName" type="string" column="NEXT_SUBJECT_NAME" length="200"/>
-        <property name="routeType" type="string" column="ROUTE_TYPE" length="40"/>
-        <property name="condition" type="string" column="ROUTE_CONDITION" length="40"/>
-        <property name="isFirst" type="boolean" column="IS_FIRST"/>
 
         <!-- 公共属性 -->
         <property name="creatorId" column="CREATOR_ID" type="string" length="40" update="false"/>

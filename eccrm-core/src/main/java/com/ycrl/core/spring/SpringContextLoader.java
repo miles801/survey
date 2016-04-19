@@ -1,10 +1,7 @@
 package com.ycrl.core.spring;
 
-import com.michael.licence.Licence;
-import com.michael.licence.LicenceVerify;
 import com.ycrl.core.SystemContainer;
 import com.ycrl.core.pool.ThreadPool;
-import eccrm.utils.NetUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.web.context.ContextLoader;
@@ -13,11 +10,6 @@ import redis.clients.jedis.ShardedJedisPool;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import java.net.SocketException;
-import java.util.Date;
-import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * 自定义Spring启动器
@@ -60,56 +52,6 @@ public class SpringContextLoader extends ContextLoader implements ServletContext
         }
     }
 
-    private void verifyLicence() {
-        logger.info("验证Licence....");
-        Licence licence = LicenceVerify.getInstance().isValidLicence();
-        if (licence == null) {
-            logger.error("Licence文件验证失败!");
-            System.exit(1);
-        }
-        Date endDate = licence.getEndDate();
-        long time = endDate.getTime() - new Date().getTime();
-        if (time < 0) {
-            logger.error("Licence已过期!");
-            System.exit(1);
-        }
-        // 验证IP
-        Set<String> ips = licence.getMacAddress();
-        if (ips != null && !ips.isEmpty()) {
-            boolean flag = false;
-            for (String ip : ips) {
-                if (ip.equals("ALL")) {
-                    flag = true;
-                    break;
-                } else {
-                    // 获取本机IP
-                    try {
-                        Set<String> localIps = NetUtils.getLocalMacAddress();
-                        if (localIps.contains(ip)) {
-                            flag = true;
-                            break;
-                        }
-                    } catch (SocketException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            if (!flag) {
-                logger.error("当前主机未授权!");
-                System.exit(1);
-            }
-        }
-        // 启动定时器，当Licence过期时退出系统
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                logger.error("Licence已过期!");
-                System.exit(1);
-            }
-        }, time);
-        logger.info("Licence验证成功!将在[" + (time / (1000 * 60 * 60 * 24)) + "]天后过期!");
-    }
 
 
     @Override

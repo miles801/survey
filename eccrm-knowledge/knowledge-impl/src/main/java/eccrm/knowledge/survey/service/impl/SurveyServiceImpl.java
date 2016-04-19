@@ -13,10 +13,7 @@ import eccrm.base.parameter.vo.BusinessParamItemVo;
 import eccrm.knowledge.survey.bo.SubjectBo;
 import eccrm.knowledge.survey.bo.SurveyBo;
 import eccrm.knowledge.survey.dao.*;
-import eccrm.knowledge.survey.domain.Subject;
-import eccrm.knowledge.survey.domain.Survey;
-import eccrm.knowledge.survey.domain.SurveyReport;
-import eccrm.knowledge.survey.domain.SurveyReportDetail;
+import eccrm.knowledge.survey.domain.*;
 import eccrm.knowledge.survey.service.SurveyService;
 import eccrm.knowledge.survey.vo.SurveyVo;
 import org.apache.log4j.Logger;
@@ -137,19 +134,51 @@ public class SurveyServiceImpl implements SurveyService {
             throw new RuntimeException("发布失败!非[启用]状态的试卷无法启用!");
         }
         // 检查有效期
-        Date endDate = survey.getEndTime();
-        if (new Date().after(endDate)) {
-            throw new RuntimeException("发布失败!该试卷已经过期!");
+        long nowTime = new Date().getTime();
+        Assert.isTrue(survey.getEndTime().getTime() > nowTime, "申请考试失败!试卷已过期，请刷新后重试!");
+        Assert.isTrue(survey.getStartTime().getTime() < nowTime, "申请考试失败!试卷还未开放，请耐心等待!");
+
+        // 生成题目
+        SubjectBo bo = new SubjectBo();
+        bo.setCategoryId(survey.getCategoryId());   // 只选择指定类型下的题目
+        bo.setRandom(true);
+        bo.setStatus(CommonStatus.ACTIVE.getValue());
+        Integer danxuan = survey.getXzCounts();
+        int index = 1;
+        if (IntegerUtils.isBigger(danxuan, 0)) {
+            bo.setSubjectType("1");// 单选
+            Pager.setLimit(danxuan);
+            List<Subject> subjects = subjectDao.query(bo);
+            Assert.notEmpty(subjects, "试卷生成失败!没有足够的单选题，请与管理员联系或刷新后重试!");
+            index = saveSurveySubject(id, index, subjects);
         }
-        // 检查是否包含题目
-        /*boolean hasSubject = surveySubjectDao.hasSubject(id);
-        if (!hasSubject) {
-            throw new RuntimeException("发布失败!该试卷还未设置题目!");
-        }*/
 
-        // 检查题库是否有足够的题
+        Integer duoxuan = survey.getDxCounts();
+        if (IntegerUtils.isBigger(duoxuan, 0)) {
+            bo.setSubjectType("2"); // 多选
+            Pager.setLimit(duoxuan);
+            List<Subject> subjects = subjectDao.query(bo);
+            Assert.notEmpty(subjects, "试卷生成失败!没有足够的多选题，请与管理员联系或刷新后重试!");
+            index = saveSurveySubject(id, index, subjects);
+        }
 
+        Integer panduan = survey.getPdCounts();
+        if (IntegerUtils.isBigger(panduan, 0)) {
+            bo.setSubjectType("3"); // 判断
+            Pager.setLimit(panduan);
+            List<Subject> subjects = subjectDao.query(bo);
+            Assert.notEmpty(subjects, "试卷生成失败!没有足够的判断题，请与管理员联系或刷新后重试!");
+            index = saveSurveySubject(id, index, subjects);
+        }
 
+        Integer tiankong = survey.getTkCounts();
+        if (IntegerUtils.isBigger(tiankong, 0)) {
+            bo.setSubjectType("4"); // 填空
+            Pager.setLimit(tiankong);
+            List<Subject> subjects = subjectDao.query(bo);
+            Assert.notEmpty(subjects, "试卷生成失败!没有足够的填空题，请与管理员联系或刷新后重试!");
+            index = saveSurveySubject(id, index, subjects);
+        }
         survey.setStatus(Survey.STATUS_PUBLISHED);
     }
 
@@ -210,53 +239,11 @@ public class SurveyServiceImpl implements SurveyService {
         report.setTotalScore(survey.getTotalScore());
         report.setCurrent(0);
         report.setIp(ip);
-        String reportId = surveyReportDao.save(report);
+        surveyReportDao.save(report);
 
-        // 往试卷中插入题目
-
-        SubjectBo bo = new SubjectBo();
-        bo.setCategoryId(survey.getCategoryId());   // 只选择指定类型下的题目
-        bo.setRandom(true);
-        bo.setStatus(CommonStatus.ACTIVE.getValue());
-        Integer danxuan = survey.getXzCounts();
-        int index = 1;
-        if (IntegerUtils.isBigger(danxuan, 0)) {
-            bo.setSubjectType("1");// 单选
-            Pager.setLimit(danxuan);
-            List<Subject> subjects = subjectDao.query(bo);
-            Assert.notEmpty(subjects, "试卷生成失败!没有足够的单选题，请与管理员联系或刷新后重试!");
-            index = addReportDetail(surveyId, reportId, index, subjects, survey.getXzScore());
-        }
-
-        Integer duoxuan = survey.getDxCounts();
-        if (IntegerUtils.isBigger(duoxuan, 0)) {
-            bo.setSubjectType("2"); // 多选
-            Pager.setLimit(duoxuan);
-            List<Subject> subjects = subjectDao.query(bo);
-            Assert.notEmpty(subjects, "试卷生成失败!没有足够的多选题，请与管理员联系或刷新后重试!");
-            index = addReportDetail(surveyId, reportId, index, subjects, survey.getDxScore());
-        }
-
-        Integer panduan = survey.getPdCounts();
-        if (IntegerUtils.isBigger(panduan, 0)) {
-            bo.setSubjectType("3"); // 判断
-            Pager.setLimit(panduan);
-            List<Subject> subjects = subjectDao.query(bo);
-            Assert.notEmpty(subjects, "试卷生成失败!没有足够的判断题，请与管理员联系或刷新后重试!");
-            index = addReportDetail(surveyId, reportId, index, subjects, survey.getPdScore());
-        }
-
-        Integer tiankong = survey.getTkCounts();
-        if (IntegerUtils.isBigger(tiankong, 0)) {
-            bo.setSubjectType("4"); // 填空
-            Pager.setLimit(tiankong);
-            List<Subject> subjects = subjectDao.query(bo);
-            Assert.notEmpty(subjects, "试卷生成失败!没有足够的填空题，请与管理员联系或刷新后重试!");
-            index = addReportDetail(surveyId, reportId, index, subjects, survey.getXzScore());
-        }
-
-        logger.info(SecurityContext.getEmpName() + "--申请考试成功，共计" + index + "题....");
-
+        // 往试卷中插入题目 获取乱序的题目
+        List<Subject> subjects = surveySubjectDao.randomQuery(surveyId);
+        addReportDetail(survey, report, subjects);
     }
 
     /**
@@ -268,22 +255,46 @@ public class SurveyServiceImpl implements SurveyService {
      * @param subjects 题目
      * @return 更新后索引
      */
-    private int addReportDetail(String surveyId, String reportId, int index, List<Subject> subjects, int score) {
+    private int saveSurveySubject(String surveyId, int index, List<Subject> subjects) {
         for (Subject subject : subjects) {
-            SurveyReportDetail detail = new SurveyReportDetail();
-            detail.setSurveyId(surveyId);
-            detail.setSurveyReportId(reportId);
-            detail.setSubjectId(subject.getId());
-            detail.setSubjectName(subject.getTitle());
-            detail.setSubjectType(subject.getSubjectType());
-            detail.setScore(0);
-            detail.setRightAnswer(subject.getAnswer());
-            detail.setEmpId(SecurityContext.getEmpId());
-            detail.setEmpName(SecurityContext.getEmpName());
-            detail.setSequenceNo(index++);
-            detail.setScore(score);
-            surveyReportDetailDao.save(detail);
+            SurveySubject surveySubject = new SurveySubject();
+            surveySubject.setSurveyId(surveyId);
+            surveySubject.setSubjectId(subject.getId());
+            surveySubject.setSubjectName("");
+            surveySubject.setSubjectType(subject.getSubjectType());
+            surveySubject.setCategoryId(subject.getCategoryId());
+            surveySubject.setCategoryName(subject.getCategoryName());
+            surveySubjectDao.save(surveySubject);
         }
         return index;
+    }
+
+    private void addReportDetail(Survey survey, SurveyReport report, List<Subject> subjects) {
+        for (Subject subject : subjects) {
+            SurveyReportDetail detail = new SurveyReportDetail();
+            detail.setSurveyId(survey.getId());
+            detail.setEmpId(SecurityContext.getEmpId());
+            detail.setEmpName(SecurityContext.getEmpName());
+            detail.setRightAnswer(subject.getAnswer());
+            detail.setSubjectId(subject.getId());
+            detail.setSubjectName(subject.getTitle());
+            String subjectType = subject.getSubjectType();
+            detail.setSubjectType(subjectType);
+            detail.setSurveyReportId(report.getId());
+            if ("1".equals(subjectType)) {
+                detail.setScore(survey.getXzScore());
+            } else if ("2".equals(subjectType)) {
+                detail.setScore(survey.getDxScore());
+            } else if ("3".equals(subjectType)) {
+                detail.setScore(survey.getPdScore());
+            } else if ("4".equals(subjectType)) {
+                detail.setScore(survey.getTkScore());
+            } else if ("5".equals(subjectType)) {
+                detail.setScore(survey.getJdScore());
+            } else {
+                Assert.isTrue(false, "错误的题目类型：" + subjectType);
+            }
+            surveyReportDetailDao.save(detail);
+        }
     }
 }

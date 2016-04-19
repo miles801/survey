@@ -121,8 +121,7 @@
             var promise = SurveyService.answer(beans, function (data) {
                 data = data.data || {};
                 $scope.finish = true;
-                $scope.index = -1;              // 将索引切换到不存在的值
-                $scope.changeIndex = $.noop;  // 禁用切换按钮
+                $scope.index = 0;              // 打完过后切换到第一题
                 AlertFactory.success('答题完成!总得分:' + data.score);
                 $scope.score = data.score;
                 angular.forEach($scope.subjects, function (subject) {
@@ -184,7 +183,6 @@
                 if (data.finish) {
                     $scope.finish = true;
                     $scope.index = -1;              // 将索引切换到不存在的值
-                    $scope.changeIndex = $.noop;  // 禁用切换按钮
                     AlertFactory.success('答题完成!总得分:' + data.score);
                     $scope.score = data.score;
                     angular.forEach($scope.subjects, function (subject) {

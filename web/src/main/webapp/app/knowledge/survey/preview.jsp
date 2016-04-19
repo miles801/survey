@@ -173,7 +173,7 @@
         <div class="article-box">
             <form role="form" name="form">
                 <div class="row survey" bindonce ng-repeat="subject in subjects"
-                     ng-show="$index==$parent.index || subject.error">
+                     ng-show="$index==$parent.index">
                     <span ng-cloak style="position: absolute;">{{$index+1}}. </span>
                     <div class="title" bo-html="subject.title"></div>
                     <%-- 单选 --%>
@@ -235,11 +235,11 @@
                 <div class="row text-center" ng-if="finish" ng-cloak>
                     <h5 style="color: #E50000; font-size: 20px;">答题结束：总得分 {{score}} 分</h5>
                 </div>
-                <div class="row button-row" ng-if="!finish" style="padding: 20px;text-align: center;" ng-cloak>
+                <div class="row button-row" style="padding: 20px;text-align: center;" ng-cloak>
                     <button class="btn btn-blue" ng-show="index>0"
                             ng-click="prev();">上一题
                     </button>
-                    <button class="btn btn-blue" ng-click="commitAnswer()"
+                    <button class="btn btn-blue" ng-click="commitAnswer()" ng-if="!finish"
                             ng-disabled="form.$invalid" ng-if="pageType=='ANSWER'">提交答案
                     </button>
                     <button class="btn btn-blue" ng-show="index<beans.totalSubjects-1"

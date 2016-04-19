@@ -1,6 +1,7 @@
 package eccrm.knowledge.survey.dao;
 
 import eccrm.knowledge.survey.bo.SurveySubjectBo;
+import eccrm.knowledge.survey.domain.Subject;
 import eccrm.knowledge.survey.domain.SurveySubject;
 
 import java.util.List;
@@ -87,5 +88,12 @@ public interface SurveySubjectDao {
      * @throws IllegalArgumentException surveyId和subjectId均不能为空
      */
     void resetFirstSubject(String surveyId, String subjectId);
+
+    /**
+     * 乱序获取指定试卷的题目，按照题型进行排序
+     *
+     * @param surveyId 试卷ID
+     */
+    List<Subject> randomQuery(String surveyId);
 
 }

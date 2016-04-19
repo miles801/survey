@@ -4,12 +4,11 @@ import com.ycrl.core.HibernateDaoHelper;
 import com.ycrl.core.hibernate.criteria.CriteriaUtils;
 import eccrm.knowledge.survey.bo.SurveySubjectBo;
 import eccrm.knowledge.survey.dao.SurveySubjectDao;
+import eccrm.knowledge.survey.domain.Subject;
 import eccrm.knowledge.survey.domain.SurveySubject;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
@@ -149,5 +148,21 @@ public class SurveySubjectDaoImpl extends HibernateDaoHelper implements SurveySu
                 .setParameter(1, subjectId)
                 .executeUpdate();
 
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Subject> randomQuery(String surveyId) {
+        Criteria criteria = createCriteria(Subject.class);
+
+        // 排除指定试卷的题目
+        DetachedCriteria detachedCriteria = DetachedCriteria.forClass(SurveySubject.class);
+        detachedCriteria.setProjection(Projections.property("subjectId"))
+                .add(Restrictions.eq("surveyId", surveyId));
+        criteria.add(Property.forName("id").in(detachedCriteria));
+
+        // 是否为随机获取数据
+        criteria.add(Restrictions.sqlRestriction(" 1=1 order by rand()"));
+        return criteria.list();
     }
 }
