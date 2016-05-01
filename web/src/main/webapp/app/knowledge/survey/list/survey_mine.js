@@ -116,5 +116,15 @@
         });
 
 
+        $scope.exportData = function () {
+            if (!$scope.pager.total) {
+                AlertFactory.error('没有匹配的数据，请重新设置查询条件并进行查询操作!');
+                return;
+            }
+            var param = $.param(angular.extend({}, $scope.condition));
+            param = encodeURI(encodeURI(param));
+            window.open(CommonUtils.contextPathURL('/survey/export?' + param));
+        }
+
     });
 })(window, angular, jQuery);

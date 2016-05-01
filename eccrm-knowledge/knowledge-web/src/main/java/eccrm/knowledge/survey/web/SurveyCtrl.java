@@ -1,14 +1,19 @@
 package eccrm.knowledge.survey.web;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.michael.poi.exp.ExportEngine;
 import com.ycrl.base.common.JspAccessType;
 import com.ycrl.core.pager.PageVo;
 import com.ycrl.core.web.BaseController;
+import com.ycrl.utils.gson.DateStringConverter;
 import com.ycrl.utils.gson.GsonUtils;
 import com.ycrl.utils.gson.JsonObjectUtils;
 import eccrm.knowledge.survey.bo.SubjectBo;
 import eccrm.knowledge.survey.bo.SurveyBo;
+import eccrm.knowledge.survey.bo.SurveyReportBo;
 import eccrm.knowledge.survey.domain.Survey;
 import eccrm.knowledge.survey.domain.SurveyReportDetail;
 import eccrm.knowledge.survey.service.*;
@@ -33,6 +38,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -321,6 +327,33 @@ public class SurveyCtrl extends BaseController {
     @RequestMapping(value = "/import", params = {"attachmentIds", "type"}, method = RequestMethod.POST)
     public void importData(@RequestParam String attachmentIds, @RequestParam String type, HttpServletResponse response) {
         surveyReportService.importData(attachmentIds.split(","), type);
+        GsonUtils.printSuccess(response);
+    }
+
+    @RequestMapping(value = "/export", method = RequestMethod.GET)
+    public void export(HttpServletRequest request, HttpServletResponse response) {
+        SurveyReportBo bo = GsonUtils.wrapDataToEntity(request, SurveyReportBo.class);
+        PageVo vo = surveyReportService.pageQuery(bo);
+        List data = vo.getData();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new DateStringConverter("yyyy-MM-dd HH:mm:ss"))
+                .create();
+        String json = gson.toJson(data);
+        JsonElement element = gson.fromJson(json, JsonElement.class);
+        JsonObject o = new JsonObject();
+        o.add("c", element);
+        String disposition = null;//
+        try {
+            disposition = "attachment;filename=" + URLEncoder.encode("考试成绩.xlsx", "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", disposition);
+        try {
+            new ExportEngine().export(response.getOutputStream(), this.getClass().getClassLoader().getResourceAsStream("survey_report.xlsx"), o);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         GsonUtils.printSuccess(response);
     }
 

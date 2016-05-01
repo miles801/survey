@@ -51,6 +51,12 @@
                     <span class="glyphicons list"></span>
                     <span>试卷列表</span>
                 </div>
+                <div class="header-button">
+                    <button type="button" class="btn btn-green btn-min" ng-click="exportData();">
+                        <span class="glyphicons search"></span>
+                        导出
+                    </button>
+                </div>
             </div>
             <div class="block-content">
                 <div class="content-wrap">
@@ -92,7 +98,6 @@
     </div>
     <div class="list-pagination" eccrm-page="pager"></div>
 </div>
-</div >
 </body>
 
 <script type="text/javascript" src="<%=contextPath%>/app/knowledge/survey/list/survey_mine.js"></script>
