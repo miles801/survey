@@ -128,7 +128,7 @@
             },
 
             // 获取所有个人已经完成的试卷
-            finished: {method: 'GET', params: {method: 'finished'}, isArray: false},
+            finished: {method: 'POST', params: {method: 'finished'}, isArray: false},
 
             // 查询所有在线考试的IP地址
             queryOnline: {method: 'GET', params: {method: 'online'}, isArray: false},

@@ -69,10 +69,6 @@
                             <span class="glyphicons plus"></span>
                             新增
                         </a>
-                       <a type="button" class="btn btn-green btn-min" ng-click="remove();" ng-disabled="!anyone">
-                           <span class="glyphicons remove_2"></span>
-                           删除
-                       </a>
                 </span>
             </div>
             <div class="block-content">
@@ -127,6 +123,9 @@
                                     </a>
                                     <a class="btn btn-tiny" title="发布" ng-click="publish(foo.id,foo.status)">
                                         <span class="icons yes"></span>
+                                    </a>
+                                    <a class="btn btn-tiny" title="关闭" ng-click="remove(foo.id,foo.status)">
+                                        <span class="icons fork"></span>
                                     </a>
 
                                     <a class="btn btn-tiny" title="预览/模拟考试"

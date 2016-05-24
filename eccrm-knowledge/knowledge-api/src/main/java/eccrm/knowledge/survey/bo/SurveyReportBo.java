@@ -2,6 +2,7 @@ package eccrm.knowledge.survey.bo;
 
 import com.ycrl.core.hibernate.criteria.BO;
 import com.ycrl.core.hibernate.criteria.Condition;
+import com.ycrl.core.hibernate.criteria.LikeModel;
 import com.ycrl.core.hibernate.criteria.MatchModel;
 
 import java.util.Date;
@@ -15,9 +16,15 @@ public class SurveyReportBo implements BO {
     @Condition
     private String surveyId;
 
+    @Condition(matchMode = MatchModel.LIKE, likeMode = LikeModel.ANYWHERE)
+    private String surveyName;
     // 参与人
     @Condition
     private String empId;
+
+    @Condition(matchMode = MatchModel.LIKE, likeMode = LikeModel.ANYWHERE)
+    private String empName;
+
 
     // 试卷答题有效期
     @Condition(matchMode = MatchModel.GE, target = "effectDate")
@@ -39,6 +46,22 @@ public class SurveyReportBo implements BO {
     // 是否完成答卷
     @Condition
     private Boolean finish;
+
+    public String getEmpName() {
+        return empName;
+    }
+
+    public void setEmpName(String empName) {
+        this.empName = empName;
+    }
+
+    public String getSurveyName() {
+        return surveyName;
+    }
+
+    public void setSurveyName(String surveyName) {
+        this.surveyName = surveyName;
+    }
 
     public String getSurveyId() {
         return surveyId;

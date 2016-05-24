@@ -89,19 +89,16 @@
 
         // 删除
         $scope.remove = function (id) {
-            ModalFactory.remove($scope, function () {
-                if (!id) {
-                    var items = [];
-                    angular.forEach($scope.items, function (v) {
-                        items.push(v.id);
+            ModalFactory.confirm({
+                scope: $scope,
+                content: '试卷一旦关闭，新用户将无法注册考试，请确认?',
+                callback: function () {
+                    var promise = SurveyService.deleteByIds({ids: id}, function () {
+                        AlertFactory.success($scope, null, '关闭成功!');
+                        $scope.query();
                     });
-                    id = items.join(',');
+                    CommonUtils.loading(promise);
                 }
-                var result = SurveyService.deleteByIds({ids: id});
-                CommonUtils.loading(result, '删除中...', function () {
-                    AlertFactory.success($scope, null, '删除成功!');
-                    $scope.query();
-                });
             });
         };
 

@@ -12,7 +12,7 @@
             fetch: function () {
                 var param = angular.extend({}, $scope.condition, {start: this.start, limit: this.limit});
                 return CommonUtils.promise(function (defer) {
-                    var promise = SurveyService.finished();
+                    var promise = SurveyService.finished(param);
                     CommonUtils.loading(promise, '加载中...', function (data) {
                         data = data.data || {total: 0};
                         defer.resolve(data);

@@ -38,7 +38,7 @@
                         <div class="form-label col-1-half">
                             <label>试卷名称:</label>
                         </div>
-                        <input class="col-2-half" type="text" ng-model="condition.name"/>
+                        <input class="col-2-half" type="text" ng-model="condition.surveyName"/>
                     </div>
                 </div>
             </div>

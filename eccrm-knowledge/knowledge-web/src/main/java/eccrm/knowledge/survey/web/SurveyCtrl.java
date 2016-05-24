@@ -278,9 +278,10 @@ public class SurveyCtrl extends BaseController {
 
     // 查询个人已完成试卷
     @ResponseBody
-    @RequestMapping(value = "/finished", method = RequestMethod.GET)
-    public void queryPersonalFinishedSurvey(HttpServletResponse response) {
-        PageVo data = surveyReportService.queryFinish(null);
+    @RequestMapping(value = "/finished", method = RequestMethod.POST)
+    public void queryPersonalFinishedSurvey(HttpServletRequest request, HttpServletResponse response) {
+        SurveyReportBo bo = GsonUtils.wrapDataToEntity(request, SurveyReportBo.class);
+        PageVo data = surveyReportService.queryFinish(bo);
         GsonUtils.printData(response, data);
     }
 
