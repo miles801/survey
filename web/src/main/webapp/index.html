@@ -404,7 +404,7 @@
                                 } else if (data['inactive']) {//未激活
                                     window.location.href = 'main';
                                 } else {//登录失败
-                                    $scope.error = data['error'] || data['fail'] || [];
+                                    $scope.error = data['message'];
                                 }
                                 focused && focused.focus();
                             }

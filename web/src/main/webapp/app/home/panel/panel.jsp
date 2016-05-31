@@ -189,7 +189,9 @@
         <div style="padding: 20px;border:1px solid #dcdcdc;display: block;width: 90%;margin:0 auto;min-height: 300px;">
             <div ng-repeat="foo in ips" ng-class="{online:foo.isOnline}" class="box" ng-cloak>
                 <span ng-if="!foo.isOnline">{{foo.name}}</span>
-                <span ng-if="foo.isOnline">{{foo.employeeName}}</span>
+                <span ng-if="foo.isOnline">{{foo.employeeName}} <a
+                        style="color: #8eff3f;padding-left: 3px;cursor: pointer;"
+                        ng-click="remove(foo.nowId,foo)">踢出</a></span>
             </div>
             <div style="clear: left">&nbsp;</div>
         </div>

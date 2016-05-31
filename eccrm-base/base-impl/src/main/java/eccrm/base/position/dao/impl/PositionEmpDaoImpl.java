@@ -342,7 +342,7 @@ public class PositionEmpDaoImpl extends HibernateDaoHelper implements PositionEm
             return null;
         }
         String subHql = "select distinct pe.empId from " + PositionEmp.class.getName() + " pe where pe.orgId=? and pe.positionId=?";
-        Query query = getSession().createQuery("from " + Employee.class.getName() + " e where e.id in(" + subHql + ") order by e.extensionNumber asc ")
+        Query query = getSession().createQuery("from " + Employee.class.getName() + " e where e.id in(" + subHql + ") ")
                 .setParameter(0, orgId)
                 .setParameter(1, positionId);
         if (Pager.getStart() != null) {

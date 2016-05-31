@@ -89,13 +89,13 @@ public class LoginFilter implements Filter {
             setPermissionContext(session);
 
             // 打印访问信息
-            logger.info(String.format("+++++++++++++ ( %s ) --%s(%s)-->%s", Thread.currentThread().getName(), userId, empName, requestUri));
+            logger.debug(String.format("+++++++++++++ ( %s ) --%s(%s)-->%s", Thread.currentThread().getName(), userId, empName, requestUri));
             long start = System.currentTimeMillis();
             filterChain.doFilter(request, response);
             long end = System.currentTimeMillis();
             long period = end - start;
-            logger.info(String.format("------------- ( %s ) --%s(%s)-->%s,用时:%d ms", Thread.currentThread().getName(), userId, empName, requestUri, period));
-            if (period > 500) {
+            logger.debug(String.format("------------- ( %s ) --%s(%s)-->%s,用时:%d ms", Thread.currentThread().getName(), userId, empName, requestUri, period));
+            if (period > 100) {
                 logger.warn(String.format("请求时间过长:%d ms --> %s", period, requestUri));
             }
             SecurityContext.remove();

@@ -56,6 +56,9 @@
                                     SurveyService.score({id: ip.nowId}, function (data) {
                                         ip.nowId = null;
                                         data = data.data || {};
+                                        if (!data.empName) {
+                                            return;
+                                        }
                                         AsideFactory.info({
                                             title: '通知',
                                             content: ip.name + '(' + data.empName + ')答完题了，分数为:' + data.score + '!'
@@ -75,6 +78,19 @@
 
         loadEmployee();
 
+
+        $scope.remove = function (surveyReportId, foo) {
+            ModalFactory.confirm({
+                scope: $scope,
+                content: '确定要将该用户踢出考试吗？一旦提出，本次考试成绩将作废并情况记录!请确认!',
+                callback: function () {
+                    var promise = SurveyService.deleteSurveyReport({id: surveyReportId}, function () {
+                        foo.isOnline = false;
+                    });
+                    CommonUtils.loading(promise);
+                }
+            });
+        };
 
         // 可注册试卷
         $scope.canRegisterData = [];

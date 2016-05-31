@@ -3,6 +3,7 @@ package eccrm.base.user.web;
 import com.google.gson.JsonObject;
 import com.ycrl.core.SystemContainer;
 import com.ycrl.core.context.SecurityContext;
+import com.ycrl.core.web.BaseController;
 import com.ycrl.utils.gson.GsonUtils;
 import com.ycrl.utils.gson.JsonObjectUtils;
 import eccrm.base.auth.service.AccreditFuncService;
@@ -35,7 +36,7 @@ import java.util.Date;
  */
 @Controller
 @Scope("prototype")
-public class LoginCtrl {
+public class LoginCtrl extends BaseController {
     private Logger logger = Logger.getLogger(LoginCtrl.class);
     @Resource
     private UserService userService;
@@ -78,6 +79,7 @@ public class LoginCtrl {
             if (StringUtils.isEmpty(empId)) {
                 throw new RuntimeException("当前登录用户[" + username + "]没有关联员工!请与管理员联系!");
             }
+
             String employeeName = userVo.getEmployeeName();
             // 设置登录信息到session以及上下文中
             HttpSession session = request.getSession();

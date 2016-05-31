@@ -1,6 +1,7 @@
 package eccrm.login;
 
 import com.ycrl.core.SystemContainer;
+import com.ycrl.utils.string.StringUtils;
 import eccrm.base.auth.domain.AccreditData;
 import eccrm.base.auth.domain.AccreditFunc;
 import eccrm.base.auth.service.AccreditDataService;
@@ -9,9 +10,12 @@ import eccrm.base.auth.service.PersonalPermissionContext;
 import eccrm.base.position.service.PositionEmpService;
 import eccrm.base.user.service.LoginSuccessEvent;
 import eccrm.base.user.vo.UserVo;
+import eccrm.knowledge.survey.service.SurveyReportService;
+import eccrm.knowledge.survey.vo.SurveyReportVo;
 import eccrm.utils.NetUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -47,7 +51,13 @@ public class LoginSuccessEventImpl implements LoginSuccessEvent {
         String ip = NetUtils.getClientIpAddress(request);
         logger.info("[" + ip + ":" + userVo.getUsername() + "(" + employeeName + ")] login success!");
 
-
+        List<SurveyReportVo> data = SystemContainer.getInstance().getBean(SurveyReportService.class).queryAllOnlineIP();
+        if (data != null && data.size() > 0) {
+            for (SurveyReportVo vo : data) {
+                Assert.isTrue(!StringUtils.equals(empId, vo.getEmpId()), "登录失败!该用户已经在线，请与管理员联系!");
+                Assert.isTrue(!StringUtils.equals(ip, vo.getIp()), "登录失败!当前IP已经被其他用户占用，请与管理员联系!");
+            }
+        }
         // 查询员工所有岗位被授权的操作资源的编号(用于判断用户是否具有某些权限）
         Map<String, Boolean> positionResourceMap = new HashMap<String, Boolean>();
         List<String> resourceCodes = funcService.queryPersonalResourceCode();
