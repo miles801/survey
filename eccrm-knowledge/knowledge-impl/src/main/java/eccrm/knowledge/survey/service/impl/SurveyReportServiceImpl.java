@@ -92,6 +92,9 @@ public class SurveyReportServiceImpl implements SurveyReportService {
     public void deleteByIds(String[] ids) {
         if (ids == null || ids.length == 0) return;
         for (String id : ids) {
+            // 删除关联信息
+            surveyReportDetailDao.deleteByReportId(id);
+            // 删除当前的答题信息
             surveyReportDao.deleteById(id);
         }
     }

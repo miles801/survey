@@ -366,4 +366,12 @@ public class SurveyCtrl extends BaseController {
         GsonUtils.printData(response, data);
     }
 
+    // 删除试卷
+    @ResponseBody
+    @RequestMapping(value = "/delete-survey-report", params = "id", method = RequestMethod.POST)
+    public void deleteSurveyReport(@RequestParam String id, HttpServletResponse response) {
+        surveyReportService.deleteByIds(new String[]{id});
+        GsonUtils.printSuccess(response);
+    }
+
 }

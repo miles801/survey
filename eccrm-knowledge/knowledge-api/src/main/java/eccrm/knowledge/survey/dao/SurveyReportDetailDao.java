@@ -56,4 +56,11 @@ public interface SurveyReportDetailDao {
     SurveyReportDetail findBySubject(String surveyReportId, String subjectId);
 
     List<Subject> querySubjectById(String surveyReportId);
+
+    /**
+     * 删除指定试卷的所有附属信息
+     *
+     * @param surveyReportId
+     */
+    void deleteByReportId(String surveyReportId);
 }

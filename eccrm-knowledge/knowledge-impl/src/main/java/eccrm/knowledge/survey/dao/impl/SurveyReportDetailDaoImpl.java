@@ -7,7 +7,10 @@ import eccrm.knowledge.survey.dao.SurveyReportDetailDao;
 import eccrm.knowledge.survey.domain.Subject;
 import eccrm.knowledge.survey.domain.SurveyReportDetail;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.*;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
@@ -104,8 +107,16 @@ public class SurveyReportDetailDaoImpl extends HibernateDaoHelper implements Sur
                 .setProjection(Projections.property("subjectId"))
                 .add(Restrictions.eq("surveyReportId", surveyReportId));
         return criteria.add(Property.forName("id").in(detachedCriteria))
-                .addOrder(Order.asc("subjectType"))
+                .add(Restrictions.sqlRestriction(" 1=1 order by SUBJECT_TYPE,rand()"))
                 .list();
+    }
+
+    @Override
+    public void deleteByReportId(String surveyReportId) {
+        Assert.hasText(surveyReportId, "删除失败!注册的试卷ID不能为空!");
+        getSession().createQuery("delete from " + SurveyReportDetail.class.getName() + " sr where sr.surveyReportId=?")
+                .setParameter(0, surveyReportId)
+                .executeUpdate();
     }
 
     private void initCriteria(Criteria criteria, SurveyReportDetailBo bo) {

@@ -109,6 +109,9 @@
             // 获取所有个人未完成的试卷
             unfinished: {method: 'GET', params: {method: 'unfinished'}, isArray: false},
 
+            // 删除某一个已注册的试卷
+            deleteSurveyReport: {method: 'POST', params: {method: 'delete-survey-report', id: '@id'}, isArray: false},
+
             // 答题时，获取指定试卷的下一题
             // 必须参数：注册试卷的ID
             nextsubject: {method: 'GET', params: {method: 'nextsubject', id: '@id'}, isArray: false},

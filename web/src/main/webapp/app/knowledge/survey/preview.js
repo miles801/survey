@@ -43,38 +43,6 @@
 
         $scope.pageType = pageType;
 
-        // 保存所有的题目
-        var subjects = null;
-
-        /**
-         * 验证并获得表单中的值！
-         * 如果验证通过，则返回表单的数据对象
-         * 如果验证不通过，则返回错误信息
-         */
-        var validate = function () {
-            var subject = $scope.subjects[0];
-            var answer = subject.answer;
-            if (subject.subjectType == 2) {
-                var checked = [];
-                angular.forEach(subject.items, function (o) {
-                    if (o.isSelected == true) {
-                        checked.push(o.id);
-                    }
-                });
-                answer = checked.join(',');
-            }
-
-            if (!answer) {
-                return '请填写答案后再提交!';
-            }
-            //
-            var data = {
-                id: subject.surveyReportDetailId,
-                answer: answer
-            };
-            return data;
-        };
-
         // 多选题的值发生变化时
         $scope.changeValue = function () {
             var bean = $scope.subjects[$scope.index];

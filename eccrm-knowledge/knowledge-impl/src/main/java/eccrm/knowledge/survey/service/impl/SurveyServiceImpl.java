@@ -116,10 +116,12 @@ public class SurveyServiceImpl implements SurveyService {
             Survey survey = surveyDao.findById(id);
             if (survey != null) {
                 String status = survey.getStatus();
-                if (CommonStatus.ACTIVE.getValue().equals(status)) {
-                    survey.setStatus(CommonStatus.INACTIVE.getValue());
-                } else if (CommonStatus.INACTIVE.getValue().equals(status)) {
+                if (Survey.STATUS_ACTIVE.equals(status)) {
+                    survey.setStatus(Survey.STATUS_CANCELED);
+                } else if (Survey.STATUS_INACTIVE.equals(status)) {
                     surveyDao.deleteById(id);
+                } else {
+                    survey.setStatus(Survey.STATUS_CLOSED);
                 }
             }
         }
@@ -250,7 +252,6 @@ public class SurveyServiceImpl implements SurveyService {
      * 生成题目明细
      *
      * @param surveyId 试卷
-     * @param reportId 所属注册的试卷
      * @param index    索引
      * @param subjects 题目
      * @return 更新后索引
